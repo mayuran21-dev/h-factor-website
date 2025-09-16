@@ -1,0 +1,5 @@
+/login       https://app.hfactor.co.uk/login     302
+/signup      https://app.hfactor.co.uk/signup    302
+/app         https://app.hfactor.co.uk           302
+/contact     /api/contact                        200
+/*           /index.html                         200

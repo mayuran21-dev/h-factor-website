@@ -1,0 +1,1478 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>H Factor - Workforce Management for UK SMEs</title>
+    <meta name="description" content="Complete HR and payroll management system for UK businesses. HMRC compliant, GDPR certified. Start your free trial or subscribe today.">
+    
+    <!-- Favicon -->
+    <link href="./assets/favicon-light.png" rel="icon" media="(prefers-color-scheme: light)">
+    <link href="./assets/favicon-dark.png" rel="icon" media="(prefers-color-scheme: dark)">
+    <link rel="apple-touch-icon" href="./assets/touch-icon.png">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="H Factor - Workforce Management for UK SMEs">
+    <meta property="og:description" content="Complete HR and payroll management system for UK businesses. HMRC compliant, GDPR certified.">
+    <meta property="og:image" content="./assets/og-image.jpg">
+    <meta property="og:url" content="https://hfactor.co.uk">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@hfactor">
+    <meta name="twitter:title" content="H Factor - Workforce Management for UK SMEs">
+    <meta name="twitter:description" content="Complete HR and payroll management system for UK businesses. HMRC compliant, GDPR certified.">
+    <meta name="twitter:image" content="./assets/og-image.jpg">
+
+    <style>
+        :root {
+            --primary: #193B55;
+            --background: #FCFCFC;
+            --accent: #FFBE36;
+            --secondary: #FF740F;
+            --text-primary: #193B55;
+            --text-secondary: #6B7280;
+            --text-muted: #999999;
+            --white: #ffffff;
+            --border: #e0e0e0;
+            --success: #10B981;
+            --error: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            background: var(--background);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 1001;
+        }
+        
+        .skip-link:focus {
+            top: 6px;
+        }
+
+        /* Navigation */
+        .navigation {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(252, 252, 252, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 12px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navigation.scrolled {
+            background: rgba(252, 252, 252, 0.98);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            background: rgba(255, 190, 54, 0.1);
+        }
+
+        .nav-cta {
+            background: var(--primary) !important;
+            color: var(--white) !important;
+            padding: 10px 20px !important;
+            border-radius: 6px;
+            font-weight: 600;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent) !important;
+            color: var(--primary) !important;
+            transform: translateY(-1px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 8px;
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 120px 20px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: clamp(32px, 6vw, 72px);
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 4vw, 22px);
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .hero-cta-primary {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 200px;
+        }
+
+        .hero-cta-primary:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(25, 59, 85, 0.3);
+        }
+
+        .hero-cta-secondary {
+            background: transparent;
+            color: var(--primary);
+            padding: 16px 32px;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 200px;
+        }
+
+        .hero-cta-secondary:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 32px 24px;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 24px;
+            background: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .feature-description {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 80px 20px;
+            background: var(--white);
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .pricing-title {
+            font-size: clamp(36px, 5vw, 48px);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .pricing-subtitle {
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        /* Pricing Toggle */
+        .pricing-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .toggle-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .toggle-label.active {
+            color: var(--primary);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 32px;
+            background: var(--border);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--accent);
+        }
+
+        .toggle-knob {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 28px;
+            height: 28px;
+            background: var(--white);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch.active .toggle-knob {
+            transform: translateX(28px);
+        }
+
+        .savings-badge {
+            background: var(--success);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        /* Pricing Grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            background: var(--background);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(25, 59, 85, 0.1);
+            border-color: var(--accent);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            border-width: 3px;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: "Most Popular";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .pricing-tier {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .pricing-amount {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .pricing-period {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .pricing-annual-note {
+            font-size: 14px;
+            color: var(--success);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 24px 0;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .check-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .check-icon::after {
+            content: "✓";
+            color: var(--white);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .pricing-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .pricing-cta-primary {
+            width: 100%;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+        }
+
+        .pricing-cta-primary:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-1px);
+        }
+
+        .pricing-cta-secondary {
+            width: 100%;
+            background: transparent;
+            color: var(--primary);
+            padding: 12px 24px;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+        }
+
+        .pricing-cta-secondary:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: var(--white);
+            padding: 60px 20px 40px;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-brand {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 24px;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .hero-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                border: 1px solid var(--border);
+                border-top: none;
+                flex-direction: column;
+                padding: 20px;
+                gap: 8px;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero-section {
+                padding: 100px 20px 60px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .pricing-toggle {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .nav-container {
+                padding: 0 40px;
+            }
+            
+            .hero-section {
+                padding: 140px 40px 100px;
+            }
+            
+            .features-section,
+            .pricing-container {
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+        }
+
+        @media (min-width: 1440px) {
+            .hero-title {
+                font-size: 80px;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1.08);
+            }
+        }
+
+        /* Touch improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .nav-links a,
+            .hero-cta-primary,
+            .hero-cta-secondary,
+            .pricing-cta-primary,
+            .pricing-cta-secondary {
+                min-height: 44px;
+            }
+            
+            .back-to-top {
+                width: 56px;
+                height: 56px;
+                bottom: 24px;
+                right: 24px;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --border: #000000;
+                --text-muted: #000000;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Skip Link for Screen Readers -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav class="navigation" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="#" class="nav-brand" aria-label="H Factor Home">H Factor</a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="https://app.hfactor.co.uk/login">Login</a></li>
+                <li><a href="https://checkout.stripe.com/c/pay/cs_test_a1234567890#trial" class="nav-cta">Start Free Trial</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                ☰
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section" aria-labelledby="hero-title">
+            <h1 id="hero-title" class="hero-title fade-in">Workforce Management for UK SMEs</h1>
+            <p class="hero-subtitle fade-in">The complete HR and payroll management solution for UK businesses. HMRC compliant, GDPR certified, and built for growth.</p>
+            <div class="hero-buttons fade-in">
+                <a href="https://checkout.stripe.com/c/pay/cs_test_subscribe#essential-monthly" class="hero-cta-primary" aria-describedby="subscribe-description">
+                    Subscribe Now
+                </a>
+                <a href="https://checkout.stripe.com/c/pay/cs_test_trial#14-days" class="hero-cta-secondary" aria-describedby="trial-description">
+                    Start 14-Day Free Trial
+                </a>
+            </div>
+            <div class="sr-only">
+                <p id="subscribe-description">Subscribe immediately and start using H Factor with full access to all features</p>
+                <p id="trial-description">Try H Factor free for 14 days with no payment required</p>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features-section" aria-labelledby="features-title">
+            <h2 id="features-title" class="sr-only">Key Features</h2>
+            <div class="features-grid">
+                <article class="feature-card animate-on-scroll">
+                    <div class="feature-icon" aria-hidden="true">🏛️</div>
+                    <h3 class="feature-title">HMRC Compliant</h3>
+                    <p class="feature-description">Automated RTI submissions and tax calculations ensure full compliance with UK regulations.</p>
+                </article>
+                
+                <article class="feature-card animate-on-scroll">
+                    <div class="feature-icon" aria-hidden="true">🔒</div>
+                    <h3 class="feature-title">GDPR Certified</h3>
+                    <p class="feature-description">Your employee data is protected with bank-level security and GDPR compliance.</p>
+                </article>
+                
+                <article class="feature-card animate-on-scroll">
+                    <div class="feature-icon" aria-hidden="true">💰</div>
+                    <h3 class="feature-title">Payroll Processing</h3>
+                    <p class="feature-description">Process payroll in minutes with automatic calculations for PAYE, NI, and pensions.</p>
+                </article>
+                
+                <article class="feature-card animate-on-scroll">
+                    <div class="feature-icon" aria-hidden="true">📊</div>
+                    <h3 class="feature-title">HMRC Reporting</h3>
+                    <p class="feature-description">Automatic submission of RTI reports, P45s, P60s, and pension auto-enrollment.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="pricing-section" aria-labelledby="pricing-title">
+            <div class="pricing-container">
+                <h2 id="pricing-title" class="pricing-title animate-on-scroll">Simple pricing that scales</h2>
+                <p class="pricing-subtitle animate-on-scroll">Choose the plan that fits your business needs</p>
+                
+                <!-- Pricing Toggle -->
+                <div class="pricing-toggle animate-on-scroll">
+                    <span class="toggle-label active" id="monthly-label">Monthly</span>
+                    <button class="toggle-switch" id="pricing-toggle" aria-labelledby="toggle-description" aria-pressed="false" role="switch">
+                        <div class="toggle-knob"></div>
+                    </button>
+                    <span class="toggle-label" id="annual-label">
+                        Annual
+                        <span class="savings-badge">Save 17%</span>
+                    </span>
+                    <div class="sr-only" id="toggle-description">Switch between monthly and annual pricing</div>
+                </div>
+                
+                <div class="pricing-grid">
+                    <!-- Essential Plan -->
+                    <article class="pricing-card animate-on-scroll">
+                        <h3 class="pricing-tier">Essential</h3>
+                        <div class="pricing-amount">
+                            <span class="price" data-monthly="49" data-annual="490">£49</span>
+                            <span class="pricing-period">/month</span>
+                        </div>
+                        <p class="pricing-annual-note" style="display: none;">Billed annually (£490/year)</p>
+                        <ul class="pricing-features">
+                            <li><span class="check-icon" aria-hidden="true"></span>Up to 10 employees</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>HMRC RTI submissions</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Payroll processing</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Employee self-service</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Basic reporting</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Email support</li>
+                        </ul>
+                        <div class="pricing-buttons">
+                            <a href="https://checkout.stripe.com/c/pay/cs_test_essential_monthly" class="pricing-cta-primary subscribe-btn" data-plan="essential">
+                                Subscribe Now
+                            </a>
+                            <a href="https://checkout.stripe.com/c/pay/cs_test_essential_trial" class="pricing-cta-secondary trial-btn" data-plan="essential">
+                                Start 14-Day Trial
+                            </a>
+                        </div>
+                    </article>
+                    
+                    <!-- Professional Plan -->
+                    <article class="pricing-card featured animate-on-scroll">
+                        <h3 class="pricing-tier">Professional</h3>
+                        <div class="pricing-amount">
+                            <span class="price" data-monthly="99" data-annual="990">£99</span>
+                            <span class="pricing-period">/month</span>
+                        </div>
+                        <p class="pricing-annual-note" style="display: none;">Billed annually (£990/year)</p>
+                        <ul class="pricing-features">
+                            <li><span class="check-icon" aria-hidden="true"></span>Up to 50 employees</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Everything in Essential</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Advanced reporting</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Holiday management</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Performance tracking</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Priority support</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>API access</li>
+                        </ul>
+                        <div class="pricing-buttons">
+                            <a href="https://checkout.stripe.com/c/pay/cs_test_professional_monthly" class="pricing-cta-primary subscribe-btn" data-plan="professional">
+                                Subscribe Now
+                            </a>
+                            <a href="https://checkout.stripe.com/c/pay/cs_test_professional_trial" class="pricing-cta-secondary trial-btn" data-plan="professional">
+                                Start 14-Day Trial
+                            </a>
+                        </div>
+                    </article>
+                    
+                    <!-- Enterprise Plan -->
+                    <article class="pricing-card animate-on-scroll">
+                        <h3 class="pricing-tier">Enterprise</h3>
+                        <div class="pricing-amount">
+                            <span class="price" data-monthly="199" data-annual="1990">£199</span>
+                            <span class="pricing-period">/month</span>
+                        </div>
+                        <p class="pricing-annual-note" style="display: none;">Billed annually (£1,990/year)</p>
+                        <ul class="pricing-features">
+                            <li><span class="check-icon" aria-hidden="true"></span>Unlimited employees</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Everything in Professional</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Custom integrations</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Dedicated account manager</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Custom reporting</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>Phone support</li>
+                            <li><span class="check-icon" aria-hidden="true"></span>SLA guarantee</li>
+                        </ul>
+                        <div class="pricing-buttons">
+                            <a href="https://checkout.stripe.com/c/pay/cs_test_enterprise_monthly" class="pricing-cta-primary subscribe-btn" data-plan="enterprise">
+                                Subscribe Now
+                            </a>
+                            <a href="https://checkout.stripe.com/c/pay/cs_test_enterprise_trial" class="pricing-cta-secondary trial-btn" data-plan="enterprise">
+                                Start 14-Day Trial
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="contact-section" aria-labelledby="contact-title">
+            <div class="contact-container">
+                <h2 id="contact-title" class="contact-title animate-on-scroll">Questions? Get in touch</h2>
+                <p class="contact-subtitle animate-on-scroll">Our sales team will help you find the perfect plan for your business</p>
+                
+                <form class="contact-form animate-on-scroll" id="contact-form" action="#" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name *</label>
+                        <input type="text" id="name" name="name" required aria-describedby="name-error">
+                        <span class="error-message" id="name-error" aria-live="polite"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required aria-describedby="email-error">
+                        <span class="error-message" id="email-error" aria-live="polite"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="employees">Number of Employees</label>
+                        <select id="employees" name="employees">
+                            <option value="">Select range</option>
+                            <option value="1-10">1-10 employees</option>
+                            <option value="11-50">11-50 employees</option>
+                            <option value="51-100">51-100 employees</option>
+                            <option value="100+">100+ employees</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="4" required aria-describedby="message-error"></textarea>
+                        <span class="error-message" id="message-error" aria-live="polite"></span>
+                    </div>
+                    
+                    <button type="submit" class="contact-submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        ↑
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-brand">H Factor</div>
+            <p class="footer-description">The complete HR and payroll management solution for UK businesses. HMRC compliant, GDPR certified, and built for growth.</p>
+            
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="mailto:sales@h-factor.co.uk">Contact Sales</a>
+                <a href="mailto:support@h-factor.co.uk">Support</a>
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms">Terms of Service</a>
+                <a href="/security">Security</a>
+            </nav>
+            
+            <div class="footer-copyright">
+                © 2025 H Factor. All rights reserved. Built for UK SMEs with ❤️
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Configuration
+        const CONFIG = {
+            emailEndpoint: 'mailto:sales@h-factor.co.uk',
+            stripeUrls: {
+                essential: {
+                    monthly: 'https://checkout.stripe.com/c/pay/cs_test_essential_monthly',
+                    annual: 'https://checkout.stripe.com/c/pay/cs_test_essential_annual',
+                    trial: 'https://checkout.stripe.com/c/pay/cs_test_essential_trial'
+                },
+                professional: {
+                    monthly: 'https://checkout.stripe.com/c/pay/cs_test_professional_monthly',
+                    annual: 'https://checkout.stripe.com/c/pay/cs_test_professional_annual',
+                    trial: 'https://checkout.stripe.com/c/pay/cs_test_professional_trial'
+                },
+                enterprise: {
+                    monthly: 'https://checkout.stripe.com/c/pay/cs_test_enterprise_monthly',
+                    annual: 'https://checkout.stripe.com/c/pay/cs_test_enterprise_annual',
+                    trial: 'https://checkout.stripe.com/c/pay/cs_test_enterprise_trial'
+                }
+            }
+        };
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        if (mobileMenuToggle && navLinks) {
+            mobileMenuToggle.addEventListener('click', () => {
+                const isOpen = navLinks.classList.contains('open');
+                navLinks.classList.toggle('open');
+                mobileMenuToggle.setAttribute('aria-expanded', !isOpen);
+                mobileMenuToggle.innerHTML = isOpen ? '☰' : '✕';
+            });
+
+            // Close menu when clicking on links
+            navLinks.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    navLinks.classList.remove('open');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    mobileMenuToggle.innerHTML = '☰';
+                }
+            });
+        }
+
+        // Pricing Toggle
+        const pricingToggle = document.getElementById('pricing-toggle');
+        const monthlyLabel = document.getElementById('monthly-label');
+        const annualLabel = document.getElementById('annual-label');
+        const priceElements = document.querySelectorAll('.price');
+        const annualNotes = document.querySelectorAll('.pricing-annual-note');
+        const subscribeButtons = document.querySelectorAll('.subscribe-btn');
+        
+        let isAnnual = false;
+
+        function updatePricing() {
+            pricingToggle.classList.toggle('active', isAnnual);
+            pricingToggle.setAttribute('aria-pressed', isAnnual.toString());
+            
+            monthlyLabel.classList.toggle('active', !isAnnual);
+            annualLabel.classList.toggle('active', isAnnual);
+
+            priceElements.forEach(price => {
+                const monthly = price.dataset.monthly;
+                const annual = price.dataset.annual;
+                price.textContent = isAnnual ? `£${annual}` : `£${monthly}`;
+            });
+
+            annualNotes.forEach(note => {
+                note.style.display = isAnnual ? 'block' : 'none';
+            });
+
+            // Update subscribe button URLs
+            subscribeButtons.forEach(btn => {
+                const plan = btn.dataset.plan;
+                const period = isAnnual ? 'annual' : 'monthly';
+                btn.href = CONFIG.stripeUrls[plan][period];
+            });
+
+            // Update pricing period text
+            document.querySelectorAll('.pricing-period').forEach(period => {
+                period.textContent = isAnnual ? '/year' : '/month';
+            });
+        }
+
+        if (pricingToggle) {
+            pricingToggle.addEventListener('click', () => {
+                isAnnual = !isAnnual;
+                updatePricing();
+            });
+
+            // Initialize pricing
+            updatePricing();
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.querySelector('.navigation');
+        let lastScrollY = window.scrollY;
+
+        function handleNavbarScroll() {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            lastScrollY = currentScrollY;
+        }
+
+        window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('back-to-top');
+
+        function handleBackToTop() {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }
+
+        if (backToTopBtn) {
+            window.addEventListener('scroll', handleBackToTop, { passive: true });
+            
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe animation elements
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Contact Form Handling
+        const contactForm = document.getElementById('contact-form');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = new FormData(contactForm);
+                const data = Object.fromEntries(formData);
+                
+                // Basic validation
+                const errors = {};
+                
+                if (!data.name.trim()) {
+                    errors.name = 'Name is required';
+                }
+                
+                if (!data.email.trim()) {
+                    errors.email = 'Email is required';
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+                    errors.email = 'Please enter a valid email address';
+                }
+                
+                if (!data.message.trim()) {
+                    errors.message = 'Message is required';
+                }
+                
+                // Clear previous errors
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.textContent = '';
+                });
+                
+                // Show errors if any
+                if (Object.keys(errors).length > 0) {
+                    Object.keys(errors).forEach(field => {
+                        const errorEl = document.getElementById(`${field}-error`);
+                        if (errorEl) {
+                            errorEl.textContent = errors[field];
+                        }
+                    });
+                    return;
+                }
+                
+                // Create email body
+                const emailBody = `
+New inquiry from H Factor website:
+
+Name: ${data.name}
+Email: ${data.email}
+Company: ${data.company || 'Not provided'}
+Employees: ${data.employees || 'Not provided'}
+
+Message:
+${data.message}
+
+---
+Sent from H Factor contact form
+                `.trim();
+                
+                // Create mailto link
+                const mailtoLink = `mailto:sales@h-factor.co.uk?subject=New Website Inquiry from ${data.name}&body=${encodeURIComponent(emailBody)}`;
+                
+                // Open email client
+                window.location.href = mailtoLink;
+                
+                // Show success message
+                const submitBtn = contactForm.querySelector('.contact-submit');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Message Sent!';
+                submitBtn.style.background = 'var(--success)';
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.background = '';
+                    contactForm.reset();
+                }, 3000);
+            });
+        }
+
+        // Initialize fade-in animations
+        window.addEventListener('load', () => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Keyboard Navigation Enhancement
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-nav');
+            }
+        });
+
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-nav');
+        });
+
+        // Performance optimization: Debounce scroll events
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Apply debouncing to scroll handlers
+        window.addEventListener('scroll', debounce(() => {
+            handleNavbarScroll();
+            handleBackToTop();
+        }, 16), { passive: true });
+
+        // Preload critical resources
+        function preloadCriticalResources() {
+            const criticalLinks = [
+                CONFIG.stripeUrls.professional.monthly,
+                CONFIG.stripeUrls.professional.trial
+            ];
+            
+            criticalLinks.forEach(url => {
+                const link = document.createElement('link');
+                link.rel = 'prefetch';
+                link.href = url;
+                document.head.appendChild(link);
+            });
+        }
+
+        // Initialize preloading after page load
+        window.addEventListener('load', preloadCriticalResources);
+
+        console.log('H Factor website loaded successfully! 🚀');
+    </script>
+
+    <style>
+        /* Additional Contact Form Styles */
+        .contact-section {
+            padding: 80px 20px;
+            background: var(--background);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-title {
+            font-size: clamp(32px, 5vw, 42px);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .contact-subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            color: var(--text-primary);
+            background: var(--white);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 190, 54, 0.1);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 14px;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .contact-submit {
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 48px;
+        }
+
+        .contact-submit:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        /* Keyboard navigation styles */
+        .keyboard-nav *:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Loading states */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* Enhanced mobile styles */
+        @media (max-width: 480px) {
+            .hero-section {
+                padding: 90px 16px 50px;
+            }
+            
+            .pricing-section,
+            .features-section,
+            .contact-section {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+            
+            .nav-container {
+                padding: 0 16px;
+            }
+        }
+    </style>
+</body>
+</html>
