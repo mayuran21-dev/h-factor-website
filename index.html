@@ -692,6 +692,15 @@
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .footer-brand svg {
+            width: 200px;
+            height: auto;
+            max-width: 100%;
         }
 
         .footer-description {
@@ -1146,7 +1155,55 @@
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
         <div class="footer-container">
-            <div class="footer-brand">H Factor</div>
+            <div class="footer-brand">
+                <svg viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" aria-label="H Factor Logo">
+                  <defs>
+                    <!-- Mask to cut notch from H -->
+                    <mask id="h-mask">
+                      <rect x="0" y="0" width="680" height="680" fill="white"/>
+                      <ellipse cx="337.5" cy="237" rx="15" ry="18" fill="black"/>
+                    </mask>
+
+                    <!-- Mask to cut notch from F -->
+                    <mask id="f-mask">
+                      <rect x="0" y="0" width="680" height="680" fill="white"/>
+                      <ellipse cx="342.5" cy="237" rx="15" ry="18" fill="black"/>
+                    </mask>
+                  </defs>
+
+                  <!-- H Letter (yellow #FFBE36) - with notch cut out and rounded edges -->
+                  <g mask="url(#h-mask)">
+                    <!-- Left vertical bar of H -->
+                    <rect x="217.5" y="155" width="40" height="165" rx="8" ry="8" fill="#FFBE36"/>
+                    <!-- Right vertical bar of H (with notch) -->
+                    <rect x="297.5" y="155" width="40" height="165" rx="8" ry="8" fill="#FFBE36"/>
+                    <!-- Horizontal crossbar of H -->
+                    <rect x="217.5" y="225" width="120" height="35" rx="8" ry="8" fill="#FFBE36"/>
+                  </g>
+
+                  <!-- F Letter (yellow #FFBE36) - with notch cut out and rounded edges -->
+                  <g mask="url(#f-mask)">
+                    <!-- Vertical bar of F (with notch) -->
+                    <rect x="342.5" y="155" width="40" height="165" rx="8" ry="8" fill="#FFBE36"/>
+                    <!-- Top horizontal bar of F -->
+                    <rect x="342.5" y="155" width="120" height="35" rx="8" ry="8" fill="#FFBE36"/>
+                    <!-- Middle horizontal bar of F -->
+                    <rect x="342.5" y="225" width="90" height="35" rx="8" ry="8" fill="#FFBE36"/>
+                  </g>
+
+                  <!-- Pink circle accent (sits in the notches) -->
+                  <circle cx="340" cy="237" r="14" fill="#E50058"/>
+
+                  <!-- Horizontal line (#FF740F) -->
+                  <line x1="137" y1="360" x2="543" y2="360" stroke="#FF740F" stroke-width="3"/>
+
+                  <!-- Text: H FACTOR (#FFBE36) -->
+                  <text x="340" y="445" font-family="Arial Black, Arial, sans-serif" font-size="72" font-weight="900" fill="#FFBE36" text-anchor="middle" letter-spacing="4">H FACTOR</text>
+
+                  <!-- Text: PEOPLE & PAYROLL HUB -->
+                  <text x="340" y="480" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#d8d8d8" text-anchor="middle" letter-spacing="10">PEOPLE & PAYROLL HUB</text>
+                </svg>
+            </div>
             <p class="footer-description">The complete HR and payroll management solution for UK businesses. HMRC compliant, GDPR certified, and built for growth.</p>
             
             <nav class="footer-links" aria-label="Footer navigation">
