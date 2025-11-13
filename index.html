@@ -360,6 +360,49 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
         }
 
+        /* Key Points Section */
+        .key-points-section {
+            background: #fcfcfc;
+            padding: 80px 20px;
+        }
+
+        .key-points-container {
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .key-points-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+        }
+
+        .key-point-item {
+            text-align: center;
+            padding: 0 24px;
+        }
+
+        .key-point-heading {
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .key-point-description {
+            font-size: clamp(16px, 2vw, 18px);
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 960px) {
+            .key-points-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
         /* Features Section */
         .features-section {
             padding: 80px 20px;
@@ -1480,6 +1523,26 @@
             <div class="sr-only">
                 <p id="subscribe-description">Subscribe immediately and start using H Factor with full access to all features</p>
                 <p id="trial-description">Try H Factor free for 14 days with no payment required</p>
+            </div>
+        </section>
+
+        <!-- Key Points Section -->
+        <section class="key-points-section">
+            <div class="key-points-container">
+                <div class="key-points-grid">
+                    <div class="key-point-item">
+                        <h2 class="key-point-heading">HMRC Compliant & Secure</h2>
+                        <p class="key-point-description">Automated RTI submissions and tax calculations with GDPR-certified data protection. Stay compliant with UK regulations effortlessly.</p>
+                    </div>
+                    <div class="key-point-item">
+                        <h2 class="key-point-heading">Automated Payroll Processing</h2>
+                        <p class="key-point-description">Process payroll in minutes, not hours. Automatic calculations for PAYE, NI, pensions, and student loans with zero manual work.</p>
+                    </div>
+                    <div class="key-point-item">
+                        <h2 class="key-point-heading">Save Time & Money</h2>
+                        <p class="key-point-description">Cut HR admin time by up to 70% and reduce payroll processing costs. Focus on growing your business, not paperwork.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
