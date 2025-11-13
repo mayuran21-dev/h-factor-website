@@ -1,0 +1,34 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" fill="#193B55"/>
+
+  <defs>
+    <!-- Mask to cut notch from H -->
+    <mask id="h-mask-fav">
+      <rect x="0" y="0" width="100" height="100" fill="white"/>
+      <ellipse cx="43.5" cy="50" rx="3" ry="3.5" fill="black"/>
+    </mask>
+
+    <!-- Mask to cut notch from F -->
+    <mask id="f-mask-fav">
+      <rect x="0" y="0" width="100" height="100" fill="white"/>
+      <ellipse cx="46.5" cy="50" rx="3" ry="3.5" fill="black"/>
+    </mask>
+  </defs>
+
+  <!-- H Letter (white) -->
+  <g mask="url(#h-mask-fav)">
+    <rect x="20" y="25" width="8" height="50" rx="2" ry="2" fill="white"/>
+    <rect x="40" y="25" width="8" height="50" rx="2" ry="2" fill="white"/>
+    <rect x="20" y="46" width="28" height="8" rx="2" ry="2" fill="white"/>
+  </g>
+
+  <!-- F Letter (white) -->
+  <g mask="url(#f-mask-fav)">
+    <rect x="52" y="25" width="8" height="50" rx="2" ry="2" fill="white"/>
+    <rect x="52" y="25" width="28" height="8" rx="2" ry="2" fill="white"/>
+    <rect x="52" y="46" width="22" height="8" rx="2" ry="2" fill="white"/>
+  </g>
+
+  <!-- Pink circle accent -->
+  <circle cx="45" cy="50" r="3" fill="#E50058"/>
+</svg>

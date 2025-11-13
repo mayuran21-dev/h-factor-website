@@ -1,0 +1,43 @@
+<svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Mask to cut notch from H -->
+    <mask id="h-mask-white">
+      <rect x="0" y="0" width="400" height="150" fill="white"/>
+      <ellipse cx="93" cy="50" rx="3" ry="3.5" fill="black"/>
+    </mask>
+
+    <!-- Mask to cut notch from F -->
+    <mask id="f-mask-white">
+      <rect x="0" y="0" width="400" height="150" fill="white"/>
+      <ellipse cx="99" cy="50" rx="3" ry="3.5" fill="black"/>
+    </mask>
+  </defs>
+
+  <!-- H Letter (white) -->
+  <g mask="url(#h-mask-white)">
+    <rect x="60" y="20" width="8" height="60" rx="2" ry="2" fill="white"/>
+    <rect x="85" y="20" width="8" height="60" rx="2" ry="2" fill="white"/>
+    <rect x="60" y="46" width="33" height="8" rx="2" ry="2" fill="white"/>
+  </g>
+
+  <!-- F Letter (white) -->
+  <g mask="url(#f-mask-white)">
+    <rect x="99" y="20" width="8" height="60" rx="2" ry="2" fill="white"/>
+    <rect x="99" y="20" width="33" height="8" rx="2" ry="2" fill="white"/>
+    <rect x="99" y="46" width="26" height="8" rx="2" ry="2" fill="white"/>
+  </g>
+
+  <!-- Pink circle accent -->
+  <circle cx="96" cy="50" r="3" fill="#E50058"/>
+
+  <!-- Orange line -->
+  <line x1="50" y1="95" x2="350" y2="95" stroke="#FF740F" stroke-width="2"/>
+
+  <!-- Text: H-FACTOR (white) -->
+  <text x="200" y="118" font-family="Arial Black, Arial, sans-serif" font-size="24" font-weight="900" fill="white" text-anchor="middle" letter-spacing="2">
+    H<tspan dy="-3">-</tspan><tspan dy="3">FACTOR</tspan>
+  </text>
+
+  <!-- Text: PEOPLE & PAYROLL HUB (white) -->
+  <text x="200" y="138" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle" letter-spacing="4">PEOPLE & PAYROLL HUB</text>
+</svg>

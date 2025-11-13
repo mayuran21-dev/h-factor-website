@@ -7,23 +7,22 @@
     <meta name="description" content="Complete HR and payroll management system for UK businesses. HMRC compliant, GDPR certified. Start your free trial or subscribe today.">
     
     <!-- Favicon -->
-    <link href="./assets/favicon-light.png" rel="icon" media="(prefers-color-scheme: light)">
-    <link href="./assets/favicon-dark.png" rel="icon" media="(prefers-color-scheme: dark)">
-    <link rel="apple-touch-icon" href="./assets/touch-icon.png">
+    <link href="./h-factor-website/assets/favicon.svg" rel="icon" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./h-factor-website/assets/favicon.svg">
     
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="H Factor - Workforce Management for UK SMEs">
     <meta property="og:description" content="Complete HR and payroll management system for UK businesses. HMRC compliant, GDPR certified.">
-    <meta property="og:image" content="./assets/og-image.jpg">
+    <meta property="og:image" content="./h-factor-website/assets/logo.svg">
     <meta property="og:url" content="https://h-factor.co.uk">
-    
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@hfactor">
     <meta name="twitter:title" content="H Factor - Workforce Management for UK SMEs">
     <meta name="twitter:description" content="Complete HR and payroll management system for UK businesses. HMRC compliant, GDPR certified.">
-    <meta name="twitter:image" content="./assets/og-image.jpg">
+    <meta name="twitter:image" content="./h-factor-website/assets/logo.svg">
 
     <style>
         :root {
@@ -116,10 +115,14 @@
         }
 
         .nav-brand {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
+            display: flex;
+            align-items: center;
             text-decoration: none;
+        }
+
+        .nav-brand img {
+            height: 32px;
+            width: auto;
         }
 
         .nav-links {
@@ -689,9 +692,14 @@
         }
 
         .footer-brand {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer-brand img {
+            height: 80px;
+            width: auto;
         }
 
         .footer-description {
@@ -925,7 +933,9 @@
     <!-- Navigation -->
     <nav class="navigation" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="#" class="nav-brand" aria-label="H Factor Home">H Factor</a>
+            <a href="#" class="nav-brand" aria-label="H Factor Home">
+                <img src="./h-factor-website/assets/logo-horizontal.svg" alt="H Factor - People & Payroll Hub">
+            </a>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#pricing">Pricing</a></li>
@@ -1146,7 +1156,9 @@
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
         <div class="footer-container">
-            <div class="footer-brand">H Factor</div>
+            <div class="footer-brand">
+                <img src="./h-factor-website/assets/logo-white.svg" alt="H Factor - People & Payroll Hub">
+            </div>
             <p class="footer-description">The complete HR and payroll management solution for UK businesses. HMRC compliant, GDPR certified, and built for growth.</p>
             
             <nav class="footer-links" aria-label="Footer navigation">
