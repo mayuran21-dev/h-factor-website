@@ -261,93 +261,144 @@
             transform: rotate(-45deg) translate(7px, -6px);
         }
 
-        /* Hero Section */
+        /* Hero Section - Wealthsimple Style */
         .hero-section {
-            text-align: center;
-            padding: 160px 20px 120px;
-            max-width: 1100px;
-            margin: 0 auto;
+            background: #fcfcfc;
+            padding: 80px 20px;
             position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .split-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-text-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .hero-eyebrow {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--secondary);
+            background: rgba(108, 92, 231, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            width: fit-content;
         }
 
         .hero-title {
-            font-size: clamp(48px, 8vw, 96px);
+            font-size: clamp(48px, 5vw, 72px);
             font-weight: 900;
             color: var(--text-primary);
-            line-height: 1.05;
-            margin-bottom: 32px;
+            line-height: 1.1;
+            margin: 0;
             letter-spacing: -0.02em;
+            text-wrap: balance;
         }
 
         .hero-subtitle {
-            font-size: clamp(20px, 3vw, 28px);
+            font-size: clamp(18px, 2vw, 24px);
             color: var(--text-secondary);
-            margin-bottom: 48px;
-            max-width: 720px;
-            margin-left: auto;
-            margin-right: auto;
             line-height: 1.6;
+            margin: 0;
             font-weight: 400;
+        }
+
+        .hero-subtitle a {
+            color: var(--secondary);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .hero-subtitle a:hover {
+            color: var(--tertiary);
         }
 
         .hero-buttons {
             display: flex;
-            flex-direction: column;
             gap: 16px;
             align-items: center;
+            margin-top: 8px;
         }
 
         .hero-cta-primary {
-            background: var(--accent);
-            color: var(--primary);
-            padding: 20px 48px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 16px 32px;
             border: none;
-            border-radius: 50px;
-            font-size: 20px;
+            border-radius: 9999px;
+            font-size: 17px;
             font-weight: 700;
             text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            min-height: 64px;
+            transition: all 0.25s ease;
+            min-height: 56px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 220px;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(255, 217, 61, 0.3);
-            position: relative;
-            overflow: hidden;
+            white-space: nowrap;
         }
 
         .hero-cta-primary:hover {
-            background: var(--accent-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(255, 217, 61, 0.4);
+            background: var(--primary-dark);
+            transform: translateY(-2px);
         }
 
         .hero-cta-secondary {
-            background: var(--white);
+            background: transparent;
             color: var(--primary);
-            padding: 20px 48px;
+            padding: 16px 32px;
             border: 2px solid var(--border);
-            border-radius: 50px;
-            font-size: 18px;
+            border-radius: 9999px;
+            font-size: 17px;
             font-weight: 700;
             text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            min-height: 64px;
+            transition: all 0.25s ease;
+            min-height: 56px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 220px;
             cursor: pointer;
-            box-shadow: var(--shadow-sm);
+            white-space: nowrap;
         }
 
         .hero-cta-secondary:hover {
-            background: var(--background-alt);
+            background: var(--white);
             border-color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+        }
+
+        .hero-media-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
         }
 
         /* Features Section */
@@ -1055,17 +1106,37 @@
 
         /* Responsive Design */
         @media (min-width: 768px) {
-            .hero-buttons {
-                flex-direction: row;
-                justify-content: center;
-            }
-
             .mobile-menu-toggle {
                 display: none;
             }
         }
 
         @media (max-width: 960px) {
+            .split-hero {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .hero-media-container {
+                min-height: 400px;
+                order: -1;
+            }
+
+            .hero-section {
+                min-height: auto;
+                padding: 60px 20px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-cta-primary,
+            .hero-cta-secondary {
+                width: 100%;
+                justify-content: center;
+            }
             .nav-brand svg {
                 height: 28px;
             }
@@ -1115,9 +1186,6 @@
                 display: none;
             }
 
-            .hero-section {
-                padding: 100px 20px 60px;
-            }
 
             .features-grid {
                 grid-template-columns: 1fr;
@@ -1166,11 +1234,11 @@
             .nav-container {
                 padding: 0 40px;
             }
-            
+
             .hero-section {
-                padding: 140px 40px 100px;
+                padding: 100px 40px;
             }
-            
+
             .features-section,
             .pricing-container {
                 padding-left: 40px;
@@ -1245,7 +1313,19 @@
             }
 
             .hero-section {
-                padding: 90px 16px 50px;
+                padding: 50px 16px;
+            }
+
+            .hero-media-container {
+                min-height: 300px;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
             }
 
             .pricing-section,
@@ -1365,15 +1445,32 @@
     <main id="main-content" class="main-content">
         <!-- Hero Section -->
         <section class="hero-section" aria-labelledby="hero-title">
-            <h1 id="hero-title" class="hero-title fade-in">Workforce Management for UK SMEs</h1>
-            <p class="hero-subtitle fade-in">The complete HR and payroll management solution for UK businesses. HMRC compliant, GDPR certified, and built for growth.</p>
-            <div class="hero-buttons fade-in">
-                <a href="#" onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="hero-cta-primary" aria-describedby="subscribe-description">
-                    Subscribe Now
-                </a>
-                <a href="#" onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="hero-cta-secondary" aria-describedby="trial-description">
-                    Start 14-Day Free Trial
-                </a>
+            <div class="hero-container">
+                <div class="split-hero">
+                    <div class="hero-text-container">
+                        <div class="hero-eyebrow fade-in">
+                            HMRC Compliant & GDPR Certified
+                        </div>
+                        <h1 id="hero-title" class="hero-title fade-in">Workforce Management for UK SMEs</h1>
+                        <p class="hero-subtitle fade-in">The complete HR and payroll management solution for UK businesses. Built for growth, designed for simplicity. <a href="#features">Learn more</a>.</p>
+                        <div class="hero-buttons fade-in">
+                            <a href="#" onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="hero-cta-primary" aria-describedby="subscribe-description">
+                                <span>Subscribe Now</span>
+                            </a>
+                            <a href="#" onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="hero-cta-secondary" aria-describedby="trial-description">
+                                <span>Start Free Trial</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hero-media-container fade-in">
+                        <img
+                            src="https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=1200&h=1200&fit=crop&q=90"
+                            alt="Modern HR and payroll management dashboard"
+                            class="hero-image"
+                            loading="eager"
+                        />
+                    </div>
+                </div>
             </div>
             <div class="sr-only">
                 <p id="subscribe-description">Subscribe immediately and start using H Factor with full access to all features</p>
