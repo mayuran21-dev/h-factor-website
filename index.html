@@ -363,16 +363,47 @@
         /* Features Section */
         .features-section {
             padding: 120px 20px;
-            max-width: 1280px;
+            background: var(--white);
+        }
+
+        .features-container {
+            max-width: 1240px;
             margin: 0 auto;
-            background: var(--background);
+        }
+
+        .features-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .features-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr;
             gap: 32px;
-            margin-top: 80px;
+        }
+
+        .features-image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+        }
+
+        .features-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
         }
 
         .feature-card {
@@ -1150,9 +1181,14 @@
                 display: none;
             }
 
-            .features-grid {
+            .features-split {
                 grid-template-columns: 1fr;
-                gap: 32px;
+                gap: 48px;
+            }
+
+            .features-image-container {
+                min-height: 400px;
+                order: -1;
             }
 
             .pricing-grid {
@@ -1289,6 +1325,10 @@
 
             .hero-subtitle {
                 font-size: 16px;
+            }
+
+            .features-image-container {
+                min-height: 300px;
             }
 
             .pricing-section,
@@ -1435,31 +1475,45 @@
 
         <!-- Features Section -->
         <section id="features" class="features-section" aria-labelledby="features-title">
-            <h2 id="features-title" class="sr-only">Key Features</h2>
-            <div class="features-grid">
-                <article class="feature-card animate-on-scroll">
-                    <div class="feature-icon" aria-hidden="true">🏛️</div>
-                    <h3 class="feature-title">HMRC Compliant</h3>
-                    <p class="feature-description">Automated RTI submissions and tax calculations ensure full compliance with UK regulations.</p>
-                </article>
-                
-                <article class="feature-card animate-on-scroll">
-                    <div class="feature-icon" aria-hidden="true">🔒</div>
-                    <h3 class="feature-title">GDPR Certified</h3>
-                    <p class="feature-description">Your employee data is protected with bank-level security and GDPR compliance.</p>
-                </article>
-                
-                <article class="feature-card animate-on-scroll">
-                    <div class="feature-icon" aria-hidden="true">💰</div>
-                    <h3 class="feature-title">Payroll Processing</h3>
-                    <p class="feature-description">Process payroll in minutes with automatic calculations for PAYE, NI, and pensions.</p>
-                </article>
-                
-                <article class="feature-card animate-on-scroll">
-                    <div class="feature-icon" aria-hidden="true">📊</div>
-                    <h3 class="feature-title">HMRC Reporting</h3>
-                    <p class="feature-description">Automatic submission of RTI reports, P45s, P60s, and pension auto-enrollment.</p>
-                </article>
+            <div class="features-container">
+                <div class="features-split">
+                    <div class="features-content">
+                        <h2 id="features-title" class="sr-only">Key Features</h2>
+                        <div class="features-grid">
+                            <article class="feature-card animate-on-scroll">
+                                <div class="feature-icon" aria-hidden="true">🏛️</div>
+                                <h3 class="feature-title">HMRC Compliant</h3>
+                                <p class="feature-description">Automated RTI submissions and tax calculations ensure full compliance with UK regulations.</p>
+                            </article>
+
+                            <article class="feature-card animate-on-scroll">
+                                <div class="feature-icon" aria-hidden="true">🔒</div>
+                                <h3 class="feature-title">GDPR Certified</h3>
+                                <p class="feature-description">Your employee data is protected with bank-level security and GDPR compliance.</p>
+                            </article>
+
+                            <article class="feature-card animate-on-scroll">
+                                <div class="feature-icon" aria-hidden="true">💰</div>
+                                <h3 class="feature-title">Payroll Processing</h3>
+                                <p class="feature-description">Process payroll in minutes with automatic calculations for PAYE, NI, and pensions.</p>
+                            </article>
+
+                            <article class="feature-card animate-on-scroll">
+                                <div class="feature-icon" aria-hidden="true">📊</div>
+                                <h3 class="feature-title">HMRC Reporting</h3>
+                                <p class="feature-description">Automatic submission of RTI reports, P45s, P60s, and pension auto-enrollment.</p>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="features-image-container animate-on-scroll">
+                        <img
+                            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=1200&fit=crop&q=90"
+                            alt="HR system dashboard and analytics"
+                            class="features-image"
+                            loading="lazy"
+                        />
+                    </div>
+                </div>
             </div>
         </section>
 
