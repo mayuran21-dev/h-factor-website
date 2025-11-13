@@ -445,6 +445,7 @@
             padding: 8px;
             min-height: 44px;
             min-width: 44px;
+            z-index: 1001;
         }
 
         .mobile-menu-toggle span {
@@ -465,6 +466,165 @@
 
         .mobile-menu-toggle.open span:nth-child(3) {
             transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu Drawer */
+        .mobile-menu-drawer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--white);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-100%);
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            padding-top: 80px;
+        }
+
+        .mobile-menu-drawer.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .mobile-menu-content {
+            padding: 24px;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-nav-links > li {
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .mobile-nav-link {
+            display: block;
+            padding: 16px 0;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--secondary);
+        }
+
+        /* Mobile Dropdown */
+        .mobile-dropdown-button {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .mobile-dropdown-caret {
+            width: 12px;
+            height: 12px;
+            position: relative;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .mobile-dropdown-caret-left,
+        .mobile-dropdown-caret-right {
+            position: absolute;
+            width: 8px;
+            height: 2px;
+            background: currentColor;
+            border-radius: 1px;
+        }
+
+        .mobile-dropdown-caret-left {
+            transform: rotate(45deg);
+            left: 0;
+            top: 5px;
+        }
+
+        .mobile-dropdown-caret-right {
+            transform: rotate(-45deg);
+            right: 0;
+            top: 5px;
+        }
+
+        .mobile-dropdown-button[aria-expanded="true"] .mobile-dropdown-caret {
+            transform: rotate(180deg);
+        }
+
+        .mobile-dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-dropdown-content.open {
+            max-height: 1000px;
+        }
+
+        .mobile-dropdown-section {
+            padding: 16px 0 16px 16px;
+        }
+
+        .mobile-dropdown-section h3 {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin: 0 0 12px 0;
+        }
+
+        .mobile-dropdown-section ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-dropdown-section a {
+            display: block;
+            padding: 8px 0;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .mobile-dropdown-section a:hover {
+            color: var(--secondary);
+        }
+
+        /* Mobile CTAs */
+        .mobile-cta-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 24px 0;
+            border-top: 1px solid var(--border-light);
+            margin-top: 24px;
+        }
+
+        .mobile-cta-container a {
+            width: 100%;
+            justify-content: center;
+            text-align: center;
         }
 
         /* Hero Section - Wealthsimple Style */
@@ -1719,6 +1879,79 @@
                 </div>
             </div>
         </nav>
+
+        <!-- Mobile Menu Drawer -->
+        <div class="mobile-menu-drawer" id="mobile-menu-drawer">
+            <div class="mobile-menu-content">
+                <ul class="mobile-nav-links">
+                    <!-- What we offer - Dropdown -->
+                    <li>
+                        <button
+                            type="button"
+                            class="mobile-dropdown-button"
+                            aria-controls="mobile-dropdown-features"
+                            aria-expanded="false"
+                            data-mobile-dropdown="features">
+                            <span>What we offer</span>
+                            <span class="mobile-dropdown-caret" aria-hidden="true">
+                                <span class="mobile-dropdown-caret-left"></span>
+                                <span class="mobile-dropdown-caret-right"></span>
+                            </span>
+                        </button>
+                        <div class="mobile-dropdown-content" id="mobile-dropdown-features" data-mobile-dropdown-content="features">
+                            <div class="mobile-dropdown-section">
+                                <h3>Core Features</h3>
+                                <ul>
+                                    <li><a href="#features">HMRC Compliance</a></li>
+                                    <li><a href="#features">GDPR Certified</a></li>
+                                    <li><a href="#features">Payroll Processing</a></li>
+                                    <li><a href="#features">HMRC Reporting</a></li>
+                                </ul>
+                            </div>
+                            <div class="mobile-dropdown-section">
+                                <h3>Tools</h3>
+                                <ul>
+                                    <li><a href="#roi-calculator">ROI Calculator</a></li>
+                                    <li><a href="#features">Employee Self-Service</a></li>
+                                    <li><a href="#features">Holiday Management</a></li>
+                                    <li><a href="#features">Performance Tracking</a></li>
+                                </ul>
+                            </div>
+                            <div class="mobile-dropdown-section">
+                                <h3>Support</h3>
+                                <ul>
+                                    <li><a href="#contact">Get in Touch</a></li>
+                                    <li><a href="#pricing">Compare Plans</a></li>
+                                    <li><a href="mailto:support@h-factor.co.uk">Email Support</a></li>
+                                    <li><a href="mailto:sales@h-factor.co.uk">Talk to Sales</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Pricing - Simple Link -->
+                    <li>
+                        <a href="#pricing" class="mobile-nav-link">Pricing</a>
+                    </li>
+
+                    <!-- Support - Simple Link -->
+                    <li>
+                        <a href="#contact" class="mobile-nav-link">Support</a>
+                    </li>
+                </ul>
+
+                <!-- Mobile CTAs -->
+                <div class="mobile-cta-container">
+                    <a href="https://h-factor.base44.app" class="nav-login">Log in</a>
+                    <a href="#" onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="nav-cta-secondary">
+                        <span>Start Free Trial</span>
+                    </a>
+                    <a href="#" onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="nav-cta-primary">
+                        <span>Get started</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- End Sticky Header Wrapper -->
 
@@ -2132,6 +2365,64 @@
             if (e.key === 'Escape' && activeDropdown) {
                 closeAllDropdowns();
             }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuDrawer = document.getElementById('mobile-menu-drawer');
+        let isMobileMenuOpen = false;
+
+        if (mobileMenuToggle && mobileMenuDrawer) {
+            mobileMenuToggle.addEventListener('click', () => {
+                isMobileMenuOpen = !isMobileMenuOpen;
+
+                if (isMobileMenuOpen) {
+                    mobileMenuDrawer.classList.add('open');
+                    mobileMenuToggle.classList.add('open');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'true');
+                    document.body.style.overflow = 'hidden'; // Prevent body scroll
+                } else {
+                    mobileMenuDrawer.classList.remove('open');
+                    mobileMenuToggle.classList.remove('open');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = ''; // Restore body scroll
+                }
+            });
+
+            // Close mobile menu when clicking links
+            const mobileNavLinks = mobileMenuDrawer.querySelectorAll('a');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuDrawer.classList.remove('open');
+                    mobileMenuToggle.classList.remove('open');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                    isMobileMenuOpen = false;
+                });
+            });
+        }
+
+        // Mobile Dropdown Accordion
+        const mobileDropdownButtons = document.querySelectorAll('[data-mobile-dropdown]');
+
+        mobileDropdownButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdownId = button.getAttribute('data-mobile-dropdown');
+                const dropdownContent = document.querySelector(`[data-mobile-dropdown-content="${dropdownId}"]`);
+                const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+                if (dropdownContent) {
+                    if (isExpanded) {
+                        // Close dropdown
+                        dropdownContent.classList.remove('open');
+                        button.setAttribute('aria-expanded', 'false');
+                    } else {
+                        // Open dropdown
+                        dropdownContent.classList.add('open');
+                        button.setAttribute('aria-expanded', 'true');
+                    }
+                }
+            });
         });
 
         // Real Stripe integration function
