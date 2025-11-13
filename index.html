@@ -90,37 +90,103 @@
             border: 0;
         }
 
-        /* Top Banner */
-        .top-banner {
-            background: #f3f2ef;
+        /* Sticky Header Wrapper */
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Notification Banner - Wealthsimple Style */
+        .notification-banner {
+            background: #FFD93D;
             color: var(--text-primary);
-            text-align: center;
-            font-size: 14px;
-            padding: 10px 16px;
-            border-bottom: 1px solid var(--border);
-            font-weight: 400;
-            line-height: 1.4;
+            padding: 12px 20px;
+            position: relative;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
-        .top-banner a {
-            color: var(--secondary);
-            text-decoration: underline;
-            margin-left: 4px;
+        .notification-banner.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .notification-banner-content {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            position: relative;
+        }
+
+        .notification-banner-text {
+            font-size: 15px;
             font-weight: 500;
+            line-height: 1.5;
+            text-align: center;
+            flex: 1;
         }
 
-        .top-banner a:hover {
-            color: var(--tertiary);
+        .notification-banner-text a {
+            color: var(--text-primary);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .notification-banner-text a:hover {
+            color: var(--primary-dark);
+        }
+
+        .notification-banner-close {
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .notification-banner-close:hover {
+            opacity: 1;
+        }
+
+        .notification-banner-close svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         /* Navigation */
         .navigation {
-            position: sticky;
-            top: 0;
             width: 100%;
-            background: var(--white);
+            background: #fcfcfc;
             border-bottom: 1px solid var(--border-light);
-            z-index: 1000;
             transition: all 0.25s ease;
         }
 
@@ -1312,6 +1378,19 @@
                 height: 26px;
             }
 
+            .notification-banner {
+                padding: 10px 16px;
+            }
+
+            .notification-banner-text {
+                font-size: 13px;
+                padding-right: 32px;
+            }
+
+            .notification-banner-close {
+                right: 8px;
+            }
+
             .hero-section {
                 padding: 50px 16px;
             }
@@ -1364,13 +1443,25 @@
 </head>
 
 <body id="top">
-    <!-- Top Banner -->
-    <div class="top-banner">
-        <p>HMRC compliant payroll and HR management for UK SMEs. <a href="#pricing">Get started today</a></p>
-    </div>
+    <!-- Sticky Header Wrapper -->
+    <div class="header-sticky" data-cy="sticky-header">
+        <!-- Notification Banner -->
+        <div class="notification-banner" id="notification-banner" data-testid="notification-banner">
+            <div class="notification-banner-content">
+                <div class="notification-banner-text">
+                    <p>HMRC compliant payroll and HR management for UK SMEs. <a href="#pricing">Get started today</a> 🚀</p>
+                </div>
+                <button type="button" class="notification-banner-close" id="close-banner" aria-label="Close notification banner">
+                    <span class="visually-hidden">Close banner</span>
+                    <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
 
-    <!-- Navigation -->
-    <nav class="navigation" role="navigation" aria-label="Main navigation">
+        <!-- Navigation -->
+        <nav class="navigation" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <a href="#top" class="nav-brand" aria-label="H Factor Home - Scroll to top">
                 <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
@@ -1440,6 +1531,8 @@
             </button>
         </div>
     </nav>
+    </div>
+    <!-- End Sticky Header Wrapper -->
 
     <!-- Main Content -->
     <main id="main-content" class="main-content">
@@ -1787,6 +1880,23 @@
             emailEndpoint: 'mailto:sales@h-factor.co.uk',
             backendUrl: 'https://h-factor.base44.app/api/functions/createStripeCheckout'
         };
+
+        // Notification Banner Close Button
+        const closeBanner = document.getElementById('close-banner');
+        const notificationBanner = document.getElementById('notification-banner');
+
+        if (closeBanner && notificationBanner) {
+            closeBanner.addEventListener('click', () => {
+                notificationBanner.classList.add('hidden');
+                // Store in localStorage so banner stays hidden
+                localStorage.setItem('bannerClosed', 'true');
+            });
+
+            // Check if banner was previously closed
+            if (localStorage.getItem('bannerClosed') === 'true') {
+                notificationBanner.classList.add('hidden');
+            }
+        }
 
         // Real Stripe integration function
         async function startSubscription(priceId, planName) {
