@@ -27,17 +27,27 @@
 
     <style>
         :root {
-            --primary: #193B55;
-            --background: #FCFCFC;
-            --accent: #FFBE36;
-            --secondary: #FF740F;
-            --text-primary: #193B55;
-            --text-secondary: #6B7280;
-            --text-muted: #999999;
+            --primary: #1a1a1a;
+            --primary-dark: #0a0a0a;
+            --background: #ffffff;
+            --background-alt: #f8f9fa;
+            --accent: #FFD93D;
+            --accent-hover: #FFC700;
+            --secondary: #6C5CE7;
+            --tertiary: #00D9C0;
+            --pink: #FF6B9D;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
             --white: #ffffff;
-            --border: #e0e0e0;
-            --success: #10B981;
-            --error: #EF4444;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --success: #00D9C0;
+            --error: #FF6B9D;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.16);
         }
 
         * {
@@ -51,12 +61,21 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Inter', sans-serif;
+            font-size: 18px;
+            line-height: 1.7;
             color: var(--text-secondary);
             background: var(--background);
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-weight: 400;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--text-primary);
+            margin: 0;
         }
 
         .sr-only {
@@ -92,18 +111,19 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(252, 252, 252, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border-light);
             z-index: 1000;
-            padding: 12px 0;
-            transition: all 0.3s ease;
+            padding: 16px 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .navigation.scrolled {
-            background: rgba(252, 252, 252, 0.98);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 8px 0;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow-sm);
+            padding: 12px 0;
         }
 
         .nav-container {
@@ -140,34 +160,37 @@
         .nav-links a {
             color: var(--text-primary);
             text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
 
         .nav-links a:hover {
-            color: var(--accent);
-            background: rgba(255, 190, 54, 0.1);
+            color: var(--text-primary);
+            background: var(--background-alt);
         }
 
         .nav-cta {
             background: var(--primary) !important;
             color: var(--white) !important;
-            padding: 10px 20px !important;
-            border-radius: 6px;
-            font-weight: 600;
+            padding: 12px 24px !important;
+            border-radius: 50px;
+            font-weight: 700;
             min-height: 44px;
             display: flex;
             align-items: center;
             cursor: pointer;
+            box-shadow: var(--shadow-sm);
         }
 
         .nav-cta:hover {
             background: var(--accent) !important;
             color: var(--primary) !important;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
         /* Mobile Menu */
@@ -186,26 +209,30 @@
         /* Hero Section */
         .hero-section {
             text-align: center;
-            padding: 120px 20px 80px;
-            max-width: 900px;
+            padding: 160px 20px 120px;
+            max-width: 1100px;
             margin: 0 auto;
+            position: relative;
         }
 
         .hero-title {
-            font-size: clamp(32px, 6vw, 72px);
-            font-weight: 700;
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 900;
             color: var(--text-primary);
-            line-height: 1.1;
-            margin-bottom: 24px;
+            line-height: 1.05;
+            margin-bottom: 32px;
+            letter-spacing: -0.02em;
         }
 
         .hero-subtitle {
-            font-size: clamp(18px, 4vw, 22px);
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            max-width: 600px;
+            font-size: clamp(20px, 3vw, 28px);
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 720px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.6;
+            font-weight: 400;
         }
 
         .hero-buttons {
@@ -218,124 +245,296 @@
         .hero-cta-primary {
             background: var(--accent);
             color: var(--primary);
-            padding: 16px 32px;
+            padding: 20px 48px;
             border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 600;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
             text-decoration: none;
-            transition: all 0.3s ease;
-            min-height: 56px;
-            display: flex;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 64px;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 200px;
+            min-width: 220px;
             cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 217, 61, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
         .hero-cta-primary:hover {
-            background: var(--primary);
-            color: var(--white);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(25, 59, 85, 0.3);
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255, 217, 61, 0.4);
         }
 
         .hero-cta-secondary {
-            background: transparent;
+            background: var(--white);
             color: var(--primary);
-            padding: 16px 32px;
-            border: 2px solid var(--primary);
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
+            padding: 20px 48px;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
             text-decoration: none;
-            transition: all 0.3s ease;
-            min-height: 56px;
-            display: flex;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 64px;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 200px;
+            min-width: 220px;
             cursor: pointer;
+            box-shadow: var(--shadow-sm);
         }
 
         .hero-cta-secondary:hover {
-            background: var(--primary);
-            color: var(--white);
+            background: var(--background-alt);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
         /* Features Section */
         .features-section {
-            padding: 80px 20px;
-            max-width: 1200px;
+            padding: 120px 20px;
+            max-width: 1280px;
             margin: 0 auto;
+            background: var(--background);
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 80px;
         }
 
         .feature-card {
-            text-align: center;
-            padding: 32px 24px;
-            border-radius: 12px;
-            transition: transform 0.3s ease;
+            text-align: left;
+            padding: 48px 40px;
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--background-alt);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .feature-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
         }
 
         .feature-icon {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 24px;
-            background: var(--accent);
-            border-radius: 12px;
+            width: 80px;
+            height: 80px;
+            margin: 0 0 28px 0;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 36px;
+            box-shadow: 0 8px 24px rgba(255, 217, 61, 0.25);
         }
 
         .feature-title {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 28px;
+            font-weight: 800;
             color: var(--text-primary);
             margin-bottom: 16px;
+            line-height: 1.3;
         }
 
         .feature-description {
-            font-size: 16px;
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        /* ROI Calculator Section */
+        .roi-calculator-section {
+            padding: 120px 20px;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
+            color: var(--white);
+        }
+
+        .roi-calculator-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .roi-calculator-title {
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 24px;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .roi-calculator-subtitle {
+            font-size: clamp(18px, 3vw, 22px);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 64px;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        .calculator-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 32px;
+            padding: 56px 48px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .slider-group {
+            margin-bottom: 48px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .slider-label-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .slider-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--secondary);
+            letter-spacing: -0.02em;
+        }
+
+        .slider-input {
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            background: var(--border-light);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--tertiary));
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .slider-input::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        .slider-input::-moz-range-thumb {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--tertiary));
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .slider-input::-moz-range-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        .roi-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            margin-top: 56px;
+            padding-top: 48px;
+            border-top: 2px solid var(--border-light);
+        }
+
+        .roi-result-item {
+            text-align: center;
+        }
+
+        .roi-result-label {
+            font-size: 15px;
+            font-weight: 600;
             color: var(--text-muted);
-            line-height: 1.6;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .roi-result-value {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--secondary);
+            letter-spacing: -0.03em;
+        }
+
+        .roi-result-suffix {
+            font-size: 24px;
+            color: var(--text-secondary);
+            font-weight: 700;
         }
 
         /* Pricing Section */
         .pricing-section {
-            padding: 80px 20px;
-            background: var(--white);
+            padding: 120px 20px;
+            background: var(--background-alt);
         }
 
         .pricing-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
             text-align: center;
         }
 
         .pricing-title {
-            font-size: clamp(36px, 5vw, 48px);
-            font-weight: 700;
+            font-size: clamp(48px, 6vw, 72px);
+            font-weight: 900;
             color: var(--text-primary);
-            margin-bottom: 16px;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
         }
 
         .pricing-subtitle {
-            font-size: 20px;
-            color: var(--text-muted);
-            margin-bottom: 40px;
+            font-size: clamp(20px, 3vw, 24px);
+            color: var(--text-secondary);
+            margin-bottom: 56px;
+            font-weight: 400;
         }
 
         /* Pricing Toggle */
@@ -343,244 +542,265 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 16px;
-            margin: 40px 0;
+            gap: 20px;
+            margin: 48px 0 64px;
             flex-wrap: wrap;
         }
 
         .toggle-label {
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            transition: color 0.3s ease;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-muted);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .toggle-label.active {
-            color: var(--primary);
+            color: var(--text-primary);
         }
 
         .toggle-switch {
             position: relative;
-            width: 60px;
-            height: 32px;
+            width: 68px;
+            height: 36px;
             background: var(--border);
-            border-radius: 16px;
+            border-radius: 18px;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
         }
 
         .toggle-switch.active {
             background: var(--accent);
+            box-shadow: 0 4px 12px rgba(255, 217, 61, 0.3);
         }
 
         .toggle-knob {
             position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 28px;
-            height: 28px;
+            top: 3px;
+            left: 3px;
+            width: 30px;
+            height: 30px;
             background: var(--white);
             border-radius: 50%;
-            transition: transform 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .toggle-switch.active .toggle-knob {
-            transform: translateX(28px);
+            transform: translateX(32px);
         }
 
         .savings-badge {
-            background: var(--success);
+            background: linear-gradient(135deg, var(--secondary), var(--tertiary));
             color: var(--white);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
             margin-left: 8px;
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.25);
         }
 
         /* Pricing Grid */
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 32px;
-            margin-top: 60px;
+            margin-top: 64px;
         }
 
         .pricing-card {
-            background: var(--background);
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 32px 24px;
+            background: var(--white);
+            border: 2px solid var(--border-light);
+            border-radius: 24px;
+            padding: 48px 40px;
             text-align: left;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            overflow: hidden;
         }
 
         .pricing-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(25, 59, 85, 0.1);
-            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--border);
         }
 
         .pricing-card.featured {
             border-color: var(--accent);
             border-width: 3px;
-            transform: scale(1.05);
+            transform: scale(1.02);
+            background: linear-gradient(135deg, var(--white) 0%, #fffef5 100%);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.02) translateY(-8px);
         }
 
         .pricing-card.featured::before {
             content: "Most Popular";
             position: absolute;
-            top: -12px;
+            top: -16px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
             color: var(--primary);
-            padding: 8px 20px;
-            border-radius: 20px;
+            padding: 10px 24px;
+            border-radius: 50px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 800;
+            box-shadow: 0 4px 16px rgba(255, 217, 61, 0.4);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .pricing-tier {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 800;
             color: var(--text-primary);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .pricing-amount {
-            font-size: 48px;
-            font-weight: 700;
+            font-size: 64px;
+            font-weight: 900;
             color: var(--text-primary);
             margin-bottom: 8px;
             display: flex;
             align-items: baseline;
             gap: 8px;
+            letter-spacing: -0.03em;
         }
 
         .pricing-period {
-            font-size: 16px;
-            font-weight: 400;
+            font-size: 18px;
+            font-weight: 600;
             color: var(--text-muted);
         }
 
         .pricing-annual-note {
-            font-size: 14px;
-            color: var(--success);
-            margin-bottom: 24px;
-            font-weight: 500;
+            font-size: 15px;
+            color: var(--tertiary);
+            margin-bottom: 32px;
+            font-weight: 600;
         }
 
         .pricing-features {
             list-style: none;
-            margin: 24px 0;
+            margin: 32px 0;
         }
 
         .pricing-features li {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 12px;
-            font-size: 15px;
+            gap: 14px;
+            margin-bottom: 16px;
+            font-size: 16px;
             color: var(--text-secondary);
+            font-weight: 500;
         }
 
         .check-icon {
-            width: 20px;
-            height: 20px;
-            background: var(--success);
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--tertiary), var(--secondary));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
             margin-top: 2px;
+            box-shadow: 0 2px 8px rgba(0, 217, 192, 0.25);
         }
 
         .check-icon::after {
             content: "✓";
             color: var(--white);
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
         }
 
         .pricing-buttons {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-top: 32px;
+            gap: 16px;
+            margin-top: 40px;
         }
 
         .pricing-cta-primary {
             width: 100%;
-            background: var(--accent);
-            color: var(--primary);
-            padding: 14px 24px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 18px 32px;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 48px;
+            min-height: 56px;
+            box-shadow: var(--shadow-sm);
         }
 
         .pricing-cta-primary:hover {
-            background: var(--primary);
-            color: var(--white);
-            transform: translateY(-1px);
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
         .pricing-cta-secondary {
             width: 100%;
             background: transparent;
             color: var(--primary);
-            padding: 12px 24px;
-            border: 2px solid var(--primary);
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
+            padding: 16px 32px;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 44px;
+            min-height: 52px;
         }
 
         .pricing-cta-secondary:hover {
-            background: var(--primary);
-            color: var(--white);
+            background: var(--background-alt);
+            border-color: var(--primary);
+            transform: translateY(-2px);
         }
 
         /* Contact Form Styles */
         .contact-section {
-            padding: 80px 20px;
+            padding: 120px 20px;
             background: var(--background);
             max-width: 800px;
             margin: 0 auto;
         }
 
         .contact-title {
-            font-size: clamp(32px, 5vw, 42px);
-            font-weight: 700;
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 900;
             color: var(--text-primary);
-            margin-bottom: 16px;
+            margin-bottom: 24px;
             text-align: center;
+            letter-spacing: -0.02em;
         }
 
         .contact-subtitle {
-            font-size: 18px;
-            color: var(--text-muted);
-            margin-bottom: 40px;
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 56px;
             text-align: center;
+            font-weight: 400;
         }
 
         .contact-form {
@@ -594,31 +814,33 @@
 
         .form-group label {
             display: block;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 12px 16px;
+            padding: 16px 20px;
             border: 2px solid var(--border);
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
             color: var(--text-primary);
             background: var(--white);
-            transition: border-color 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
         }
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(255, 190, 54, 0.1);
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+            transform: translateY(-2px);
         }
 
         .error-message {
@@ -630,44 +852,46 @@
 
         .contact-submit {
             width: 100%;
-            background: var(--primary);
-            color: var(--white);
-            padding: 14px 32px;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 18px 40px;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
-            min-height: 48px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 64px;
+            box-shadow: 0 4px 20px rgba(255, 217, 61, 0.3);
         }
 
         .contact-submit:hover {
-            background: var(--accent);
-            color: var(--primary);
-            transform: translateY(-1px);
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 217, 61, 0.4);
         }
 
         /* Back to Top Button */
         .back-to-top {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
+            bottom: 32px;
+            right: 32px;
+            width: 56px;
+            height: 56px;
             background: var(--primary);
             color: var(--white);
             border: none;
             border-radius: 50%;
-            font-size: 20px;
+            font-size: 24px;
             cursor: pointer;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 999;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: var(--shadow-lg);
         }
 
         .back-to-top.visible {
@@ -678,14 +902,15 @@
         .back-to-top:hover {
             background: var(--accent);
             color: var(--primary);
-            transform: translateY(-2px);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
         }
 
         /* Footer */
         .footer {
             background: var(--primary);
             color: var(--white);
-            padding: 60px 20px 40px;
+            padding: 80px 20px 48px;
             text-align: center;
         }
 
@@ -839,6 +1064,24 @@
                 flex-direction: column;
                 gap: 12px;
             }
+
+            .calculator-box {
+                padding: 32px 24px;
+                border-radius: 24px;
+            }
+
+            .slider-value {
+                font-size: 24px;
+            }
+
+            .roi-results {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .roi-result-value {
+                font-size: 40px;
+            }
         }
 
         @media (min-width: 1024px) {
@@ -929,13 +1172,34 @@
 
             .pricing-section,
             .features-section,
-            .contact-section {
+            .contact-section,
+            .roi-calculator-section {
                 padding-left: 16px;
                 padding-right: 16px;
             }
 
             .nav-container {
                 padding: 0 16px;
+            }
+
+            .calculator-box {
+                padding: 24px 20px;
+            }
+
+            .slider-label-text {
+                font-size: 16px;
+            }
+
+            .slider-value {
+                font-size: 20px;
+            }
+
+            .roi-result-value {
+                font-size: 32px;
+            }
+
+            .roi-result-suffix {
+                font-size: 18px;
             }
         }
     </style>
@@ -1058,6 +1322,53 @@
                     <h3 class="feature-title">HMRC Reporting</h3>
                     <p class="feature-description">Automatic submission of RTI reports, P45s, P60s, and pension auto-enrollment.</p>
                 </article>
+            </div>
+        </section>
+
+        <!-- ROI Calculator Section -->
+        <section class="roi-calculator-section animate-on-scroll" aria-labelledby="roi-title">
+            <div class="roi-calculator-container">
+                <h2 id="roi-title" class="roi-calculator-title">Calculate Your Savings</h2>
+                <p class="roi-calculator-subtitle">See how much time and money H Factor can save your business</p>
+
+                <div class="calculator-box">
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-text">Number of Employees</span>
+                            <span class="slider-value" id="employee-value">25</span>
+                        </div>
+                        <input type="range" min="1" max="200" value="25" class="slider-input" id="employee-slider" aria-label="Number of employees">
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-text">Hours Spent on HR/Payroll per Week</span>
+                            <span class="slider-value" id="hours-value">10</span>
+                        </div>
+                        <input type="range" min="1" max="40" value="10" class="slider-input" id="hours-slider" aria-label="Hours spent on HR and payroll per week">
+                    </div>
+
+                    <div class="roi-results">
+                        <div class="roi-result-item">
+                            <div class="roi-result-label">Time Saved</div>
+                            <div class="roi-result-value">
+                                <span id="time-saved">7</span><span class="roi-result-suffix">h/week</span>
+                            </div>
+                        </div>
+                        <div class="roi-result-item">
+                            <div class="roi-result-label">Cost Savings</div>
+                            <div class="roi-result-value">
+                                £<span id="cost-saved">1,456</span><span class="roi-result-suffix">/month</span>
+                            </div>
+                        </div>
+                        <div class="roi-result-item">
+                            <div class="roi-result-label">Annual ROI</div>
+                            <div class="roi-result-value">
+                                <span id="roi-percentage">1,200</span><span class="roi-result-suffix">%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1566,6 +1877,44 @@ Sent from H Factor contact form
             handleNavbarScroll();
             handleBackToTop();
         }, 16), { passive: true });
+
+        // ROI Calculator
+        const employeeSlider = document.getElementById('employee-slider');
+        const hoursSlider = document.getElementById('hours-slider');
+        const employeeValue = document.getElementById('employee-value');
+        const hoursValue = document.getElementById('hours-value');
+        const timeSaved = document.getElementById('time-saved');
+        const costSaved = document.getElementById('cost-saved');
+        const roiPercentage = document.getElementById('roi-percentage');
+
+        function calculateROI() {
+            const employees = parseInt(employeeSlider.value);
+            const hours = parseInt(hoursSlider.value);
+
+            // Update slider values
+            employeeValue.textContent = employees;
+            hoursValue.textContent = hours;
+
+            // Calculate time saved (70% efficiency improvement)
+            const hoursTimeSaved = Math.round(hours * 0.7 * 10) / 10;
+            timeSaved.textContent = hoursTimeSaved;
+
+            // Calculate cost savings (£30/hour average HR cost)
+            const hourlyCost = 30;
+            const monthlySavings = Math.round((hoursTimeSaved * 4.33 * hourlyCost));
+            costSaved.textContent = monthlySavings.toLocaleString();
+
+            // Calculate ROI percentage (based on Professional plan at £99/month)
+            const planCost = 99;
+            const roi = Math.round(((monthlySavings - planCost) / planCost) * 100);
+            roiPercentage.textContent = Math.max(roi, 0).toLocaleString();
+        }
+
+        if (employeeSlider && hoursSlider) {
+            employeeSlider.addEventListener('input', calculateROI);
+            hoursSlider.addEventListener('input', calculateROI);
+            calculateROI(); // Initial calculation
+        }
 
         console.log('H Factor website loaded successfully!');
     </script>
