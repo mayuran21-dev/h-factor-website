@@ -188,6 +188,7 @@
             background: #fcfcfc;
             border-bottom: 1px solid var(--border-light);
             transition: all 0.25s ease;
+            position: relative;
         }
 
         .navigation.scrolled {
@@ -315,17 +316,16 @@
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
-            transition: all 0.25s ease;
+            transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
             z-index: 999;
-            max-height: 0;
-            overflow: hidden;
+            pointer-events: none;
         }
 
         .dropdown-content.active {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
-            max-height: 600px;
+            pointer-events: auto;
         }
 
         .dropdown-inner {
@@ -1830,10 +1830,10 @@
                 <!-- CTA Buttons -->
                 <div class="nav-cta-container">
                     <a href="https://h-factor.base44.app" class="nav-login">Log in</a>
-                    <a href="#" onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="nav-cta-secondary">
+                    <a href="#" onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential'); return false;" class="nav-cta-secondary">
                         <span>Start Free Trial</span>
                     </a>
-                    <a href="#" onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="nav-cta-primary">
+                    <a href="#" onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional'); return false;" class="nav-cta-primary">
                         <span>Get started</span>
                     </a>
                 </div>
@@ -1943,10 +1943,10 @@
                 <!-- Mobile CTAs -->
                 <div class="mobile-cta-container">
                     <a href="https://h-factor.base44.app" class="nav-login">Log in</a>
-                    <a href="#" onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="nav-cta-secondary">
+                    <a href="#" onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential'); return false;" class="nav-cta-secondary">
                         <span>Start Free Trial</span>
                     </a>
-                    <a href="#" onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="nav-cta-primary">
+                    <a href="#" onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional'); return false;" class="nav-cta-primary">
                         <span>Get started</span>
                     </a>
                 </div>
@@ -1968,10 +1968,10 @@
                         <h1 id="hero-title" class="hero-title fade-in">Workforce Management for UK SMEs</h1>
                         <p class="hero-subtitle fade-in">The complete HR and payroll management solution for UK businesses. Built for growth, designed for simplicity. <a href="#features">Learn more</a>.</p>
                         <div class="hero-buttons fade-in">
-                            <a href="#" onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="hero-cta-primary" aria-describedby="subscribe-description">
+                            <a href="#" onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional'); return false;" class="hero-cta-primary" aria-describedby="subscribe-description">
                                 <span>Subscribe Now</span>
                             </a>
-                            <a href="#" onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="hero-cta-secondary" aria-describedby="trial-description">
+                            <a href="#" onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential'); return false;" class="hero-cta-secondary" aria-describedby="trial-description">
                                 <span>Start Free Trial</span>
                             </a>
                         </div>
