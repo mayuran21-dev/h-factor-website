@@ -116,10 +116,16 @@
         }
 
         .nav-brand {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
+            display: flex;
+            align-items: center;
             text-decoration: none;
+            line-height: 0;
+        }
+
+        .nav-brand svg {
+            height: 40px;
+            width: auto;
+            display: block;
         }
 
         .nav-links {
@@ -780,6 +786,10 @@
         }
 
         @media (max-width: 767px) {
+            .nav-brand svg {
+                height: 32px;
+            }
+
             .nav-links {
                 display: none;
                 position: absolute;
@@ -909,17 +919,21 @@
 
         /* Enhanced mobile styles */
         @media (max-width: 480px) {
+            .nav-brand svg {
+                height: 28px;
+            }
+
             .hero-section {
                 padding: 90px 16px 50px;
             }
-            
+
             .pricing-section,
             .features-section,
             .contact-section {
                 padding-left: 16px;
                 padding-right: 16px;
             }
-            
+
             .nav-container {
                 padding: 0 16px;
             }
@@ -927,14 +941,64 @@
     </style>
 </head>
 
-<body>
+<body id="top">
     <!-- Skip Link for Screen Readers -->
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <!-- Navigation -->
     <nav class="navigation" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="#" class="nav-brand" aria-label="H Factor Home">H Factor</a>
+            <a href="#top" class="nav-brand" aria-label="H Factor Home - Scroll to top">
+                <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <!-- Mask to cut notch from H -->
+                    <mask id="h-mask-nav">
+                      <rect x="0" y="0" width="800" height="200" fill="white"/>
+                      <ellipse cx="79.375" cy="96.15" rx="4.4" ry="5.3" fill="black"/>
+                    </mask>
+
+                    <!-- Mask to cut notch from F -->
+                    <mask id="f-mask-nav">
+                      <rect x="0" y="0" width="800" height="200" fill="white"/>
+                      <ellipse cx="80.85" cy="96.15" rx="4.4" ry="5.3" fill="black"/>
+                    </mask>
+                  </defs>
+
+                  <!-- Logomark: H Letter (dark blue) -->
+                  <g mask="url(#h-mask-nav)">
+                    <!-- Left vertical bar of H -->
+                    <rect x="40" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                    <!-- Right vertical bar of H -->
+                    <rect x="67.625" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                    <!-- Horizontal crossbar of H -->
+                    <rect x="40" y="91" width="35.25" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                  </g>
+
+                  <!-- Logomark: F Letter (dark blue) -->
+                  <g mask="url(#f-mask-nav)">
+                    <!-- Vertical bar of F -->
+                    <rect x="80.85" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                    <!-- Top horizontal bar of F -->
+                    <rect x="80.85" y="70.5" width="35.25" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                    <!-- Middle horizontal bar of F -->
+                    <rect x="80.85" y="91" width="26.45" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                  </g>
+
+                  <!-- Circle accent (pink) -->
+                  <circle cx="80.1" cy="96.15" r="4.1" fill="#E50058"/>
+
+                  <!-- Vertical divider line (orange) -->
+                  <line x1="140" y1="50" x2="140" y2="150" stroke="#FF740F" stroke-width="3"/>
+
+                  <!-- Text: H-FACTOR (dark blue) with raised hyphen -->
+                  <text x="170" y="105" font-family="Arial Black, Arial, sans-serif" font-size="42" font-weight="900" fill="#1a2c3d" letter-spacing="2">
+                    H<tspan dy="-4">-</tspan><tspan dy="4">FACTOR</tspan>
+                  </text>
+
+                  <!-- Text: PEOPLE & PAYROLL HUB (dark blue) -->
+                  <text x="170" y="135" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a2c3d" letter-spacing="4">PEOPLE & PAYROLL HUB</text>
+                </svg>
+            </a>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#pricing">Pricing</a></li>
