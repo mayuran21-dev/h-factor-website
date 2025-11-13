@@ -1,37 +1,49 @@
-<svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <!-- Mask to cut notch from H -->
-    <mask id="h-mask-nav">
-      <rect x="0" y="0" width="200" height="50" fill="white"/>
-      <ellipse cx="17.8" cy="25" rx="1.5" ry="1.8" fill="black"/>
+    <mask id="h-mask-light">
+      <rect x="0" y="0" width="800" height="200" fill="white"/>
+      <ellipse cx="79.375" cy="96.15" rx="4.4" ry="5.3" fill="black"/>
     </mask>
 
     <!-- Mask to cut notch from F -->
-    <mask id="f-mask-nav">
-      <rect x="0" y="0" width="200" height="50" fill="white"/>
-      <ellipse cx="18.3" cy="25" rx="1.5" ry="1.8" fill="black"/>
+    <mask id="f-mask-light">
+      <rect x="0" y="0" width="800" height="200" fill="white"/>
+      <ellipse cx="80.85" cy="96.15" rx="4.4" ry="5.3" fill="black"/>
     </mask>
   </defs>
 
-  <!-- H Letter -->
-  <g mask="url(#h-mask-nav)">
-    <rect x="5" y="12" width="4" height="26" rx="1" ry="1" fill="#193B55"/>
-    <rect x="14" y="12" width="4" height="26" rx="1" ry="1" fill="#193B55"/>
-    <rect x="5" y="23" width="13" height="4" rx="1" ry="1" fill="#193B55"/>
+  <!-- Logomark: H Letter (dark blue) -->
+  <g mask="url(#h-mask-light)">
+    <!-- Left vertical bar of H -->
+    <rect x="40" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+    <!-- Right vertical bar of H -->
+    <rect x="67.625" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+    <!-- Horizontal crossbar of H -->
+    <rect x="40" y="91" width="35.25" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
   </g>
 
-  <!-- F Letter -->
-  <g mask="url(#f-mask-nav)">
-    <rect x="18.3" y="12" width="4" height="26" rx="1" ry="1" fill="#193B55"/>
-    <rect x="18.3" y="12" width="13" height="4" rx="1" ry="1" fill="#193B55"/>
-    <rect x="18.3" y="23" width="10" height="4" rx="1" ry="1" fill="#193B55"/>
+  <!-- Logomark: F Letter (dark blue) -->
+  <g mask="url(#f-mask-light)">
+    <!-- Vertical bar of F -->
+    <rect x="80.85" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+    <!-- Top horizontal bar of F -->
+    <rect x="80.85" y="70.5" width="35.25" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+    <!-- Middle horizontal bar of F -->
+    <rect x="80.85" y="91" width="26.45" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
   </g>
 
-  <!-- Pink circle accent -->
-  <circle cx="18" cy="25" r="1.4" fill="#E50058"/>
+  <!-- Circle accent (pink) -->
+  <circle cx="80.1" cy="96.15" r="4.1" fill="#E50058"/>
 
-  <!-- Text: H-FACTOR -->
-  <text x="38" y="32" font-family="Arial Black, Arial, sans-serif" font-size="20" font-weight="900" fill="#193B55" letter-spacing="1">
-    H-FACTOR
+  <!-- Vertical divider line (orange) -->
+  <line x1="140" y1="50" x2="140" y2="150" stroke="#FF740F" stroke-width="3"/>
+
+  <!-- Text: H-FACTOR (dark blue) with raised hyphen -->
+  <text x="170" y="105" font-family="Arial Black, Arial, sans-serif" font-size="42" font-weight="900" fill="#1a2c3d" letter-spacing="2">
+    H<tspan dy="-4">-</tspan><tspan dy="4">FACTOR</tspan>
   </text>
+
+  <!-- Text: PEOPLE & PAYROLL HUB (dark blue) -->
+  <text x="170" y="135" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a2c3d" letter-spacing="4">PEOPLE &amp; PAYROLL HUB</text>
 </svg>
