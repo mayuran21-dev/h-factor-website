@@ -197,10 +197,11 @@
         .nav-container {
             max-width: 1240px;
             margin: 0 auto;
-            padding: 10px 24px;
+            padding: 16px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 40px;
         }
 
         .nav-brand {
@@ -208,6 +209,7 @@
             align-items: center;
             text-decoration: none;
             line-height: 0;
+            flex-shrink: 0;
         }
 
         .nav-brand svg {
@@ -216,49 +218,163 @@
             display: block;
         }
 
+        .nav-center {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 32px;
+            gap: 8px;
             list-style: none;
             margin: 0;
             padding: 0;
         }
 
-        .nav-links a {
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-link {
             color: var(--text-primary);
             text-decoration: none;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
-            padding: 12px 0;
+            padding: 12px 16px;
             transition: color 0.2s ease;
-            position: relative;
+            display: inline-block;
             letter-spacing: 0;
         }
 
-        .nav-links a:hover {
+        .nav-link:hover {
             color: var(--secondary);
         }
 
-        .nav-links a::after {
-            content: '';
+        /* Dropdown Button */
+        .dropdown-button {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 500;
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease;
+        }
+
+        .dropdown-button:hover {
+            color: var(--secondary);
+        }
+
+        .dropdown-caret {
+            width: 8px;
+            height: 8px;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .dropdown-caret-left,
+        .dropdown-caret-right {
             position: absolute;
-            bottom: 8px;
-            left: 0;
-            width: 0;
+            width: 6px;
             height: 2px;
-            background: var(--secondary);
-            transition: width 0.2s ease;
+            background: currentColor;
+            border-radius: 1px;
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
+        .dropdown-caret-left {
+            transform: rotate(45deg);
+            left: 0;
+            top: 3px;
         }
 
+        .dropdown-caret-right {
+            transform: rotate(-45deg);
+            right: 0;
+            top: 3px;
+        }
+
+        .dropdown-button[aria-expanded="true"] .dropdown-caret {
+            transform: rotate(180deg);
+        }
+
+        /* Dropdown Content */
+        .dropdown-content {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            background: var(--white);
+            border-top: 1px solid var(--border-light);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.25s ease;
+            z-index: 999;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .dropdown-content.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            max-height: 600px;
+        }
+
+        .dropdown-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 48px 24px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+        }
+
+        .dropdown-column h3 {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin: 0 0 20px 0;
+        }
+
+        .dropdown-column ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .dropdown-column a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 8px 0;
+            display: block;
+            transition: color 0.2s ease;
+        }
+
+        .dropdown-column a:hover {
+            color: var(--secondary);
+        }
+
+        /* CTA Container */
         .nav-cta-container {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 12px;
+            flex-shrink: 0;
         }
 
         .nav-login {
@@ -266,32 +382,56 @@
             text-decoration: none;
             font-size: 15px;
             font-weight: 500;
+            padding: 10px 16px;
             transition: color 0.2s ease;
+            white-space: nowrap;
         }
 
         .nav-login:hover {
             color: var(--secondary);
         }
 
-        .nav-cta {
-            background: var(--primary) !important;
-            color: var(--white) !important;
-            padding: 10px 20px !important;
+        .nav-cta-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+            padding: 10px 20px;
             border-radius: 9999px;
             font-weight: 600;
             font-size: 15px;
-            letter-spacing: 0.3px;
             min-height: 40px;
             display: inline-flex;
             align-items: center;
             cursor: pointer;
             transition: all 0.25s ease;
             text-decoration: none;
+            white-space: nowrap;
         }
 
-        .nav-cta:hover {
-            background: #1a1a1a !important;
-            color: var(--white) !important;
+        .nav-cta-secondary:hover {
+            background: var(--background-alt);
+            border-color: var(--primary);
+        }
+
+        .nav-cta-primary {
+            background: var(--primary);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 15px;
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .nav-cta-primary:hover {
+            background: var(--primary-dark);
         }
 
         /* Mobile Menu */
@@ -1203,53 +1343,33 @@
                 width: 100%;
                 justify-content: center;
             }
+
             .nav-brand svg {
                 height: 28px;
             }
 
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--white);
-                border-top: 1px solid var(--border-light);
-                flex-direction: column;
-                padding: 16px;
-                gap: 0;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            }
-
-            .nav-links li {
-                width: 100%;
-                border-bottom: 1px solid var(--border-light);
-            }
-
-            .nav-links li:last-child {
-                border-bottom: none;
-            }
-
-            .nav-links a {
-                display: block;
-                padding: 16px 12px;
-                width: 100%;
-            }
-
-            .nav-links a::after {
+            .nav-center {
                 display: none;
             }
 
-            .nav-links.open {
-                display: flex;
+            .nav-cta-container {
+                display: none;
             }
 
             .mobile-menu-toggle {
                 display: flex;
             }
 
-            .nav-cta-container {
-                display: none;
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                border: none;
+            }
+
+            .dropdown-inner {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                padding: 24px 16px;
             }
 
 
@@ -1462,75 +1582,143 @@
 
         <!-- Navigation -->
         <nav class="navigation" role="navigation" aria-label="Main navigation">
-        <div class="nav-container">
-            <a href="#top" class="nav-brand" aria-label="H Factor Home - Scroll to top">
-                <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <!-- Mask to cut notch from H -->
-                    <mask id="h-mask-nav">
-                      <rect x="0" y="0" width="800" height="200" fill="white"/>
-                      <ellipse cx="79.375" cy="96.15" rx="4.4" ry="5.3" fill="black"/>
-                    </mask>
+            <div class="nav-container">
+                <!-- Logo -->
+                <a href="#top" class="nav-brand" aria-label="H Factor Home - Scroll to top">
+                    <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <!-- Mask to cut notch from H -->
+                        <mask id="h-mask-nav">
+                          <rect x="0" y="0" width="800" height="200" fill="white"/>
+                          <ellipse cx="79.375" cy="96.15" rx="4.4" ry="5.3" fill="black"/>
+                        </mask>
 
-                    <!-- Mask to cut notch from F -->
-                    <mask id="f-mask-nav">
-                      <rect x="0" y="0" width="800" height="200" fill="white"/>
-                      <ellipse cx="80.85" cy="96.15" rx="4.4" ry="5.3" fill="black"/>
-                    </mask>
-                  </defs>
+                        <!-- Mask to cut notch from F -->
+                        <mask id="f-mask-nav">
+                          <rect x="0" y="0" width="800" height="200" fill="white"/>
+                          <ellipse cx="80.85" cy="96.15" rx="4.4" ry="5.3" fill="black"/>
+                        </mask>
+                      </defs>
 
-                  <!-- Logomark: H Letter (dark blue) -->
-                  <g mask="url(#h-mask-nav)">
-                    <!-- Left vertical bar of H -->
-                    <rect x="40" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
-                    <!-- Right vertical bar of H -->
-                    <rect x="67.625" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
-                    <!-- Horizontal crossbar of H -->
-                    <rect x="40" y="91" width="35.25" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
-                  </g>
+                      <!-- Logomark: H Letter (dark blue) -->
+                      <g mask="url(#h-mask-nav)">
+                        <!-- Left vertical bar of H -->
+                        <rect x="40" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                        <!-- Right vertical bar of H -->
+                        <rect x="67.625" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                        <!-- Horizontal crossbar of H -->
+                        <rect x="40" y="91" width="35.25" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                      </g>
 
-                  <!-- Logomark: F Letter (dark blue) -->
-                  <g mask="url(#f-mask-nav)">
-                    <!-- Vertical bar of F -->
-                    <rect x="80.85" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
-                    <!-- Top horizontal bar of F -->
-                    <rect x="80.85" y="70.5" width="35.25" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
-                    <!-- Middle horizontal bar of F -->
-                    <rect x="80.85" y="91" width="26.45" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
-                  </g>
+                      <!-- Logomark: F Letter (dark blue) -->
+                      <g mask="url(#f-mask-nav)">
+                        <!-- Vertical bar of F -->
+                        <rect x="80.85" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                        <!-- Top horizontal bar of F -->
+                        <rect x="80.85" y="70.5" width="35.25" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                        <!-- Middle horizontal bar of F -->
+                        <rect x="80.85" y="91" width="26.45" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                      </g>
 
-                  <!-- Circle accent (pink) -->
-                  <circle cx="80.1" cy="96.15" r="4.1" fill="#E50058"/>
+                      <!-- Circle accent (pink) -->
+                      <circle cx="80.1" cy="96.15" r="4.1" fill="#E50058"/>
 
-                  <!-- Vertical divider line (orange) -->
-                  <line x1="140" y1="50" x2="140" y2="150" stroke="#FF740F" stroke-width="3"/>
+                      <!-- Vertical divider line (orange) -->
+                      <line x1="140" y1="50" x2="140" y2="150" stroke="#FF740F" stroke-width="3"/>
 
-                  <!-- Text: H-FACTOR (dark blue) with raised hyphen -->
-                  <text x="170" y="105" font-family="Arial Black, Arial, sans-serif" font-size="42" font-weight="900" fill="#1a2c3d" letter-spacing="2">
-                    H<tspan dy="-4">-</tspan><tspan dy="4">FACTOR</tspan>
-                  </text>
+                      <!-- Text: H-FACTOR (dark blue) with raised hyphen -->
+                      <text x="170" y="105" font-family="Arial Black, Arial, sans-serif" font-size="42" font-weight="900" fill="#1a2c3d" letter-spacing="2">
+                        H<tspan dy="-4">-</tspan><tspan dy="4">FACTOR</tspan>
+                      </text>
 
-                  <!-- Text: PEOPLE & PAYROLL HUB (dark blue) -->
-                  <text x="170" y="135" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a2c3d" letter-spacing="4">PEOPLE & PAYROLL HUB</text>
-                </svg>
-            </a>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#roi-calculator">ROI Calculator</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="nav-cta-container">
-                <a href="https://h-factor.base44.app" class="nav-login">Log in</a>
-                <a href="#" onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="nav-cta">Get started</a>
+                      <!-- Text: PEOPLE & PAYROLL HUB (dark blue) -->
+                      <text x="170" y="135" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a2c3d" letter-spacing="4">PEOPLE & PAYROLL HUB</text>
+                    </svg>
+                </a>
+
+                <!-- Navigation Links -->
+                <div class="nav-center">
+                    <ul class="nav-links" id="nav-links">
+                        <!-- What we offer - Dropdown -->
+                        <li>
+                            <button
+                                type="button"
+                                class="dropdown-button"
+                                aria-controls="dropdown-features"
+                                aria-expanded="false"
+                                data-dropdown="features">
+                                <span>What we offer</span>
+                                <span class="dropdown-caret" aria-hidden="true">
+                                    <span class="dropdown-caret-left"></span>
+                                    <span class="dropdown-caret-right"></span>
+                                </span>
+                            </button>
+                        </li>
+
+                        <!-- Pricing - Simple Link -->
+                        <li>
+                            <a href="#pricing" class="nav-link">Pricing</a>
+                        </li>
+
+                        <!-- Support - Simple Link -->
+                        <li>
+                            <a href="#contact" class="nav-link">Support</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="nav-cta-container">
+                    <a href="https://h-factor.base44.app" class="nav-login">Log in</a>
+                    <a href="#" onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="nav-cta-secondary">
+                        <span>Start Free Trial</span>
+                    </a>
+                    <a href="#" onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="nav-cta-primary">
+                        <span>Get started</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
-            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
+
+            <!-- Dropdown Content - What we offer -->
+            <div class="dropdown-content" id="dropdown-features" data-dropdown-content="features">
+                <div class="dropdown-inner">
+                    <div class="dropdown-column">
+                        <h3>Core Features</h3>
+                        <ul>
+                            <li><a href="#features">HMRC Compliance</a></li>
+                            <li><a href="#features">GDPR Certified</a></li>
+                            <li><a href="#features">Payroll Processing</a></li>
+                            <li><a href="#features">HMRC Reporting</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown-column">
+                        <h3>Tools</h3>
+                        <ul>
+                            <li><a href="#roi-calculator">ROI Calculator</a></li>
+                            <li><a href="#features">Employee Self-Service</a></li>
+                            <li><a href="#features">Holiday Management</a></li>
+                            <li><a href="#features">Performance Tracking</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown-column">
+                        <h3>Support</h3>
+                        <ul>
+                            <li><a href="#contact">Get in Touch</a></li>
+                            <li><a href="#pricing">Compare Plans</a></li>
+                            <li><a href="mailto:support@h-factor.co.uk">Email Support</a></li>
+                            <li><a href="mailto:sales@h-factor.co.uk">Talk to Sales</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </div>
     <!-- End Sticky Header Wrapper -->
 
@@ -1897,6 +2085,54 @@
                 notificationBanner.classList.add('hidden');
             }
         }
+
+        // Dropdown Navigation
+        const dropdownButtons = document.querySelectorAll('[data-dropdown]');
+        let activeDropdown = null;
+
+        dropdownButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const dropdownId = button.getAttribute('data-dropdown');
+                const dropdownContent = document.querySelector(`[data-dropdown-content="${dropdownId}"]`);
+                const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+                // Close all dropdowns
+                closeAllDropdowns();
+
+                if (!isExpanded && dropdownContent) {
+                    // Open this dropdown
+                    dropdownContent.classList.add('active');
+                    button.setAttribute('aria-expanded', 'true');
+                    activeDropdown = dropdownContent;
+                }
+            });
+        });
+
+        function closeAllDropdowns() {
+            const allDropdowns = document.querySelectorAll('.dropdown-content');
+            allDropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+            dropdownButtons.forEach(button => {
+                button.setAttribute('aria-expanded', 'false');
+            });
+            activeDropdown = null;
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (activeDropdown && !e.target.closest('.dropdown-content') && !e.target.closest('[data-dropdown]')) {
+                closeAllDropdowns();
+            }
+        });
+
+        // Close dropdown on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && activeDropdown) {
+                closeAllDropdowns();
+            }
+        });
 
         // Real Stripe integration function
         async function startSubscription(priceId, planName) {
