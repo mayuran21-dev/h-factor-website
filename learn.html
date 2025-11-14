@@ -575,12 +575,45 @@
     <nav class="navigation" id="navigation">
         <div class="nav-container">
             <a href="./index.html" class="nav-brand" aria-label="H Factor Home">
-                <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Orange Circle with H -->
-                  <circle cx="100" cy="100" r="70" fill="#FF740F"/>
-                  <text x="100" y="125" font-family="Arial Black, Arial, sans-serif" font-size="72" font-weight="900" fill="white" text-anchor="middle">H</text>
+                <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <!-- Mask to cut notch from H -->
+                    <mask id="h-mask-nav">
+                      <rect x="0" y="0" width="800" height="200" fill="white"/>
+                      <ellipse cx="79.375" cy="96.15" rx="4.4" ry="5.3" fill="black"/>
+                    </mask>
 
-                  <!-- Vertical Orange Line -->
+                    <!-- Mask to cut notch from F -->
+                    <mask id="f-mask-nav">
+                      <rect x="0" y="0" width="800" height="200" fill="white"/>
+                      <ellipse cx="80.85" cy="96.15" rx="4.4" ry="5.3" fill="black"/>
+                    </mask>
+                  </defs>
+
+                  <!-- Logomark: H Letter (dark blue) -->
+                  <g mask="url(#h-mask-nav)">
+                    <!-- Left vertical bar of H -->
+                    <rect x="40" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                    <!-- Right vertical bar of H -->
+                    <rect x="67.625" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                    <!-- Horizontal crossbar of H -->
+                    <rect x="40" y="91" width="35.25" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                  </g>
+
+                  <!-- Logomark: F Letter (dark blue) -->
+                  <g mask="url(#f-mask-nav)">
+                    <!-- Vertical bar of F -->
+                    <rect x="80.85" y="70.5" width="11.75" height="48.5" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                    <!-- Top horizontal bar of F -->
+                    <rect x="80.85" y="70.5" width="35.25" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                    <!-- Middle horizontal bar of F -->
+                    <rect x="80.85" y="91" width="26.45" height="10.3" rx="2.35" ry="2.35" fill="#1a2c3d"/>
+                  </g>
+
+                  <!-- Circle accent (pink) -->
+                  <circle cx="80.1" cy="96.15" r="4.1" fill="#E50058"/>
+
+                  <!-- Vertical divider line (orange) -->
                   <line x1="140" y1="50" x2="140" y2="150" stroke="#FF740F" stroke-width="3"/>
 
                   <!-- Text: H-FACTOR (dark blue) with raised hyphen -->
