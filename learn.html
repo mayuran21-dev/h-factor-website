@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learn - H Factor - Workforce Management for UK SMEs</title>
+    <meta name="description" content="Learn about workforce management, HR, and payroll best practices for UK businesses.">
+
+    <!-- Favicon -->
+    <link href="./assets/favicon-light.png" rel="icon" media="(prefers-color-scheme: light)">
+    <link href="./assets/favicon-dark.png" rel="icon" media="(prefers-color-scheme: dark)">
+    <link rel="apple-touch-icon" href="./assets/touch-icon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Learn - H Factor - Workforce Management for UK SMEs">
+    <meta property="og:description" content="Learn about workforce management, HR, and payroll best practices for UK businesses.">
+    <meta property="og:image" content="./assets/og-image.jpg">
+    <meta property="og:url" content="https://h-factor.co.uk/learn">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@hfactor">
+    <meta name="twitter:title" content="Learn - H Factor">
+    <meta name="twitter:description" content="Learn about workforce management, HR, and payroll best practices for UK businesses.">
+    <meta name="twitter:image" content="./assets/og-image.jpg">
+
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --primary-dark: #0a0a0a;
+            --background: #ffffff;
+            --background-alt: #f8f9fa;
+            --accent: #FFD93D;
+            --accent-hover: #FFC700;
+            --secondary: #6C5CE7;
+            --tertiary: #00D9C0;
+            --pink: #FF6B9D;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --success: #00D9C0;
+            --error: #FF6B9D;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.16);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Inter', sans-serif;
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            background: var(--background);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-weight: 400;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Navigation */
+        .navigation {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: all 0.25s ease;
+        }
+
+        .navigation.scrolled {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            line-height: 0;
+        }
+
+        .nav-brand svg {
+            height: 64px;
+            width: auto;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 12px 0;
+            transition: color 0.2s ease;
+            position: relative;
+            letter-spacing: 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.2s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-login {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 10px 20px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-login:hover {
+            color: var(--secondary);
+        }
+
+        .nav-cta {
+            background: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-cta:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-toggle span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                gap: 0;
+                padding: 16px 0;
+                box-shadow: var(--shadow-md);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 16px 24px;
+            }
+
+            .nav-cta-container {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .mobile-menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .mobile-menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .mobile-menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 24px 80px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--background) 0%, var(--background-alt) 100%);
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 80px 24px;
+        }
+
+        .content-section h2 {
+            font-size: 48px;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 80px;
+        }
+
+        .content-card {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .content-card h3 {
+            font-size: 28px;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .content-card p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .content-section h2 {
+                font-size: 32px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navigation" id="navigation">
+        <div class="nav-container">
+            <a href="./index.html" class="nav-brand" aria-label="H Factor Home">
+                <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Orange Circle with H -->
+                  <circle cx="100" cy="100" r="70" fill="#FF740F"/>
+                  <text x="100" y="125" font-family="Arial Black, Arial, sans-serif" font-size="72" font-weight="900" fill="white" text-anchor="middle">H</text>
+
+                  <!-- Vertical Orange Line -->
+                  <line x1="140" y1="50" x2="140" y2="150" stroke="#FF740F" stroke-width="3"/>
+
+                  <!-- Text: H-FACTOR (dark blue) with raised hyphen -->
+                  <text x="170" y="105" font-family="Arial Black, Arial, sans-serif" font-size="42" font-weight="900" fill="#1a2c3d" letter-spacing="2">
+                    H<tspan dy="-4">-</tspan><tspan dy="4">FACTOR</tspan>
+                  </text>
+
+                  <!-- Text: PEOPLE & PAYROLL HUB (dark blue) -->
+                  <text x="170" y="135" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a2c3d" letter-spacing="4">PEOPLE & PAYROLL HUB</text>
+                </svg>
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="./index.html#features">Features</a></li>
+                <li><a href="./index.html#roi-calculator">ROI Calculator</a></li>
+                <li><a href="./index.html#pricing">Pricing</a></li>
+                <li><a href="./learn.html">Learn</a></li>
+                <li><a href="./index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-cta-container">
+                <a href="https://h-factor.base44.app" class="nav-login">Log in</a>
+                <a href="./index.html#pricing" class="nav-cta">Get started</a>
+            </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Learn</h1>
+            <p>Discover best practices, guides, and resources for workforce management</p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2>Resources & Guides</h2>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Getting Started</h3>
+                    <p>Learn the basics of workforce management and how H Factor can streamline your HR and payroll processes.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Best Practices</h3>
+                    <p>Discover proven strategies for managing your workforce effectively and staying compliant with UK regulations.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Video Tutorials</h3>
+                    <p>Watch step-by-step tutorials on how to use H Factor's features to maximize your productivity.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Compliance Guide</h3>
+                    <p>Stay up-to-date with HMRC requirements, GDPR regulations, and other compliance essentials.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Integration Tips</h3>
+                    <p>Learn how to integrate H Factor with your existing systems and workflows for seamless operations.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Success Stories</h3>
+                    <p>Read how other UK businesses have transformed their workforce management with H Factor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuToggle.classList.toggle('active');
+            const expanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+            mobileMenuToggle.setAttribute('aria-expanded', !expanded);
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-container')) {
+                navLinks.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Navbar scroll effect
+        const navigation = document.getElementById('navigation');
+        let lastScroll = 0;
+
+        function handleNavbarScroll() {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                navigation.classList.add('scrolled');
+            } else {
+                navigation.classList.remove('scrolled');
+            }
+
+            lastScroll = currentScroll;
+        }
+
+        // Debounce function for performance
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        window.addEventListener('scroll', debounce(handleNavbarScroll, 16), { passive: true });
+
+        console.log('H Factor Learn page loaded successfully!');
+    </script>
+</body>
+</html>
