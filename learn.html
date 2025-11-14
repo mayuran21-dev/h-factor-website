@@ -36,6 +36,7 @@
             --secondary: #6C5CE7;
             --tertiary: #00D9C0;
             --pink: #FF6B9D;
+            --orange: #FF740F;
             --text-primary: #1a1a1a;
             --text-secondary: #4a5568;
             --text-muted: #718096;
@@ -278,71 +279,203 @@
 
         /* Hero Section */
         .hero {
-            padding: 120px 24px 80px;
+            padding: 80px 24px 60px;
             text-align: center;
-            background: linear-gradient(135deg, var(--background) 0%, var(--background-alt) 100%);
+            background: var(--background);
         }
 
         .hero h1 {
-            font-size: 64px;
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 56px;
+            margin-bottom: 16px;
+            color: var(--text-primary);
         }
 
         .hero p {
-            font-size: 24px;
+            font-size: 20px;
             color: var(--text-secondary);
             max-width: 700px;
             margin: 0 auto;
         }
 
-        /* Content Section */
-        .content-section {
-            padding: 80px 24px;
+        /* Category Section */
+        .category-section {
+            padding: 40px 0;
+            margin-bottom: 60px;
         }
 
-        .content-section h2 {
-            font-size: 48px;
-            margin-bottom: 48px;
-            text-align: center;
+        .category-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
-        .content-grid {
+        .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin-bottom: 80px;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
         }
 
-        .content-card {
-            background: var(--white);
-            padding: 32px;
+        /* Category Card (Large left card) */
+        .category-card {
+            position: relative;
+            padding: 48px 40px;
             border-radius: 16px;
-            border: 1px solid var(--border-light);
-            transition: all 0.3s ease;
+            color: var(--white);
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            text-decoration: none;
         }
 
-        .content-card:hover {
+        .category-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .category-card h2 {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .category-card--hr {
+            background: linear-gradient(135deg, var(--secondary) 0%, #5a4ad6 100%);
+        }
+
+        .category-card--payroll {
+            background: linear-gradient(135deg, var(--tertiary) 0%, #00c0aa 100%);
+        }
+
+        .category-card--time {
+            background: linear-gradient(135deg, var(--pink) 0%, #ff5788 100%);
+        }
+
+        .category-card--employee {
+            background: linear-gradient(135deg, var(--orange) 0%, #e66600 100%);
+        }
+
+        .category-explore {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+            text-decoration: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .category-explore svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover .category-explore svg {
+            transform: translateX(4px);
+        }
+
+        /* Article Cards */
+        .articles-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .article-card {
+            position: relative;
+            padding: 32px;
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .article-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-md);
+            border-color: var(--border);
         }
 
-        .content-card h3 {
-            font-size: 28px;
-            margin-bottom: 16px;
+        .article-card h3 {
+            font-size: 22px;
+            font-weight: 700;
             color: var(--text-primary);
+            margin-bottom: 12px;
+            line-height: 1.3;
         }
 
-        .content-card p {
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .article-author {
+            font-weight: 600;
+        }
+
+        .article-time {
+            font-weight: 400;
+        }
+
+        .article-description {
             font-size: 16px;
             line-height: 1.6;
             color: var(--text-secondary);
+            margin-top: 12px;
         }
 
-        @media (max-width: 768px) {
+        .explore-category-link {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .explore-category-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .explore-category-link a:hover {
+            color: var(--secondary);
+        }
+
+        .explore-category-link svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .explore-category-link a:hover svg {
+            transform: translateX(4px);
+        }
+
+        @media (max-width: 968px) {
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
             .hero h1 {
                 font-size: 40px;
             }
@@ -351,12 +484,18 @@
                 font-size: 18px;
             }
 
-            .content-section h2 {
-                font-size: 32px;
+            .category-card h2 {
+                font-size: 36px;
             }
 
-            .content-grid {
-                grid-template-columns: 1fr;
+            .category-card {
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .article-description {
+                display: none;
             }
         }
     </style>
@@ -406,38 +545,169 @@
     <section class="hero">
         <div class="container">
             <h1>Learn</h1>
-            <p>Discover best practices, guides, and resources for workforce management</p>
+            <p>Expert guidance on HR, payroll, and workforce management for UK businesses</p>
         </div>
     </section>
 
-    <!-- Content Section -->
-    <section class="content-section">
-        <div class="container">
-            <h2>Resources & Guides</h2>
-            <div class="content-grid">
-                <div class="content-card">
-                    <h3>Getting Started</h3>
-                    <p>Learn the basics of workforce management and how H Factor can streamline your HR and payroll processes.</p>
+    <!-- HR Management Category -->
+    <section class="category-section">
+        <div class="category-container">
+            <div class="category-grid">
+                <a href="#" class="category-card category-card--hr">
+                    <div>
+                        <h2>HR Management</h2>
+                    </div>
+                    <div class="category-explore">
+                        <span>Explore Category</span>
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </a>
+
+                <div class="articles-column">
+                    <a href="#" class="article-card">
+                        <h3>Essential HR Policies Every UK Business Needs</h3>
+                        <div class="article-meta">
+                            <span class="article-author">By H Factor Team</span>
+                            <span>•</span>
+                            <span class="article-time">8 min read</span>
+                        </div>
+                        <p class="article-description">Discover the must-have HR policies to protect your business and employees, from absence management to disciplinary procedures.</p>
+                    </a>
+
+                    <a href="#" class="article-card">
+                        <h3>Managing Employee Performance Reviews</h3>
+                        <div class="article-meta">
+                            <span class="article-author">By H Factor Team</span>
+                            <span>•</span>
+                            <span class="article-time">6 min read</span>
+                        </div>
+                        <p class="article-description">Learn how to conduct effective performance reviews that drive growth and engagement in your workforce.</p>
+                    </a>
                 </div>
-                <div class="content-card">
-                    <h3>Best Practices</h3>
-                    <p>Discover proven strategies for managing your workforce effectively and staying compliant with UK regulations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payroll & Compliance Category -->
+    <section class="category-section">
+        <div class="category-container">
+            <div class="category-grid">
+                <a href="#" class="category-card category-card--payroll">
+                    <div>
+                        <h2>Payroll & Compliance</h2>
+                    </div>
+                    <div class="category-explore">
+                        <span>Explore Category</span>
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </a>
+
+                <div class="articles-column">
+                    <a href="#" class="article-card">
+                        <h3>Understanding HMRC Requirements for UK Payroll</h3>
+                        <div class="article-meta">
+                            <span class="article-author">By H Factor Team</span>
+                            <span>•</span>
+                            <span class="article-time">10 min read</span>
+                        </div>
+                        <p class="article-description">A complete guide to staying compliant with HMRC regulations, RTI submissions, and avoiding penalties.</p>
+                    </a>
+
+                    <a href="#" class="article-card">
+                        <h3>Payroll Mistakes and How to Avoid Them</h3>
+                        <div class="article-meta">
+                            <span class="article-author">By H Factor Team</span>
+                            <span>•</span>
+                            <span class="article-time">7 min read</span>
+                        </div>
+                        <p class="article-description">Common payroll errors that cost UK businesses thousands and practical steps to prevent them from happening.</p>
+                    </a>
                 </div>
-                <div class="content-card">
-                    <h3>Video Tutorials</h3>
-                    <p>Watch step-by-step tutorials on how to use H Factor's features to maximize your productivity.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Time & Attendance Category -->
+    <section class="category-section">
+        <div class="category-container">
+            <div class="category-grid">
+                <a href="#" class="category-card category-card--time">
+                    <div>
+                        <h2>Time & Attendance</h2>
+                    </div>
+                    <div class="category-explore">
+                        <span>Explore Category</span>
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </a>
+
+                <div class="articles-column">
+                    <a href="#" class="article-card">
+                        <h3>Best Practices for Absence Management</h3>
+                        <div class="article-meta">
+                            <span class="article-author">By H Factor Team</span>
+                            <span>•</span>
+                            <span class="article-time">5 min read</span>
+                        </div>
+                        <p class="article-description">Effective strategies to track, manage, and reduce employee absences while maintaining compliance.</p>
+                    </a>
+
+                    <a href="#" class="article-card">
+                        <h3>Creating Fair and Efficient Work Schedules</h3>
+                        <div class="article-meta">
+                            <span class="article-author">By H Factor Team</span>
+                            <span>•</span>
+                            <span class="article-time">6 min read</span>
+                        </div>
+                        <p class="article-description">Tips for building rotas that balance business needs with employee preferences and legal requirements.</p>
+                    </a>
                 </div>
-                <div class="content-card">
-                    <h3>Compliance Guide</h3>
-                    <p>Stay up-to-date with HMRC requirements, GDPR regulations, and other compliance essentials.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Integration Tips</h3>
-                    <p>Learn how to integrate H Factor with your existing systems and workflows for seamless operations.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Success Stories</h3>
-                    <p>Read how other UK businesses have transformed their workforce management with H Factor.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Employee Management Category -->
+    <section class="category-section">
+        <div class="category-container">
+            <div class="category-grid">
+                <a href="#" class="category-card category-card--employee">
+                    <div>
+                        <h2>Employee Management</h2>
+                    </div>
+                    <div class="category-explore">
+                        <span>Explore Category</span>
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </a>
+
+                <div class="articles-column">
+                    <a href="#" class="article-card">
+                        <h3>Onboarding New Employees: A Step-by-Step Guide</h3>
+                        <div class="article-meta">
+                            <span class="article-author">By H Factor Team</span>
+                            <span>•</span>
+                            <span class="article-time">9 min read</span>
+                        </div>
+                        <p class="article-description">Create a seamless onboarding experience that sets new hires up for success from day one.</p>
+                    </a>
+
+                    <a href="#" class="article-card">
+                        <h3>Building Employee Engagement in Small Teams</h3>
+                        <div class="article-meta">
+                            <span class="article-author">By H Factor Team</span>
+                            <span>•</span>
+                            <span class="article-time">7 min read</span>
+                        </div>
+                        <p class="article-description">Proven strategies to boost morale, retention, and productivity in your workforce.</p>
+                    </a>
                 </div>
             </div>
         </div>
