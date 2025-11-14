@@ -311,9 +311,9 @@
 
         .category-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 300px 1fr;
             gap: 24px;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
 
         /* Category Card (Large left card) */
@@ -384,10 +384,24 @@
         }
 
         /* Article Cards */
+        .articles-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
         .articles-column {
             display: flex;
-            flex-direction: column;
-            gap: 24px;
+            flex-direction: row;
+            gap: 16px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-bottom: 8px;
+        }
+
+        .articles-column::-webkit-scrollbar {
+            display: none;
         }
 
         .article-card {
@@ -401,6 +415,8 @@
             text-decoration: none;
             color: inherit;
             display: block;
+            min-width: 350px;
+            flex-shrink: 0;
         }
 
         .article-card:hover {
@@ -471,6 +487,48 @@
             transform: translateX(4px);
         }
 
+        /* Carousel Controls */
+        .carousel-controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            justify-content: flex-end;
+        }
+
+        .carousel-control {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-control:hover {
+            background: var(--background-alt);
+            border-color: var(--border);
+        }
+
+        .carousel-control:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .carousel-control:disabled:hover {
+            background: var(--white);
+            border-color: var(--border-light);
+        }
+
+        .carousel-control svg {
+            width: 16px;
+            height: 16px;
+            color: var(--text-primary);
+        }
+
         @media (max-width: 968px) {
             .category-grid {
                 grid-template-columns: 1fr;
@@ -491,11 +549,23 @@
             .category-card {
                 min-height: 160px;
             }
+
+            .article-card {
+                min-width: 300px;
+            }
+
+            .carousel-controls {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
             .article-description {
                 display: none;
+            }
+
+            .article-card {
+                min-width: 280px;
             }
         }
     </style>
@@ -565,26 +635,50 @@
                     </div>
                 </a>
 
-                <div class="articles-column">
-                    <a href="#" class="article-card">
-                        <h3>Essential HR Policies Every UK Business Needs</h3>
-                        <div class="article-meta">
-                            <span class="article-author">By H Factor Team</span>
-                            <span>•</span>
-                            <span class="article-time">8 min read</span>
-                        </div>
-                        <p class="article-description">Discover the must-have HR policies to protect your business and employees, from absence management to disciplinary procedures.</p>
-                    </a>
+                <div class="articles-wrapper">
+                    <div class="articles-column" data-carousel="hr">
+                        <a href="#" class="article-card">
+                            <h3>Essential HR Policies Every UK Business Needs</h3>
+                            <div class="article-meta">
+                                <span class="article-author">By H Factor Team</span>
+                                <span>•</span>
+                                <span class="article-time">8 min read</span>
+                            </div>
+                            <p class="article-description">Discover the must-have HR policies to protect your business and employees, from absence management to disciplinary procedures.</p>
+                        </a>
 
-                    <a href="#" class="article-card">
-                        <h3>Managing Employee Performance Reviews</h3>
-                        <div class="article-meta">
-                            <span class="article-author">By H Factor Team</span>
-                            <span>•</span>
-                            <span class="article-time">6 min read</span>
-                        </div>
-                        <p class="article-description">Learn how to conduct effective performance reviews that drive growth and engagement in your workforce.</p>
-                    </a>
+                        <a href="#" class="article-card">
+                            <h3>Managing Employee Performance Reviews</h3>
+                            <div class="article-meta">
+                                <span class="article-author">By H Factor Team</span>
+                                <span>•</span>
+                                <span class="article-time">6 min read</span>
+                            </div>
+                            <p class="article-description">Learn how to conduct effective performance reviews that drive growth and engagement in your workforce.</p>
+                        </a>
+
+                        <a href="#" class="article-card">
+                            <h3>Building a Strong Company Culture</h3>
+                            <div class="article-meta">
+                                <span class="article-author">By H Factor Team</span>
+                                <span>•</span>
+                                <span class="article-time">7 min read</span>
+                            </div>
+                            <p class="article-description">Create a workplace culture that attracts top talent and keeps employees engaged and motivated.</p>
+                        </a>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-control" data-direction="prev" data-target="hr" aria-label="Previous articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70711 0.292893C8.09763 0.683417 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button class="carousel-control" data-direction="next" data-target="hr" aria-label="Next articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -606,26 +700,50 @@
                     </div>
                 </a>
 
-                <div class="articles-column">
-                    <a href="#" class="article-card">
-                        <h3>Understanding HMRC Requirements for UK Payroll</h3>
-                        <div class="article-meta">
-                            <span class="article-author">By H Factor Team</span>
-                            <span>•</span>
-                            <span class="article-time">10 min read</span>
-                        </div>
-                        <p class="article-description">A complete guide to staying compliant with HMRC regulations, RTI submissions, and avoiding penalties.</p>
-                    </a>
+                <div class="articles-wrapper">
+                    <div class="articles-column" data-carousel="payroll">
+                        <a href="#" class="article-card">
+                            <h3>Understanding HMRC Requirements for UK Payroll</h3>
+                            <div class="article-meta">
+                                <span class="article-author">By H Factor Team</span>
+                                <span>•</span>
+                                <span class="article-time">10 min read</span>
+                            </div>
+                            <p class="article-description">A complete guide to staying compliant with HMRC regulations, RTI submissions, and avoiding penalties.</p>
+                        </a>
 
-                    <a href="#" class="article-card">
-                        <h3>Payroll Mistakes and How to Avoid Them</h3>
-                        <div class="article-meta">
-                            <span class="article-author">By H Factor Team</span>
-                            <span>•</span>
-                            <span class="article-time">7 min read</span>
-                        </div>
-                        <p class="article-description">Common payroll errors that cost UK businesses thousands and practical steps to prevent them from happening.</p>
-                    </a>
+                        <a href="#" class="article-card">
+                            <h3>Payroll Mistakes and How to Avoid Them</h3>
+                            <div class="article-meta">
+                                <span class="article-author">By H Factor Team</span>
+                                <span>•</span>
+                                <span class="article-time">7 min read</span>
+                            </div>
+                            <p class="article-description">Common payroll errors that cost UK businesses thousands and practical steps to prevent them from happening.</p>
+                        </a>
+
+                        <a href="#" class="article-card">
+                            <h3>Auto-Enrolment Pension Explained</h3>
+                            <div class="article-meta">
+                                <span class="article-author">By H Factor Team</span>
+                                <span>•</span>
+                                <span class="article-time">8 min read</span>
+                            </div>
+                            <p class="article-description">Everything you need to know about workplace pension schemes and your obligations as a UK employer.</p>
+                        </a>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-control" data-direction="prev" data-target="payroll" aria-label="Previous articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70711 0.292893C8.09763 0.683417 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button class="carousel-control" data-direction="next" data-target="payroll" aria-label="Next articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -647,26 +765,50 @@
                     </div>
                 </a>
 
-                <div class="articles-column">
-                    <a href="#" class="article-card">
-                        <h3>Best Practices for Absence Management</h3>
-                        <div class="article-meta">
-                            <span class="article-author">By H Factor Team</span>
-                            <span>•</span>
-                            <span class="article-time">5 min read</span>
-                        </div>
-                        <p class="article-description">Effective strategies to track, manage, and reduce employee absences while maintaining compliance.</p>
-                    </a>
+                <div class="articles-wrapper">
+                    <div class="articles-column" data-carousel="time">
+                        <a href="#" class="article-card">
+                            <h3>Best Practices for Absence Management</h3>
+                            <div class="article-meta">
+                                <span class="article-author">By H Factor Team</span>
+                                <span>•</span>
+                                <span class="article-time">5 min read</span>
+                            </div>
+                            <p class="article-description">Effective strategies to track, manage, and reduce employee absences while maintaining compliance.</p>
+                        </a>
 
-                    <a href="#" class="article-card">
-                        <h3>Creating Fair and Efficient Work Schedules</h3>
-                        <div class="article-meta">
-                            <span class="article-author">By H Factor Team</span>
-                            <span>•</span>
-                            <span class="article-time">6 min read</span>
-                        </div>
-                        <p class="article-description">Tips for building rotas that balance business needs with employee preferences and legal requirements.</p>
-                    </a>
+                        <a href="#" class="article-card">
+                            <h3>Creating Fair and Efficient Work Schedules</h3>
+                            <div class="article-meta">
+                                <span class="article-author">By H Factor Team</span>
+                                <span>•</span>
+                                <span class="article-time">6 min read</span>
+                            </div>
+                            <p class="article-description">Tips for building rotas that balance business needs with employee preferences and legal requirements.</p>
+                        </a>
+
+                        <a href="#" class="article-card">
+                            <h3>Holiday Entitlement Calculator UK 2024</h3>
+                            <div class="article-meta">
+                                <span class="article-author">By H Factor Team</span>
+                                <span>•</span>
+                                <span class="article-time">6 min read</span>
+                            </div>
+                            <p class="article-description">Calculate statutory holiday entitlement for full-time, part-time, and irregular hour workers.</p>
+                        </a>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-control" data-direction="prev" data-target="time" aria-label="Previous articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70711 0.292893C8.09763 0.683417 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button class="carousel-control" data-direction="next" data-target="time" aria-label="Next articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -688,26 +830,50 @@
                     </div>
                 </a>
 
-                <div class="articles-column">
-                    <a href="#" class="article-card">
-                        <h3>Onboarding New Employees: A Step-by-Step Guide</h3>
-                        <div class="article-meta">
-                            <span class="article-author">By H Factor Team</span>
-                            <span>•</span>
-                            <span class="article-time">9 min read</span>
-                        </div>
-                        <p class="article-description">Create a seamless onboarding experience that sets new hires up for success from day one.</p>
-                    </a>
+                <div class="articles-wrapper">
+                    <div class="articles-column" data-carousel="employee">
+                        <a href="#" class="article-card">
+                            <h3>Onboarding New Employees: A Step-by-Step Guide</h3>
+                            <div class="article-meta">
+                                <span class="article-author">By H Factor Team</span>
+                                <span>•</span>
+                                <span class="article-time">9 min read</span>
+                            </div>
+                            <p class="article-description">Create a seamless onboarding experience that sets new hires up for success from day one.</p>
+                        </a>
 
-                    <a href="#" class="article-card">
-                        <h3>Building Employee Engagement in Small Teams</h3>
-                        <div class="article-meta">
-                            <span class="article-author">By H Factor Team</span>
-                            <span>•</span>
-                            <span class="article-time">7 min read</span>
-                        </div>
-                        <p class="article-description">Proven strategies to boost morale, retention, and productivity in your workforce.</p>
-                    </a>
+                        <a href="#" class="article-card">
+                            <h3>Building Employee Engagement in Small Teams</h3>
+                            <div class="article-meta">
+                                <span class="article-author">By H Factor Team</span>
+                                <span>•</span>
+                                <span class="article-time">7 min read</span>
+                            </div>
+                            <p class="article-description">Proven strategies to boost morale, retention, and productivity in your workforce.</p>
+                        </a>
+
+                        <a href="#" class="article-card">
+                            <h3>Handling Difficult Conversations at Work</h3>
+                            <div class="article-meta">
+                                <span class="article-author">By H Factor Team</span>
+                                <span>•</span>
+                                <span class="article-time">8 min read</span>
+                            </div>
+                            <p class="article-description">Navigate challenging workplace discussions with confidence using these proven communication techniques.</p>
+                        </a>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-control" data-direction="prev" data-target="employee" aria-label="Previous articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70711 0.292893C8.09763 0.683417 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button class="carousel-control" data-direction="next" data-target="employee" aria-label="Next articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -764,6 +930,32 @@
         }
 
         window.addEventListener('scroll', debounce(handleNavbarScroll, 16), { passive: true });
+
+        // Carousel functionality
+        function initCarousel() {
+            const carouselButtons = document.querySelectorAll('.carousel-control');
+
+            carouselButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const direction = button.getAttribute('data-direction');
+                    const target = button.getAttribute('data-target');
+                    const carousel = document.querySelector(`[data-carousel="${target}"]`);
+
+                    if (!carousel) return;
+
+                    const scrollAmount = 370; // card width + gap
+                    const currentScroll = carousel.scrollLeft;
+
+                    if (direction === 'next') {
+                        carousel.scrollLeft = currentScroll + scrollAmount;
+                    } else {
+                        carousel.scrollLeft = currentScroll - scrollAmount;
+                    }
+                });
+            });
+        }
+
+        initCarousel();
 
         console.log('H Factor Learn page loaded successfully!');
     </script>
