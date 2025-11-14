@@ -437,26 +437,70 @@
         .usp-mosaic-item {
             position: relative;
             border-radius: 16px;
-            overflow: hidden;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: var(--shadow-sm);
+            perspective: 1000px;
         }
 
         .usp-mosaic-item:hover {
-            transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
             z-index: 10;
         }
 
-        .usp-mosaic-item img {
+        /* Card flip container */
+        .usp-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .usp-mosaic-item.flipped .usp-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Front and back faces */
+        .usp-card-front,
+        .usp-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .usp-card-front {
+            background: var(--white);
+        }
+
+        .usp-card-back {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
+            transform: rotateY(180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .usp-card-back-text {
+            color: var(--white);
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 900;
+            text-align: center;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .usp-card-front img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .usp-mosaic-item:hover img {
+        .usp-mosaic-item:hover .usp-card-front img {
             transform: scale(1.05);
         }
 
@@ -1722,74 +1766,144 @@
             <div class="usp-mosaic-container animate-on-scroll">
                 <h2 class="usp-mosaic-title">Built for Your Industry</h2>
                 <div class="usp-mosaic-grid">
-                    <div class="usp-mosaic-item">
-                        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&h=600&fit=crop&q=90"
-                             alt="Dental practice with modern equipment"
-                             loading="lazy">
-                        <div class="usp-mosaic-overlay">Dental Practices</div>
+                    <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
+                        <div class="usp-card-inner">
+                            <div class="usp-card-front">
+                                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&h=600&fit=crop&q=90"
+                                     alt="Dental practice with modern equipment"
+                                     loading="lazy">
+                                <div class="usp-mosaic-overlay">Dental Practices</div>
+                            </div>
+                            <div class="usp-card-back">
+                                <div class="usp-card-back-text">H-Factor</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="usp-mosaic-item">
-                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop&q=90"
-                             alt="Multiple limited companies management"
-                             loading="lazy">
-                        <div class="usp-mosaic-overlay">Multiple Companies</div>
+                    <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
+                        <div class="usp-card-inner">
+                            <div class="usp-card-front">
+                                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop&q=90"
+                                     alt="Multiple limited companies management"
+                                     loading="lazy">
+                                <div class="usp-mosaic-overlay">Multiple Companies</div>
+                            </div>
+                            <div class="usp-card-back">
+                                <div class="usp-card-back-text">H-Factor</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="usp-mosaic-item">
-                        <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&h=600&fit=crop&q=90"
-                             alt="Rota scheduling with labour cost tracking"
-                             loading="lazy">
-                        <div class="usp-mosaic-overlay">Rota & Labour Cost</div>
+                    <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
+                        <div class="usp-card-inner">
+                            <div class="usp-card-front">
+                                <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&h=600&fit=crop&q=90"
+                                     alt="Rota scheduling with labour cost tracking"
+                                     loading="lazy">
+                                <div class="usp-mosaic-overlay">Rota & Labour Cost</div>
+                            </div>
+                            <div class="usp-card-back">
+                                <div class="usp-card-back-text">H-Factor</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="usp-mosaic-item">
-                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=600&fit=crop&q=90"
-                             alt="Trainee dental nurse learning and training"
-                             loading="lazy">
-                        <div class="usp-mosaic-overlay">Trainee Nurses</div>
+                    <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
+                        <div class="usp-card-inner">
+                            <div class="usp-card-front">
+                                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=600&fit=crop&q=90"
+                                     alt="Trainee dental nurse learning and training"
+                                     loading="lazy">
+                                <div class="usp-mosaic-overlay">Trainee Nurses</div>
+                            </div>
+                            <div class="usp-card-back">
+                                <div class="usp-card-back-text">H-Factor</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="usp-mosaic-item">
-                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop&q=90"
-                             alt="Retail store operations and staff management"
-                             loading="lazy">
-                        <div class="usp-mosaic-overlay">Retail</div>
+                    <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
+                        <div class="usp-card-inner">
+                            <div class="usp-card-front">
+                                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop&q=90"
+                                     alt="Retail store operations and staff management"
+                                     loading="lazy">
+                                <div class="usp-mosaic-overlay">Retail</div>
+                            </div>
+                            <div class="usp-card-back">
+                                <div class="usp-card-back-text">H-Factor</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="usp-mosaic-item">
-                        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=600&fit=crop&q=90"
-                             alt="Construction site workforce management"
-                             loading="lazy">
-                        <div class="usp-mosaic-overlay">Construction</div>
+                    <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
+                        <div class="usp-card-inner">
+                            <div class="usp-card-front">
+                                <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=600&fit=crop&q=90"
+                                     alt="Construction site workforce management"
+                                     loading="lazy">
+                                <div class="usp-mosaic-overlay">Construction</div>
+                            </div>
+                            <div class="usp-card-back">
+                                <div class="usp-card-back-text">H-Factor</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="usp-mosaic-item">
-                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop&q=90"
-                             alt="Payroll processing and calculations"
-                             loading="lazy">
-                        <div class="usp-mosaic-overlay">Payroll</div>
+                    <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
+                        <div class="usp-card-inner">
+                            <div class="usp-card-front">
+                                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop&q=90"
+                                     alt="Payroll processing and calculations"
+                                     loading="lazy">
+                                <div class="usp-mosaic-overlay">Payroll</div>
+                            </div>
+                            <div class="usp-card-back">
+                                <div class="usp-card-back-text">H-Factor</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="usp-mosaic-item">
-                        <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop&q=90"
-                             alt="United Kingdom business compliance"
-                             loading="lazy">
-                        <div class="usp-mosaic-overlay">UK Compliant</div>
+                    <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
+                        <div class="usp-card-inner">
+                            <div class="usp-card-front">
+                                <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop&q=90"
+                                     alt="United Kingdom business compliance"
+                                     loading="lazy">
+                                <div class="usp-mosaic-overlay">UK Compliant</div>
+                            </div>
+                            <div class="usp-card-back">
+                                <div class="usp-card-back-text">H-Factor</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="usp-mosaic-item">
-                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&h=600&fit=crop&q=90"
-                             alt="HR management and employee support"
-                             loading="lazy">
-                        <div class="usp-mosaic-overlay">HR Management</div>
+                    <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
+                        <div class="usp-card-inner">
+                            <div class="usp-card-front">
+                                <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&h=600&fit=crop&q=90"
+                                     alt="HR management and employee support"
+                                     loading="lazy">
+                                <div class="usp-mosaic-overlay">HR Management</div>
+                            </div>
+                            <div class="usp-card-back">
+                                <div class="usp-card-back-text">H-Factor</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="usp-mosaic-item">
-                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=600&fit=crop&q=90"
-                             alt="Learning and development programs"
-                             loading="lazy">
-                        <div class="usp-mosaic-overlay">Learning & Development</div>
+                    <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
+                        <div class="usp-card-inner">
+                            <div class="usp-card-front">
+                                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=600&fit=crop&q=90"
+                                     alt="Learning and development programs"
+                                     loading="lazy">
+                                <div class="usp-mosaic-overlay">Learning & Development</div>
+                            </div>
+                            <div class="usp-card-back">
+                                <div class="usp-card-back-text">H-Factor</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
