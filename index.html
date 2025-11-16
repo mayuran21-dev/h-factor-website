@@ -739,6 +739,64 @@
             font-weight: 400;
         }
 
+        /* Holiday Cover Section */
+        .holiday-cover-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #1a5490 0%, #274969 100%);
+        }
+
+        .holiday-cover-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 48px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .holiday-cover-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .holiday-cover-image-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .holiday-cover-image {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+        }
+
+        .holiday-cover-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .holiday-cover-heading {
+            color: white;
+            font-size: clamp(28px, 3.5vw, 42px);
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        .holiday-cover-subheader {
+            color: white;
+            font-size: clamp(18px, 2vw, 24px);
+            font-weight: 400;
+            line-height: 1.5;
+            margin: 0;
+            opacity: 0.95;
+        }
+
         /* ROI Calculator Section */
         .roi-calculator-section {
             padding: 80px 20px;
@@ -1701,6 +1759,19 @@
                 order: -1;
             }
 
+            .holiday-cover-split {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .holiday-cover-card {
+                padding: 32px 24px;
+            }
+
+            .holiday-cover-image-container {
+                order: -1;
+            }
+
             .pricing-grid {
                 grid-template-columns: 1fr;
                 gap: 24px;
@@ -2209,10 +2280,18 @@
             </div>
 
             <!-- Holiday Cover Section -->
-            <div class="holiday-cover-container" style="text-align: center; padding: 60px 20px; background: linear-gradient(135deg, #1a5490 0%, #274969 100%);">
-                <img src="holidays.png" alt="Holiday destinations - Paris and New York" style="max-width: 600px; width: 100%; height: auto; margin-bottom: 30px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);" loading="lazy" />
-                <h2 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 15px; line-height: 1.2;">Your employees book holidays, H-Factor finds your cover!</h2>
-                <p style="color: white; font-size: 1.25rem; font-weight: 400; margin: 0; opacity: 0.95;">Smart cover with the right skills finder</p>
+            <div class="holiday-cover-container">
+                <div class="holiday-cover-card animate-on-scroll">
+                    <div class="holiday-cover-split">
+                        <div class="holiday-cover-image-container">
+                            <img src="holidays.png" alt="Holiday destinations - Paris and New York" class="holiday-cover-image" loading="lazy" />
+                        </div>
+                        <div class="holiday-cover-content">
+                            <h2 class="holiday-cover-heading">Your employees book holidays, H-Factor finds your cover!</h2>
+                            <p class="holiday-cover-subheader">Smart cover with the right skills finder</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
