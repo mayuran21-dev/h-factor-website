@@ -883,6 +883,193 @@
             font-weight: 700;
         }
 
+        /* Benefits Section */
+        .benefits-section {
+            padding: 100px 20px;
+            background: var(--white);
+        }
+
+        .benefits-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .benefits-left {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .benefits-heading {
+            font-size: clamp(40px, 5vw, 56px);
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .benefits-subtext {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .benefits-cta {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.3);
+            align-self: flex-start;
+            margin-top: 8px;
+        }
+
+        .benefits-cta:hover {
+            background: var(--tertiary);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 217, 192, 0.4);
+        }
+
+        .benefits-right {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .benefit-tier-card {
+            background: var(--background-alt);
+            border-radius: 24px;
+            padding: 40px;
+            border: 2px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-tier-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary) 0%, var(--tertiary) 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .benefit-tier-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--secondary);
+        }
+
+        .benefit-tier-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .benefit-tier-card.featured {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
+            border-color: transparent;
+        }
+
+        .benefit-tier-card.featured .tier-header,
+        .benefit-tier-card.featured .tier-subheader,
+        .benefit-tier-card.featured .tier-benefits li {
+            color: var(--white);
+        }
+
+        .benefit-tier-card.featured .tier-benefits li::before {
+            background: var(--accent);
+        }
+
+        .tier-header {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .tier-subheader {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .tier-benefits {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .tier-benefits li {
+            font-size: 16px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-left: 32px;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .tier-benefits li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background: var(--secondary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        @media (max-width: 968px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .benefits-heading {
+                font-size: clamp(32px, 8vw, 48px);
+            }
+
+            .benefits-subtext {
+                font-size: 18px;
+            }
+
+            .benefit-tier-card {
+                padding: 32px;
+            }
+        }
+
         /* Pricing Section */
         .pricing-section {
             padding: 120px 20px;
@@ -2059,6 +2246,45 @@
                             <div class="roi-result-value">
                                 <span id="roi-percentage">1,200</span><span class="roi-result-suffix">%</span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits-section">
+            <div class="benefits-container">
+                <div class="benefits-grid">
+                    <!-- Left Column: Promotional Message -->
+                    <div class="benefits-left">
+                        <h2 class="benefits-heading">Payroll and HR that scale with your business</h2>
+                        <p class="benefits-subtext">Managing your team across multiple locations or entities? Our platform simplifies payroll, compliance, and reporting—no matter how complex your setup.</p>
+                        <a href="#features" class="benefits-cta">Explore all features</a>
+                    </div>
+
+                    <!-- Right Column: Tiered Benefits -->
+                    <div class="benefits-right">
+                        <!-- Essential Tier -->
+                        <div class="benefit-tier-card">
+                            <h3 class="tier-header">Essential</h3>
+                            <p class="tier-subheader">For businesses with up to 50 employees</p>
+                            <ul class="tier-benefits">
+                                <li>Automated payroll runs with HMRC integration</li>
+                                <li>Employee self-service portal</li>
+                                <li>Basic HR tools (leave tracking, contracts)</li>
+                            </ul>
+                        </div>
+
+                        <!-- Growth Tier -->
+                        <div class="benefit-tier-card featured">
+                            <h3 class="tier-header">Growth</h3>
+                            <p class="tier-subheader">For businesses with 50+ employees or multiple entities</p>
+                            <ul class="tier-benefits">
+                                <li>Multi-company and multi-location payroll support</li>
+                                <li>Advanced HR workflows and reporting</li>
+                                <li>Extensive Learning & Development</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
