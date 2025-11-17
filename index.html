@@ -740,59 +740,64 @@
         }
 
         /* Holiday Cover Section */
+        .holiday-cover-section {
+            background: linear-gradient(135deg, #1a5490 0%, #274969 100%);
+            padding: 0 20px 80px;
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+        }
+
         .holiday-cover-container {
             max-width: 1240px;
             margin: 0 auto;
-            padding: 80px 20px;
-            background: linear-gradient(135deg, #1a5490 0%, #274969 100%);
-        }
-
-        .holiday-cover-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 48px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
+            width: 100%;
         }
 
         .holiday-cover-split {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            gap: 80px;
             align-items: center;
         }
 
         .holiday-cover-image-container {
             position: relative;
             width: 100%;
+            height: 100%;
+            min-height: 500px;
         }
 
         .holiday-cover-image {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
             border-radius: 16px;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
         }
 
         .holiday-cover-content {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
         .holiday-cover-heading {
+            font-size: clamp(48px, 5vw, 72px);
+            font-weight: 900;
             color: white;
-            font-size: clamp(28px, 3.5vw, 42px);
-            font-weight: 700;
-            line-height: 1.2;
+            line-height: 1.1;
             margin: 0;
+            letter-spacing: -0.02em;
+            text-wrap: balance;
         }
 
         .holiday-cover-subheader {
-            color: white;
             font-size: clamp(18px, 2vw, 24px);
-            font-weight: 400;
-            line-height: 1.5;
+            color: white;
+            line-height: 1.6;
             margin: 0;
             opacity: 0.95;
         }
@@ -1761,15 +1766,17 @@
 
             .holiday-cover-split {
                 grid-template-columns: 1fr;
-                gap: 32px;
-            }
-
-            .holiday-cover-card {
-                padding: 32px 24px;
+                gap: 48px;
             }
 
             .holiday-cover-image-container {
+                min-height: 400px;
                 order: -1;
+            }
+
+            .holiday-cover-section {
+                min-height: auto;
+                padding: 60px 20px;
             }
 
             .pricing-grid {
@@ -1905,6 +1912,22 @@
             }
 
             .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .holiday-cover-section {
+                padding: 50px 16px;
+            }
+
+            .holiday-cover-image-container {
+                min-height: 300px;
+            }
+
+            .holiday-cover-heading {
+                font-size: 36px;
+            }
+
+            .holiday-cover-subheader {
                 font-size: 16px;
             }
 
@@ -2278,18 +2301,23 @@
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Holiday Cover Section -->
+        <!-- Holiday Cover Section -->
+        <section class="holiday-cover-section">
             <div class="holiday-cover-container">
-                <div class="holiday-cover-card animate-on-scroll">
-                    <div class="holiday-cover-split">
-                        <div class="holiday-cover-image-container">
-                            <img src="holidays.png" alt="Holiday destinations - Paris and New York" class="holiday-cover-image" loading="lazy" />
-                        </div>
-                        <div class="holiday-cover-content">
-                            <h2 class="holiday-cover-heading">Your employees book holidays, H-Factor finds your cover!</h2>
-                            <p class="holiday-cover-subheader">Smart cover with the right skills finder</p>
-                        </div>
+                <div class="holiday-cover-split">
+                    <div class="holiday-cover-image-container fade-in">
+                        <img
+                            src="holidays.png"
+                            alt="Holiday destinations - Paris and New York travel stamps"
+                            class="holiday-cover-image"
+                            loading="lazy"
+                        />
+                    </div>
+                    <div class="holiday-cover-content">
+                        <h2 class="holiday-cover-heading fade-in">Your employees book holidays, H-Factor finds your cover!</h2>
+                        <p class="holiday-cover-subheader fade-in">Smart cover with the right skills finder</p>
                     </div>
                 </div>
             </div>
