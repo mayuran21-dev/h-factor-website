@@ -285,6 +285,16 @@
             font-weight: 400;
         }
 
+        .hero-tagline {
+            font-size: clamp(48px, 5vw, 72px);
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1.1;
+            margin: 0;
+            letter-spacing: -0.02em;
+            text-wrap: balance;
+        }
+
         .hero-buttons {
             display: flex;
             flex-direction: column;
@@ -1874,7 +1884,11 @@
             .hero-title {
                 font-size: 80px;
             }
-            
+
+            .hero-tagline {
+                font-size: 80px;
+            }
+
             .pricing-card.featured {
                 transform: scale(1.08);
             }
@@ -1950,6 +1964,10 @@
 
             .hero-subtitle {
                 font-size: 16px;
+            }
+
+            .hero-tagline {
+                font-size: 36px;
             }
 
             .holiday-cover-section {
@@ -2084,8 +2102,9 @@
             <div class="hero-container">
                 <div class="split-hero">
                     <div class="hero-text-container">
-                        <h1 id="hero-title" class="hero-title fade-in">Workforce Management for UK SMEs</h1>
-                        <p class="hero-subtitle fade-in">The complete HR and payroll management solution for UK businesses. HMRC compliant, GDPR certified, and built for growth.</p>
+                        <h1 id="hero-title" class="hero-title fade-in">Workforce Hub<br>Built in the UK</h1>
+                        <p class="hero-subtitle fade-in">Complete HR and Payroll Management Solution<br>For Small and Growing UK Businesses</p>
+                        <p class="hero-tagline fade-in">100% Human, 0% AI</p>
                         <div class="hero-buttons fade-in">
                             <a href="#" onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="hero-cta-primary" aria-describedby="subscribe-description">
                                 Subscribe Now
