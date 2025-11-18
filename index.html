@@ -7,8 +7,8 @@
     <meta name="description" content="Complete HR and payroll management system for UK businesses. HMRC compliant, GDPR certified. Start your free trial or subscribe today.">
     
     <!-- Favicon -->
-    <link href="./assets/favicon-light.png" rel="icon" media="(prefers-color-scheme: light)">
-    <link href="./assets/favicon-dark.png" rel="icon" media="(prefers-color-scheme: dark)">
+    <link href="./assets/favicon-light.svg" rel="icon" type="image/svg+xml" media="(prefers-color-scheme: light)">
+    <link href="./assets/favicon-dark.svg" rel="icon" type="image/svg+xml" media="(prefers-color-scheme: dark)">
     <link rel="apple-touch-icon" href="./assets/touch-icon.png">
     
     <!-- Open Graph -->
@@ -27,8 +27,8 @@
 
     <style>
         :root {
-            --primary: #1a1a1a;
-            --primary-dark: #0a0a0a;
+            --primary: #1a2c3d;
+            --primary-dark: #0a1a28;
             --background: #ffffff;
             --background-alt: #f8f9fa;
             --accent: #FFD93D;
@@ -498,6 +498,10 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+        }
+
+        .usp-card-back.dental-gradient {
+            background: linear-gradient(135deg, #FF740F 0%, #1a2c3d 100%);
         }
 
         .usp-card-back-text {
@@ -2158,7 +2162,7 @@
                                      loading="lazy">
                                 <div class="usp-mosaic-overlay">Dental Practices</div>
                             </div>
-                            <div class="usp-card-back">
+                            <div class="usp-card-back dental-gradient">
                                 <div class="usp-card-back-text">H-Factor</div>
                             </div>
                         </div>
