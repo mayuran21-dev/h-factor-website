@@ -308,7 +308,7 @@
 
         /* Learn Dropdown */
         .nav-item-with-dropdown {
-            position: relative;
+            position: static;
         }
 
         .nav-item-with-dropdown > a {
@@ -321,33 +321,36 @@
         .dropdown-arrow {
             width: 12px;
             height: 12px;
-            transition: transform 0.2s ease;
+            transition: transform 0.3s ease;
         }
 
-        .nav-item-with-dropdown:hover .dropdown-arrow {
-            transform: rotate(180deg);
+        .nav-item-with-dropdown.dropdown-open .dropdown-arrow {
+            transform: scaleY(-1);
         }
 
         .learn-dropdown {
             position: absolute;
-            top: calc(100% + 12px);
-            left: 50%;
-            transform: translateX(-50%);
+            top: 100%;
+            left: 0;
+            right: 0;
+            width: 100%;
             background: var(--white);
-            border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            padding: 32px;
-            min-width: 720px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 1px solid var(--border-light);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 100;
         }
 
-        .nav-item-with-dropdown:hover .learn-dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
+        .nav-item-with-dropdown.dropdown-open .learn-dropdown {
+            max-height: 600px;
+        }
+
+        .dropdown-inner {
+            padding: 48px 24px;
+            max-width: 1240px;
+            margin: 0 auto;
         }
 
         .dropdown-grid {
@@ -359,14 +362,8 @@
         .dropdown-category {
             padding: 20px;
             border-radius: 8px;
-            transition: all 0.2s ease;
             text-decoration: none;
             display: block;
-        }
-
-        .dropdown-category:hover {
-            background: var(--background-alt);
-            transform: translateY(-2px);
         }
 
         .dropdown-category-icon {
@@ -919,7 +916,8 @@
                         </svg>
                     </a>
                     <div class="learn-dropdown">
-                        <div class="dropdown-grid">
+                        <div class="dropdown-inner">
+                            <div class="dropdown-grid">
                             <a href="./learn.html#hr-management" class="dropdown-category dropdown-category--hr">
                                 <div class="dropdown-category-icon">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
@@ -972,6 +970,7 @@
                                     <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </a>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -1354,7 +1353,7 @@
             }
         });
 
-        // Learn Dropdown Toggle (Mobile)
+        // Learn Dropdown Toggle
         const dropdownItems = document.querySelectorAll('.nav-item-with-dropdown');
 
         dropdownItems.forEach(item => {
@@ -1362,20 +1361,17 @@
             const dropdown = item.querySelector('.learn-dropdown');
 
             if (link && dropdown) {
-                // For mobile: toggle dropdown on click
+                // Toggle dropdown on click (all screen sizes)
                 link.addEventListener('click', (e) => {
-                    // Only prevent default and toggle on mobile (when nav is in column mode)
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        item.classList.toggle('dropdown-open');
-                    }
+                    e.preventDefault(); // Prevent navigation to learn.html
+                    item.classList.toggle('dropdown-open');
                 });
             }
         });
 
-        // Close dropdown when clicking outside (mobile)
+        // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.nav-item-with-dropdown') && window.innerWidth <= 768) {
+            if (!e.target.closest('.nav-item-with-dropdown')) {
                 dropdownItems.forEach(item => {
                     item.classList.remove('dropdown-open');
                 });
