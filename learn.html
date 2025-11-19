@@ -359,52 +359,47 @@
             gap: 24px;
         }
 
-        .dropdown-category {
-            padding: 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-category-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
+        .dropdown-column {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
-            font-size: 20px;
+            flex-direction: column;
+            gap: 32px;
         }
 
-        .dropdown-category--hr .dropdown-category-icon {
-            background: linear-gradient(135deg, var(--secondary) 0%, #5a4ad6 100%);
+        .dropdown-section {
+            display: flex;
+            flex-direction: column;
         }
 
-        .dropdown-category--payroll .dropdown-category-icon {
-            background: linear-gradient(135deg, var(--tertiary) 0%, #00c0aa 100%);
-        }
-
-        .dropdown-category--time .dropdown-category-icon {
-            background: linear-gradient(135deg, var(--pink) 0%, #ff5788 100%);
-        }
-
-        .dropdown-category--employee .dropdown-category-icon {
-            background: linear-gradient(135deg, #FF740F 0%, #e66600 100%);
-        }
-
-        .dropdown-category h3 {
+        .dropdown-section-title {
             font-size: 16px;
             font-weight: 700;
             color: var(--text-primary);
-            margin: 0 0 8px 0;
+            margin: 0 0 12px 0;
         }
 
-        .dropdown-category p {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin: 0;
-            line-height: 1.5;
+        .dropdown-section-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--border-light);
+            margin-bottom: 16px;
+        }
+
+        .dropdown-articles {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .dropdown-article-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 15px;
+            line-height: 1.4;
+            transition: color 0.2s ease;
+        }
+
+        .dropdown-article-link:hover {
+            color: var(--secondary);
         }
 
         .dropdown-footer {
@@ -917,59 +912,8 @@
                     </a>
                     <div class="learn-dropdown">
                         <div class="dropdown-inner">
-                            <div class="dropdown-grid">
-                            <a href="./learn.html#hr-management" class="dropdown-category dropdown-category--hr">
-                                <div class="dropdown-category-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                        <circle cx="9" cy="7" r="4"/>
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                                    </svg>
-                                </div>
-                                <h3>HR Management</h3>
-                                <p>Essential policies, performance reviews, and company culture</p>
-                            </a>
-                            <a href="./learn.html#payroll-compliance" class="dropdown-category dropdown-category--payroll">
-                                <div class="dropdown-category-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                        <line x1="12" y1="1" x2="12" y2="23"/>
-                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                                    </svg>
-                                </div>
-                                <h3>Payroll & Compliance</h3>
-                                <p>HMRC requirements, auto-enrolment, and avoiding penalties</p>
-                            </a>
-                            <a href="./learn.html#time-attendance" class="dropdown-category dropdown-category--time">
-                                <div class="dropdown-category-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <polyline points="12 6 12 12 16 14"/>
-                                    </svg>
-                                </div>
-                                <h3>Time & Attendance</h3>
-                                <p>Absence management, work schedules, and holiday tracking</p>
-                            </a>
-                            <a href="./learn.html#employee-management" class="dropdown-category dropdown-category--employee">
-                                <div class="dropdown-category-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                        <circle cx="8.5" cy="7" r="4"/>
-                                        <line x1="20" y1="8" x2="20" y2="14"/>
-                                        <line x1="23" y1="11" x2="17" y2="11"/>
-                                    </svg>
-                                </div>
-                                <h3>Employee Management</h3>
-                                <p>Onboarding, engagement, and workplace conversations</p>
-                            </a>
-                        </div>
-                        <div class="dropdown-footer">
-                            <a href="./learn.html">
-                                View all articles
-                                <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </a>
+                            <div class="dropdown-grid" id="dropdown-content">
+                                <!-- Content will be dynamically loaded from learn.html -->
                             </div>
                         </div>
                     </div>
@@ -1014,7 +958,7 @@
 
                 <div class="articles-wrapper">
                     <div class="articles-column" data-carousel="hr">
-                        <a href="#" class="article-card">
+                        <a href="#" class="article-card" data-dropdown="true">
                             <h3>Essential HR Policies Every UK Business Needs</h3>
                             <div class="article-meta">
                                 <span class="article-author">By H Factor Team</span>
@@ -1024,7 +968,7 @@
                             <p class="article-description">Discover the must-have HR policies to protect your business and employees, from absence management to disciplinary procedures.</p>
                         </a>
 
-                        <a href="#" class="article-card">
+                        <a href="#" class="article-card" data-dropdown="true">
                             <h3>Managing Employee Performance Reviews</h3>
                             <div class="article-meta">
                                 <span class="article-author">By H Factor Team</span>
@@ -1079,7 +1023,7 @@
 
                 <div class="articles-wrapper">
                     <div class="articles-column" data-carousel="payroll">
-                        <a href="#" class="article-card">
+                        <a href="#" class="article-card" data-dropdown="true">
                             <h3>Understanding HMRC Requirements for UK Payroll</h3>
                             <div class="article-meta">
                                 <span class="article-author">By H Factor Team</span>
@@ -1089,7 +1033,7 @@
                             <p class="article-description">A complete guide to staying compliant with HMRC regulations, RTI submissions, and avoiding penalties.</p>
                         </a>
 
-                        <a href="#" class="article-card">
+                        <a href="#" class="article-card" data-dropdown="true">
                             <h3>Payroll Mistakes and How to Avoid Them</h3>
                             <div class="article-meta">
                                 <span class="article-author">By H Factor Team</span>
@@ -1099,7 +1043,7 @@
                             <p class="article-description">Common payroll errors that cost UK businesses thousands and practical steps to prevent them from happening.</p>
                         </a>
 
-                        <a href="#" class="article-card">
+                        <a href="#" class="article-card" data-dropdown="true">
                             <h3>Auto-Enrolment Pension Explained</h3>
                             <div class="article-meta">
                                 <span class="article-author">By H Factor Team</span>
@@ -1144,7 +1088,7 @@
 
                 <div class="articles-wrapper">
                     <div class="articles-column" data-carousel="time">
-                        <a href="#" class="article-card">
+                        <a href="#" class="article-card" data-dropdown="true">
                             <h3>Best Practices for Absence Management</h3>
                             <div class="article-meta">
                                 <span class="article-author">By H Factor Team</span>
@@ -1154,7 +1098,7 @@
                             <p class="article-description">Effective strategies to track, manage, and reduce employee absences while maintaining compliance.</p>
                         </a>
 
-                        <a href="#" class="article-card">
+                        <a href="#" class="article-card" data-dropdown="true">
                             <h3>Creating Fair and Efficient Work Schedules</h3>
                             <div class="article-meta">
                                 <span class="article-author">By H Factor Team</span>
@@ -1164,7 +1108,7 @@
                             <p class="article-description">Tips for building rotas that balance business needs with employee preferences and legal requirements.</p>
                         </a>
 
-                        <a href="#" class="article-card">
+                        <a href="#" class="article-card" data-dropdown="true">
                             <h3>Holiday Entitlement Calculator UK 2024</h3>
                             <div class="article-meta">
                                 <span class="article-author">By H Factor Team</span>
@@ -1209,7 +1153,7 @@
 
                 <div class="articles-wrapper">
                     <div class="articles-column" data-carousel="employee">
-                        <a href="#" class="article-card">
+                        <a href="#" class="article-card" data-dropdown="true">
                             <h3>Onboarding New Employees: A Step-by-Step Guide</h3>
                             <div class="article-meta">
                                 <span class="article-author">By H Factor Team</span>
@@ -1219,7 +1163,7 @@
                             <p class="article-description">Create a seamless onboarding experience that sets new hires up for success from day one.</p>
                         </a>
 
-                        <a href="#" class="article-card">
+                        <a href="#" class="article-card" data-dropdown="true">
                             <h3>Building Employee Engagement in Small Teams</h3>
                             <div class="article-meta">
                                 <span class="article-author">By H Factor Team</span>
@@ -1229,7 +1173,7 @@
                             <p class="article-description">Proven strategies to boost morale, retention, and productivity in your workforce.</p>
                         </a>
 
-                        <a href="#" class="article-card">
+                        <a href="#" class="article-card" data-dropdown="true">
                             <h3>Handling Difficult Conversations at Work</h3>
                             <div class="article-meta">
                                 <span class="article-author">By H Factor Team</span>
@@ -1353,6 +1297,78 @@
             }
         });
 
+        // Load dropdown content from learn.html
+        async function loadDropdownContent() {
+            try {
+                const response = await fetch('./learn.html');
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                // Extract articles with data-dropdown="true" grouped by section
+                const sections = {
+                    'hr-management': { title: 'HR Management', articles: [] },
+                    'payroll-compliance': { title: 'Payroll & Compliance', articles: [] },
+                    'time-attendance': { title: 'Time & Attendance', articles: [] },
+                    'employee-management': { title: 'Employee Management', articles: [] }
+                };
+
+                // Find all sections and their articles
+                Object.keys(sections).forEach(sectionId => {
+                    const section = doc.querySelector(`#${sectionId}`);
+                    if (section) {
+                        const articles = section.querySelectorAll('a.article-card[data-dropdown="true"]');
+                        articles.forEach(article => {
+                            const title = article.querySelector('h3')?.textContent || '';
+                            if (title) {
+                                sections[sectionId].articles.push({
+                                    title,
+                                    link: `./learn.html#${sectionId}`
+                                });
+                            }
+                        });
+                    }
+                });
+
+                // Build the 3-column layout
+                const dropdownContent = document.getElementById('dropdown-content');
+                if (dropdownContent) {
+                    dropdownContent.innerHTML = `
+                        <div class="dropdown-column">
+                            ${buildSection(sections['hr-management'])}
+                            ${buildSection(sections['employee-management'])}
+                        </div>
+                        <div class="dropdown-column">
+                            ${buildSection(sections['payroll-compliance'])}
+                        </div>
+                        <div class="dropdown-column">
+                            ${buildSection(sections['time-attendance'])}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading dropdown content:', error);
+            }
+        }
+
+        function buildSection(section) {
+            if (!section.articles.length) return '';
+            return `
+                <div class="dropdown-section">
+                    <h3 class="dropdown-section-title">${section.title}</h3>
+                    <div class="dropdown-section-divider"></div>
+                    <div class="dropdown-articles">
+                        ${section.articles.map(article =>
+                            `<a href="${article.link}" class="dropdown-article-link">${article.title}</a>`
+                        ).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load dropdown content on page load
+        loadDropdownContent();
+
         // Learn Dropdown Toggle
         const dropdownItems = document.querySelectorAll('.nav-item-with-dropdown');
 
@@ -1372,6 +1388,15 @@
         // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav-item-with-dropdown')) {
+                dropdownItems.forEach(item => {
+                    item.classList.remove('dropdown-open');
+                });
+            }
+        });
+
+        // Close dropdown when navigating away (tab/window switch)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
                 dropdownItems.forEach(item => {
                     item.classList.remove('dropdown-open');
                 });
