@@ -238,6 +238,163 @@
             transform: rotate(-45deg) translate(7px, -6px);
         }
 
+        /* Top Banner */
+        .top-banner {
+            background: #f3f2ef;
+            color: var(--text-primary);
+            text-align: center;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .top-banner p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .top-banner a {
+            color: var(--secondary);
+            text-decoration: underline;
+            margin-left: 6px;
+            font-weight: 500;
+        }
+
+        .top-banner a:hover {
+            color: var(--primary);
+        }
+
+        /* Learn Dropdown */
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-item-with-dropdown {
+            position: relative;
+        }
+
+        .nav-item-with-dropdown > a {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .dropdown-arrow {
+            width: 12px;
+            height: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-item-with-dropdown:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .learn-dropdown {
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            padding: 32px;
+            min-width: 720px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+        }
+
+        .nav-item-with-dropdown:hover .learn-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .dropdown-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .dropdown-category {
+            padding: 20px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-category:hover {
+            background: var(--background-alt);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-category-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+
+        .dropdown-category--hr .dropdown-category-icon {
+            background: linear-gradient(135deg, var(--secondary) 0%, #5a4ad6 100%);
+        }
+
+        .dropdown-category--payroll .dropdown-category-icon {
+            background: linear-gradient(135deg, var(--tertiary) 0%, #00c0aa 100%);
+        }
+
+        .dropdown-category--time .dropdown-category-icon {
+            background: linear-gradient(135deg, var(--pink) 0%, #ff5788 100%);
+        }
+
+        .dropdown-category--employee .dropdown-category-icon {
+            background: linear-gradient(135deg, #FF740F 0%, #e66600 100%);
+        }
+
+        .dropdown-category h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 8px 0;
+        }
+
+        .dropdown-category p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .dropdown-footer {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-light);
+            text-align: center;
+        }
+
+        .dropdown-footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s ease;
+        }
+
+        .dropdown-footer a:hover {
+            gap: 10px;
+        }
+
         /* Hero Section */
         .hero-section {
             background: #fcfcfc;
@@ -1801,6 +1958,42 @@
                 display: none;
             }
 
+            /* Mobile dropdown styles */
+            .learn-dropdown {
+                position: static;
+                transform: none;
+                min-width: 100%;
+                margin-top: 8px;
+                padding: 16px;
+                box-shadow: none;
+                border: 1px solid var(--border-light);
+                display: none;
+            }
+
+            .nav-item-with-dropdown.dropdown-open .learn-dropdown {
+                display: block;
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .dropdown-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .dropdown-category {
+                padding: 16px;
+            }
+
+            .dropdown-footer {
+                margin-top: 16px;
+                padding-top: 16px;
+            }
+
+            .nav-item-with-dropdown > a {
+                justify-content: space-between;
+            }
+
             .features-split {
                 grid-template-columns: 1fr;
                 gap: 48px;
@@ -2030,6 +2223,11 @@
 </head>
 
 <body id="top">
+    <!-- Top Banner (Optional) -->
+    <div class="top-banner">
+        <p>Transform your HR and payroll with H Factor - Get started with a free trial! <a href="#pricing">Learn more</a></p>
+    </div>
+
     <!-- Navigation -->
     <nav class="navigation" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
@@ -2085,11 +2283,74 @@
                 </svg>
             </a>
             <ul class="nav-links" id="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#roi-calculator">ROI Calculator</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="/learn.html">Learn</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li class="nav-item"><a href="#features">Features</a></li>
+                <li class="nav-item"><a href="#roi-calculator">ROI Calculator</a></li>
+                <li class="nav-item"><a href="#pricing">Pricing</a></li>
+                <li class="nav-item nav-item-with-dropdown">
+                    <a href="/learn.html">
+                        Learn
+                        <svg class="dropdown-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <div class="learn-dropdown">
+                        <div class="dropdown-grid">
+                            <a href="/learn.html#hr-management" class="dropdown-category dropdown-category--hr">
+                                <div class="dropdown-category-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    </svg>
+                                </div>
+                                <h3>HR Management</h3>
+                                <p>Essential policies, performance reviews, and company culture</p>
+                            </a>
+                            <a href="/learn.html#payroll-compliance" class="dropdown-category dropdown-category--payroll">
+                                <div class="dropdown-category-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                        <line x1="12" y1="1" x2="12" y2="23"/>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                    </svg>
+                                </div>
+                                <h3>Payroll & Compliance</h3>
+                                <p>HMRC requirements, auto-enrolment, and avoiding penalties</p>
+                            </a>
+                            <a href="/learn.html#time-attendance" class="dropdown-category dropdown-category--time">
+                                <div class="dropdown-category-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12 6 12 12 16 14"/>
+                                    </svg>
+                                </div>
+                                <h3>Time & Attendance</h3>
+                                <p>Absence management, work schedules, and holiday tracking</p>
+                            </a>
+                            <a href="/learn.html#employee-management" class="dropdown-category dropdown-category--employee">
+                                <div class="dropdown-category-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="8.5" cy="7" r="4"/>
+                                        <line x1="20" y1="8" x2="20" y2="14"/>
+                                        <line x1="23" y1="11" x2="17" y2="11"/>
+                                    </svg>
+                                </div>
+                                <h3>Employee Management</h3>
+                                <p>Onboarding, engagement, and workplace conversations</p>
+                            </a>
+                        </div>
+                        <div class="dropdown-footer">
+                            <a href="/learn.html">
+                                View all articles
+                                <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2 6H10M10 6L6 2M10 6L6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="#contact">Contact</a></li>
             </ul>
             <div class="nav-cta-container">
                 <a href="https://h-factor.base44.app" class="nav-login">Log in</a>
@@ -2754,13 +3015,41 @@
             });
 
             navLinks.addEventListener('click', (e) => {
-                if (e.target.tagName === 'A') {
+                if (e.target.tagName === 'A' && !e.target.closest('.nav-item-with-dropdown')) {
                     navLinks.classList.remove('open');
                     mobileMenuToggle.classList.remove('open');
                     mobileMenuToggle.setAttribute('aria-expanded', 'false');
                 }
             });
         }
+
+        // Learn Dropdown Toggle (Mobile)
+        const dropdownItems = document.querySelectorAll('.nav-item-with-dropdown');
+
+        dropdownItems.forEach(item => {
+            const link = item.querySelector('a');
+            const dropdown = item.querySelector('.learn-dropdown');
+
+            if (link && dropdown) {
+                // For mobile: toggle dropdown on click
+                link.addEventListener('click', (e) => {
+                    // Only prevent default and toggle on mobile (when nav is in column mode)
+                    if (window.innerWidth <= 960) {
+                        e.preventDefault();
+                        item.classList.toggle('dropdown-open');
+                    }
+                });
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-item-with-dropdown')) {
+                dropdownItems.forEach(item => {
+                    item.classList.remove('dropdown-open');
+                });
+            }
+        });
 
         // Pricing Toggle (Annual/Monthly)
         const pricingToggle = document.getElementById('pricing-toggle');
