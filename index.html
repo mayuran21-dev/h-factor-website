@@ -311,15 +311,15 @@
 
         .dropdown-section-divider {
             width: 100%;
-            height: 1px;
-            background: var(--border-light);
+            height: 2px;
+            background: var(--border);
             margin-bottom: 16px;
         }
 
         .dropdown-articles {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 6px;
         }
 
         .dropdown-article-link {
@@ -3031,7 +3031,16 @@
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 dropdownItems.forEach(item => {
-                    item.classList.remove('dropdown-open');
+                    const dropdown = item.querySelector('.learn-dropdown');
+                    if (dropdown) {
+                        // Disable transition to close immediately without animation
+                        dropdown.style.transition = 'none';
+                        item.classList.remove('dropdown-open');
+                        // Re-enable transition after a brief delay
+                        setTimeout(() => {
+                            dropdown.style.transition = '';
+                        }, 50);
+                    }
                 });
             }
         });
