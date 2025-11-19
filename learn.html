@@ -468,6 +468,13 @@
             grid-template-columns: 300px 1fr;
             gap: 24px;
             margin-bottom: 16px;
+            align-items: start;
+        }
+
+        .category-left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         /* Category Card (Large left card) */
@@ -645,13 +652,12 @@
         .carousel-controls {
             display: flex;
             gap: 12px;
-            margin-top: 16px;
-            justify-content: flex-end;
+            justify-content: flex-start;
         }
 
         .carousel-control {
-            width: 48px;
-            height: 48px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: var(--white);
             border: 1px solid var(--border-light);
@@ -944,17 +950,31 @@
     <section class="category-section" id="hr-management">
         <div class="category-container">
             <div class="category-grid">
-                <a href="#" class="category-card category-card--hr">
-                    <div>
-                        <h2>HR Management</h2>
+                <div class="category-left-column">
+                    <a href="#" class="category-card category-card--hr">
+                        <div>
+                            <h2>HR Management</h2>
+                        </div>
+                        <div class="category-explore">
+                            <span>Explore Category</span>
+                            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </a>
+                    <div class="carousel-controls">
+                        <button class="carousel-control" data-direction="prev" data-target="hr" aria-label="Previous articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70711 0.292893C8.09763 0.683417 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button class="carousel-control" data-direction="next" data-target="hr" aria-label="Next articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
                     </div>
-                    <div class="category-explore">
-                        <span>Explore Category</span>
-                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                </a>
+                </div>
 
                 <div class="articles-wrapper">
                     <div class="articles-column" data-carousel="hr">
@@ -988,18 +1008,6 @@
                             <p class="article-description">Create a workplace culture that attracts top talent and keeps employees engaged and motivated.</p>
                         </a>
                     </div>
-                    <div class="carousel-controls">
-                        <button class="carousel-control" data-direction="prev" data-target="hr" aria-label="Previous articles">
-                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70711 0.292893C8.09763 0.683417 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z" fill="currentColor"/>
-                            </svg>
-                        </button>
-                        <button class="carousel-control" data-direction="next" data-target="hr" aria-label="Next articles">
-                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="currentColor"/>
-                            </svg>
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1009,17 +1017,31 @@
     <section class="category-section" id="payroll-compliance">
         <div class="category-container">
             <div class="category-grid">
-                <a href="#" class="category-card category-card--payroll">
-                    <div>
-                        <h2>Payroll & Compliance</h2>
+                <div class="category-left-column">
+                    <a href="#" class="category-card category-card--payroll">
+                        <div>
+                            <h2>Payroll & Compliance</h2>
+                        </div>
+                        <div class="category-explore">
+                            <span>Explore Category</span>
+                            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </a>
+                    <div class="carousel-controls">
+                        <button class="carousel-control" data-direction="prev" data-target="payroll" aria-label="Previous articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70711 0.292893C8.09763 0.683417 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button class="carousel-control" data-direction="next" data-target="payroll" aria-label="Next articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
                     </div>
-                    <div class="category-explore">
-                        <span>Explore Category</span>
-                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                </a>
+                </div>
 
                 <div class="articles-wrapper">
                     <div class="articles-column" data-carousel="payroll">
@@ -1053,18 +1075,6 @@
                             <p class="article-description">Everything you need to know about workplace pension schemes and your obligations as a UK employer.</p>
                         </a>
                     </div>
-                    <div class="carousel-controls">
-                        <button class="carousel-control" data-direction="prev" data-target="payroll" aria-label="Previous articles">
-                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70711 0.292893C8.09763 0.683417 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z" fill="currentColor"/>
-                            </svg>
-                        </button>
-                        <button class="carousel-control" data-direction="next" data-target="payroll" aria-label="Next articles">
-                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="currentColor"/>
-                            </svg>
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1074,17 +1084,31 @@
     <section class="category-section" id="time-attendance">
         <div class="category-container">
             <div class="category-grid">
-                <a href="#" class="category-card category-card--time">
-                    <div>
-                        <h2>Time & Attendance</h2>
+                <div class="category-left-column">
+                    <a href="#" class="category-card category-card--time">
+                        <div>
+                            <h2>Time & Attendance</h2>
+                        </div>
+                        <div class="category-explore">
+                            <span>Explore Category</span>
+                            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </a>
+                    <div class="carousel-controls">
+                        <button class="carousel-control" data-direction="prev" data-target="time" aria-label="Previous articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70711 0.292893C8.09763 0.683417 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button class="carousel-control" data-direction="next" data-target="time" aria-label="Next articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
                     </div>
-                    <div class="category-explore">
-                        <span>Explore Category</span>
-                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                </a>
+                </div>
 
                 <div class="articles-wrapper">
                     <div class="articles-column" data-carousel="time">
@@ -1118,18 +1142,6 @@
                             <p class="article-description">Calculate statutory holiday entitlement for full-time, part-time, and irregular hour workers.</p>
                         </a>
                     </div>
-                    <div class="carousel-controls">
-                        <button class="carousel-control" data-direction="prev" data-target="time" aria-label="Previous articles">
-                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70711 0.292893C8.09763 0.683417 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z" fill="currentColor"/>
-                            </svg>
-                        </button>
-                        <button class="carousel-control" data-direction="next" data-target="time" aria-label="Next articles">
-                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="currentColor"/>
-                            </svg>
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1139,17 +1151,31 @@
     <section class="category-section" id="employee-management">
         <div class="category-container">
             <div class="category-grid">
-                <a href="#" class="category-card category-card--employee">
-                    <div>
-                        <h2>Employee Management</h2>
+                <div class="category-left-column">
+                    <a href="#" class="category-card category-card--employee">
+                        <div>
+                            <h2>Employee Management</h2>
+                        </div>
+                        <div class="category-explore">
+                            <span>Explore Category</span>
+                            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </a>
+                    <div class="carousel-controls">
+                        <button class="carousel-control" data-direction="prev" data-target="employee" aria-label="Previous articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70711 0.292893C8.09763 0.683417 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button class="carousel-control" data-direction="next" data-target="employee" aria-label="Next articles">
+                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="currentColor"/>
+                            </svg>
+                        </button>
                     </div>
-                    <div class="category-explore">
-                        <span>Explore Category</span>
-                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 3l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                </a>
+                </div>
 
                 <div class="articles-wrapper">
                     <div class="articles-column" data-carousel="employee">
@@ -1182,18 +1208,6 @@
                             </div>
                             <p class="article-description">Navigate challenging workplace discussions with confidence using these proven communication techniques.</p>
                         </a>
-                    </div>
-                    <div class="carousel-controls">
-                        <button class="carousel-control" data-direction="prev" data-target="employee" aria-label="Previous articles">
-                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70711 0.292893C8.09763 0.683417 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z" fill="currentColor"/>
-                            </svg>
-                        </button>
-                        <button class="carousel-control" data-direction="next" data-target="employee" aria-label="Next articles">
-                            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683417 14.0976 0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="currentColor"/>
-                            </svg>
-                        </button>
                     </div>
                 </div>
             </div>
