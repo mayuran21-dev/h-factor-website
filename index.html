@@ -313,13 +313,13 @@
             width: 100%;
             height: 2px;
             background: var(--border);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .dropdown-articles {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
 
         .dropdown-article-link {
@@ -3029,17 +3029,20 @@
 
         // Close dropdown when navigating away (tab/window switch)
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
+            // Close dropdown immediately when page becomes visible again to prevent glitch
+            if (!document.hidden) {
                 dropdownItems.forEach(item => {
-                    const dropdown = item.querySelector('.learn-dropdown');
-                    if (dropdown) {
-                        // Disable transition to close immediately without animation
-                        dropdown.style.transition = 'none';
-                        item.classList.remove('dropdown-open');
-                        // Re-enable transition after a brief delay
-                        setTimeout(() => {
-                            dropdown.style.transition = '';
-                        }, 50);
+                    if (item.classList.contains('dropdown-open')) {
+                        const dropdown = item.querySelector('.learn-dropdown');
+                        if (dropdown) {
+                            // Disable transition to close immediately without animation
+                            dropdown.style.transition = 'none';
+                            item.classList.remove('dropdown-open');
+                            // Re-enable transition after a brief delay
+                            setTimeout(() => {
+                                dropdown.style.transition = '';
+                            }, 50);
+                        }
                     }
                 });
             }
