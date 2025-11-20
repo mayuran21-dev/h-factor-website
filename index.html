@@ -359,9 +359,9 @@
         /* Hero Section */
         .hero-section {
             background: #fcfcfc;
-            padding: 0 20px 80px;
+            padding: 60px 20px;
             position: relative;
-            min-height: 85vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
         }
@@ -497,7 +497,10 @@
         /* Key Points Section */
         .key-points-section {
             background: #fcfcfc;
-            padding: 80px 20px;
+            padding: 60px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .key-points-container {
@@ -542,7 +545,9 @@
             padding: 60px 20px;
             background: var(--white);
             position: relative;
-            display: block;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         /* USP Mosaic Layout */
@@ -884,9 +889,9 @@
         /* Holiday Cover Section */
         .holiday-cover-section {
             background: linear-gradient(135deg, #1a5490 0%, #274969 100%);
-            padding: 80px 20px;
+            padding: 60px 20px;
             position: relative;
-            min-height: 85vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
         }
@@ -947,11 +952,14 @@
 
         /* ROI Calculator Section */
         .roi-calculator-section {
-            padding: 100px 20px;
+            padding: 60px 20px;
             background:
                 linear-gradient(135deg, rgba(108, 92, 231, 0.95) 0%, rgba(0, 217, 192, 0.95) 100%),
                 url('people.png') center/cover no-repeat;
             color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .roi-calculator-container {
@@ -1089,8 +1097,11 @@
 
         /* Benefits Section */
         .benefits-section {
-            padding: 100px 20px;
+            padding: 60px 20px;
             background: var(--white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .benefits-container {
@@ -1280,8 +1291,11 @@
 
         /* Feature Detail Sections */
         .feature-detail-section {
-            padding: 100px 20px;
+            padding: 60px 20px;
             background: var(--white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .feature-detail-section:nth-of-type(even) {
@@ -1450,8 +1464,11 @@
 
         /* Pricing Section */
         .pricing-section {
-            padding: 100px 20px;
+            padding: 60px 20px;
             background: var(--background-alt);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .pricing-container {
@@ -1742,10 +1759,17 @@
 
         /* Contact Form Styles */
         .contact-section {
-            padding: 100px 20px;
+            padding: 60px 20px;
             background: var(--background);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-container {
             max-width: 1240px;
             margin: 0 auto;
+            width: 100%;
         }
 
         .contact-title {
@@ -2200,12 +2224,13 @@
             .nav-container {
                 padding: 0 40px;
             }
-            
-            .hero-section {
-                padding: 140px 40px 100px;
+
+            .hero-section,
+            .features-section {
+                padding-left: 40px;
+                padding-right: 40px;
             }
-            
-            .features-section,
+
             .pricing-container {
                 padding-left: 40px;
                 padding-right: 40px;
