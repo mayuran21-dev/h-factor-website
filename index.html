@@ -1278,6 +1278,176 @@
             }
         }
 
+        /* Feature Detail Sections */
+        .feature-detail-section {
+            padding: 100px 20px;
+            background: var(--white);
+        }
+
+        .feature-detail-section:nth-of-type(even) {
+            background: var(--background-alt);
+        }
+
+        .feature-detail-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .feature-detail-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .feature-detail-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .feature-detail-heading {
+            font-size: clamp(40px, 5vw, 56px);
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin: 0;
+        }
+
+        .feature-detail-subtext {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .feature-detail-tagline {
+            font-size: clamp(16px, 2vw, 18px);
+            color: var(--secondary);
+            line-height: 1.6;
+            font-weight: 600;
+            font-style: italic;
+            margin: 8px 0 0 0;
+        }
+
+        .feature-detail-image-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-detail-placeholder {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 60px rgba(108, 92, 231, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-detail-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        .placeholder-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            padding: 20px;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Reverse layout for alternating sections */
+        .feature-detail-reverse .feature-detail-split {
+            direction: rtl;
+        }
+
+        .feature-detail-reverse .feature-detail-content {
+            direction: ltr;
+        }
+
+        .feature-detail-reverse .feature-detail-image-container {
+            direction: ltr;
+        }
+
+        @media (max-width: 968px) {
+            .feature-detail-section {
+                padding: 60px 20px;
+            }
+
+            .feature-detail-split {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .feature-detail-heading {
+                font-size: clamp(32px, 8vw, 48px);
+            }
+
+            .feature-detail-subtext {
+                font-size: 18px;
+            }
+
+            .feature-detail-tagline {
+                font-size: 16px;
+            }
+
+            /* Reset direction on mobile */
+            .feature-detail-reverse .feature-detail-split {
+                direction: ltr;
+            }
+
+            /* Image always comes first on mobile */
+            .feature-detail-image-container {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .feature-detail-section {
+                padding: 50px 16px;
+            }
+
+            .feature-detail-heading {
+                font-size: 28px;
+            }
+
+            .feature-detail-subtext {
+                font-size: 16px;
+            }
+
+            .placeholder-text {
+                font-size: 18px;
+            }
+        }
+
         /* Pricing Section */
         .pricing-section {
             padding: 100px 20px;
@@ -2626,6 +2796,197 @@
                                 <li>Extensive Learning & Development</li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section 1: Rota + Labour Costs + Heatmaps -->
+        <section class="feature-detail-section">
+            <div class="feature-detail-container">
+                <div class="feature-detail-split">
+                    <div class="feature-detail-content">
+                        <h2 class="feature-detail-heading">See exactly what your rota costs before you publish it</h2>
+                        <p class="feature-detail-subtext">Your rota isn't just a schedule—it's your largest controllable expense. HFactor calculates labour costs in real-time as you build each week's rota, converting salaries to shift costs automatically. The heatmap shows you which days are understaffed (before patients arrive) and which are overstaffed (before you've paid for it).</p>
+                        <p class="feature-detail-subtext">No spreadsheets. No manual calculations. No surprises on payday.</p>
+                        <p class="feature-detail-tagline">Built for UK practices that track margins, not just shifts.</p>
+                    </div>
+                    <div class="feature-detail-image-container">
+                        <div class="feature-detail-placeholder">
+                            <span class="placeholder-text">Rota Cost Heatmap</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section 2: Shift Swaps + Rota + Labour Costs -->
+        <section class="feature-detail-section feature-detail-reverse">
+            <div class="feature-detail-container">
+                <div class="feature-detail-split">
+                    <div class="feature-detail-image-container">
+                        <div class="feature-detail-placeholder">
+                            <span class="placeholder-text">Shift Swap Management</span>
+                        </div>
+                    </div>
+                    <div class="feature-detail-content">
+                        <h2 class="feature-detail-heading">Your team handles shift swaps. You keep control of costs.</h2>
+                        <p class="feature-detail-subtext">Staff request shift swaps directly in the system. You approve or decline with one click, knowing the labour cost impact before you decide. The rota updates automatically, and you see exactly who's covering what—no WhatsApp trails, no paper notes stuck to the staffroom wall.</p>
+                        <p class="feature-detail-subtext">Your team gets flexibility. You keep visibility.</p>
+                        <p class="feature-detail-tagline">Designed for practices where staff autonomy and budget control both matter.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section 3: Training Pathways + Document Reduction + Online Tracking -->
+        <section class="feature-detail-section">
+            <div class="feature-detail-container">
+                <div class="feature-detail-split">
+                    <div class="feature-detail-content">
+                        <h2 class="feature-detail-heading">Stop filing competency documents. Start tracking competency progress.</h2>
+                        <p class="feature-detail-subtext">Your trainee dental nurses complete structured learning pathways online. You see exactly what they've finished, what's due, and what's overdue—without opening a filing cabinet. CPD hours accumulate automatically. Certificates generate when pathways complete.</p>
+                        <p class="feature-detail-subtext">One system. No printing. No paper trails. No lost files during CQC inspections.</p>
+                        <p class="feature-detail-tagline">Built for practices where compliance matters and filing cabinets don't.</p>
+                    </div>
+                    <div class="feature-detail-image-container">
+                        <div class="feature-detail-placeholder">
+                            <span class="placeholder-text">Training Pathways Dashboard</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section 4: Multiple Limited Companies + Tailored + Rota -->
+        <section class="feature-detail-section feature-detail-reverse">
+            <div class="feature-detail-container">
+                <div class="feature-detail-split">
+                    <div class="feature-detail-image-container">
+                        <div class="feature-detail-placeholder">
+                            <span class="placeholder-text">Multi-Company Dashboard</span>
+                        </div>
+                    </div>
+                    <div class="feature-detail-content">
+                        <h2 class="feature-detail-heading">One system for all your practices. Tailored to how each one operates.</h2>
+                        <p class="feature-detail-subtext">You run multiple limited companies. HFactor manages them all from one login—each with its own rota, its own staff, its own reporting. Filter by company, by location, or view everything at once. The system adapts to your structure, not the other way around.</p>
+                        <p class="feature-detail-subtext">No duplicate subscriptions. No switching between platforms. No forcing every practice into the same workflow.</p>
+                        <p class="feature-detail-tagline">Built for UK dental groups that grew beyond one location.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section 5: Payroll + RTI + Simple Cost -->
+        <section class="feature-detail-section">
+            <div class="feature-detail-container">
+                <div class="feature-detail-split">
+                    <div class="feature-detail-content">
+                        <h2 class="feature-detail-heading">Run UK payroll correctly without a payroll specialist</h2>
+                        <p class="feature-detail-subtext">Calculate gross pay, deductions, and RTI submissions for HMRC—built into the system you're already using for rotas and timesheets. No separate payroll software. No manual data entry between systems. No paying two suppliers for one workflow.</p>
+                        <p class="feature-detail-subtext">Your timesheets become payroll runs. Payroll runs become RTI submissions. It's the same data, processed once.</p>
+                        <p class="feature-detail-tagline">Designed for practices that need HMRC compliance without HMRC complexity.</p>
+                    </div>
+                    <div class="feature-detail-image-container">
+                        <div class="feature-detail-placeholder">
+                            <span class="placeholder-text">Payroll & RTI Processing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section 6: Training Pathways + Payroll + Shift Swaps -->
+        <section class="feature-detail-section feature-detail-reverse">
+            <div class="feature-detail-container">
+                <div class="feature-detail-split">
+                    <div class="feature-detail-image-container">
+                        <div class="feature-detail-placeholder">
+                            <span class="placeholder-text">Integrated Staff Management</span>
+                        </div>
+                    </div>
+                    <div class="feature-detail-content">
+                        <h2 class="feature-detail-heading">Onboard staff faster. Pay them accurately. Let them manage their own shifts.</h2>
+                        <p class="feature-detail-subtext">New dental nurses follow structured pathways from day one—training tracked, competency recorded, CPD hours logged. When they start working shifts, timesheets feed straight into payroll. When they need to swap a shift, they request it in the same system.</p>
+                        <p class="feature-detail-subtext">One place for learning, scheduling, and payment. No switching platforms. No duplicate data entry.</p>
+                        <p class="feature-detail-tagline">Built for practices that hire regularly and don't want admin to scale with headcount.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section 7: Labour Costs + Heatmaps + Multiple Companies -->
+        <section class="feature-detail-section">
+            <div class="feature-detail-container">
+                <div class="feature-detail-split">
+                    <div class="feature-detail-content">
+                        <h2 class="feature-detail-heading">Which of your practices is overstaffed? You'll know this week.</h2>
+                        <p class="feature-detail-subtext">Compare labour costs and staffing levels across all your practices in one view. The heatmap shows you which locations are running tight and which have margin to spare. Filter by company, by week, by role—see patterns you couldn't spot when data lived in separate spreadsheets.</p>
+                        <p class="feature-detail-subtext">No consolidating reports manually. No waiting for month-end.</p>
+                        <p class="feature-detail-tagline">Designed for UK dental groups that need operational visibility, not just financial summaries.</p>
+                    </div>
+                    <div class="feature-detail-image-container">
+                        <div class="feature-detail-placeholder">
+                            <span class="placeholder-text">Multi-Practice Analytics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section 8: Rota + Training + Tailored -->
+        <section class="feature-detail-section feature-detail-reverse">
+            <div class="feature-detail-container">
+                <div class="feature-detail-split">
+                    <div class="feature-detail-image-container">
+                        <div class="feature-detail-placeholder">
+                            <span class="placeholder-text">Custom Rota System</span>
+                        </div>
+                    </div>
+                    <div class="feature-detail-content">
+                        <h2 class="feature-detail-heading">Your practice doesn't work like everyone else's. Your rota system shouldn't either.</h2>
+                        <p class="feature-detail-subtext">Configure roles, locations, and templates that match your actual structure—not a generic clinic layout. Assign trainee nurses to mentors directly in the rota. Track who's working where, who's qualified for what, and who needs supervision.</p>
+                        <p class="feature-detail-subtext">The system adapts to your workflows, your terminology, your compliance requirements.</p>
+                        <p class="feature-detail-tagline">Built for UK practices that need software to fit the business, not the business to fit the software.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section 9: Payroll + RTI + Multiple Companies + Labour Costs -->
+        <section class="feature-detail-section">
+            <div class="feature-detail-container">
+                <div class="feature-detail-split">
+                    <div class="feature-detail-content">
+                        <h2 class="feature-detail-heading">Run payroll for all your practices. See the total cost before you approve.</h2>
+                        <p class="feature-detail-subtext">Process payroll for multiple limited companies from one system. Each company's RTI submission goes to HMRC automatically. Each company's labour costs are tracked separately. You see aggregated costs across the group or drill down to individual practices.</p>
+                        <p class="feature-detail-subtext">One payroll run. Multiple companies. Full HMRC compliance.</p>
+                        <p class="feature-detail-tagline">Designed for UK dental groups where payroll complexity scales with growth.</p>
+                    </div>
+                    <div class="feature-detail-image-container">
+                        <div class="feature-detail-placeholder">
+                            <span class="placeholder-text">Multi-Company Payroll</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section 10: Integrated Story (All Features) -->
+        <section class="feature-detail-section feature-detail-reverse">
+            <div class="feature-detail-container">
+                <div class="feature-detail-split">
+                    <div class="feature-detail-image-container">
+                        <div class="feature-detail-placeholder">
+                            <span class="placeholder-text">Complete Platform Overview</span>
+                        </div>
+                    </div>
+                    <div class="feature-detail-content">
+                        <h2 class="feature-detail-heading">Replace four systems with one that's tailored to your practices</h2>
+                        <p class="feature-detail-subtext">You're probably using separate tools for rotas, payroll, training records, and employee files. HFactor combines them—built specifically for UK dental practices, adaptable to how each of your companies operates.</p>
+                        <p class="feature-detail-subtext">Plan rotas with cost visibility before you publish. Let staff request shift swaps with approval controls. Track trainee nurse pathways online instead of in filing cabinets. Run payroll with RTI submissions built in. Manage multiple limited companies from one login, each tailored to its own workflows.</p>
+                        <p class="feature-detail-subtext">No more exporting data between systems. No more duplicate entries. No more wondering if your training records will be ready when CQE asks.</p>
+                        <p class="feature-detail-tagline">Built for UK dental groups that grew beyond spreadsheets but don't want enterprise software complexity.</p>
                     </div>
                 </div>
             </div>
