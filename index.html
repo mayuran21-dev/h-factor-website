@@ -1398,6 +1398,15 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
+        .feature-detail-image {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(108, 92, 231, 0.2);
+        }
+
         /* Reverse layout for alternating sections */
         .feature-detail-reverse .feature-detail-split {
             direction: rtl;
@@ -2850,9 +2859,12 @@
             <div class="feature-detail-container">
                 <div class="feature-detail-split">
                     <div class="feature-detail-image-container">
-                        <div class="feature-detail-placeholder">
-                            <span class="placeholder-text">Shift Swap Management</span>
-                        </div>
+                        <img
+                            src="holidays.png"
+                            alt="Holiday destinations - Paris and New York travel stamps"
+                            class="feature-detail-image"
+                            loading="lazy"
+                        />
                     </div>
                     <div class="feature-detail-content">
                         <h2 class="feature-detail-heading">Your team handles shift swaps. You keep control of costs.</h2>
