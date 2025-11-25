@@ -2375,6 +2375,99 @@
                 font-size: 18px;
             }
         }
+
+        /* Customer Type Toggle Styles */
+        .customer-type-toggle {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .type-btn {
+            padding: 12px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid #C8A972;
+            background: transparent;
+            color: #C8A972;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .type-btn:hover {
+            background: rgba(200, 169, 114, 0.1);
+        }
+
+        .type-btn.active {
+            background: #C8A972;
+            color: white;
+        }
+
+        /* Pricing Type Sections */
+        .pricing-type-section {
+            display: none;
+        }
+
+        .pricing-type-section.active {
+            display: block;
+        }
+
+        /* Pricing Card Updates for New Model */
+        .pricing-range {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin: 8px 0 24px;
+            line-height: 1.6;
+        }
+
+        .pricing-option {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .option-label {
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 16px;
+        }
+
+        .pricing-divider {
+            text-align: center;
+            margin: 16px 0;
+            color: #999;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .customer-type-toggle {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .type-btn {
+                width: 100%;
+            }
+
+            .option-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+        }
     </style>
 </head>
 
@@ -3020,33 +3113,35 @@
         <!-- Pricing Section -->
         <section id="pricing" class="pricing-section" aria-labelledby="pricing-title">
             <div class="pricing-container">
-                <div class="pricing-grid-wrapper">
-                    <!-- Left Column: Pricing Info -->
-                    <div class="pricing-left">
-                        <h2 id="pricing-title" class="pricing-title animate-on-scroll">Simple pricing that scales</h2>
-                        <p class="pricing-subtitle animate-on-scroll">Choose the plan that fits your business needs</p>
+                <h2 id="pricing-title" class="pricing-title animate-on-scroll">Simple pricing that scales</h2>
+                <p class="pricing-subtitle animate-on-scroll">Choose the plan that fits your business needs</p>
 
-                        <!-- Pricing Toggle -->
-                        <div class="pricing-toggle animate-on-scroll">
-                            <span class="toggle-label active" id="monthly-label">Monthly</span>
-                            <button class="toggle-switch" id="pricing-toggle" aria-labelledby="toggle-description" aria-pressed="false" role="switch">
-                                <div class="toggle-knob"></div>
-                            </button>
-                            <span class="toggle-label" id="annual-label">
-                                Annual
-                                <span class="savings-badge">Save 17%</span>
-                            </span>
-                            <div class="sr-only" id="toggle-description">Switch between monthly and annual pricing</div>
+                <!-- Customer Type Toggle -->
+                <div class="customer-type-toggle animate-on-scroll">
+                    <button class="type-btn active" id="single-company-btn" data-type="single">
+                        Single Companies
+                    </button>
+                    <button class="type-btn" id="holding-company-btn" data-type="holding">
+                        Holding Companies
+                    </button>
+                </div>
+
+                <!-- Single Companies Pricing -->
+                <div id="single-companies-section" class="pricing-type-section active">
+                    <div class="pricing-grid" id="single-companies-grid">
+                        <!-- Pricing cards will be dynamically loaded from Stripe -->
+                        <div class="pricing-loading">
+                            <p>Loading pricing...</p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Right Column: Pricing Cards -->
-                    <div class="pricing-right">
-                        <div class="pricing-grid" id="pricing-grid">
-                            <!-- Pricing cards will be dynamically loaded from Stripe -->
-                            <div class="pricing-loading">
-                                <p>Loading pricing...</p>
-                            </div>
+                <!-- Holding Companies Pricing -->
+                <div id="holding-companies-section" class="pricing-type-section">
+                    <div class="pricing-grid" id="holding-companies-grid">
+                        <!-- Pricing cards will be dynamically loaded from Stripe -->
+                        <div class="pricing-loading">
+                            <p>Loading pricing...</p>
                         </div>
                     </div>
                 </div>
@@ -3190,6 +3285,22 @@
             stripeProductsUrl: window.location.origin + '/api/stripe-products'
         };
 
+        // Tier name mapping for display
+        const TIER_NAMES = {
+            'micro': 'Micro Plan',
+            'starter': 'Starter Plan',
+            'growth': 'Growth Plan',
+            'standard': 'Standard Plan',
+            'plus': 'Plus Plan',
+            'scale': 'Scale Plan',
+            'scaleplus': 'Scale+ Plan',
+            'holding_starter': 'Starter Group',
+            'holding_regional': 'Regional Group',
+            'holding_regional_plus': 'Regional Group+',
+            'holding_enterprise': 'Enterprise Group',
+            'holding_national': 'National Group'
+        };
+
         // Fetch and render Stripe products
         async function loadStripePricing() {
             try {
@@ -3201,86 +3312,116 @@
 
                 const data = await response.json();
 
-                if (!data.success || !data.products) {
+                if (!data.success || !data.pricing) {
                     throw new Error('Invalid pricing data');
                 }
 
-                renderPricingCards(data.products);
+                renderPricingSections(data.pricing);
+                initializeCustomerTypeToggle();
             } catch (error) {
                 console.error('Error loading pricing:', error);
                 renderFallbackPricing();
             }
         }
 
-        // Render pricing cards from Stripe products
-        function renderPricingCards(products) {
-            const pricingGrid = document.getElementById('pricing-grid');
-
-            if (!pricingGrid) return;
-
-            // Clear loading message
-            pricingGrid.innerHTML = '';
-
-            // Render each product
-            products.forEach(product => {
-                const card = createPricingCard(product);
-                pricingGrid.appendChild(card);
-            });
-
-            // Reinitialize pricing toggle after rendering
-            initializePricingToggle();
+        // Render both pricing sections
+        function renderPricingSections(pricing) {
+            renderTierCards(pricing.singleCompanies, 'single-companies-grid', false);
+            renderTierCards(pricing.holdingCompanies, 'holding-companies-grid', true);
         }
 
-        // Create individual pricing card
-        function createPricingCard(product) {
+        // Render tier cards
+        function renderTierCards(tiers, gridId, isHolding) {
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+
+            grid.innerHTML = '';
+
+            tiers.forEach(tier => {
+                const card = createTierCard(tier, isHolding);
+                grid.appendChild(card);
+            });
+        }
+
+        // Create tier card with HR-only and HR+Payroll options
+        function createTierCard(tier, isHolding) {
             const article = document.createElement('article');
             article.className = 'pricing-card animate-on-scroll';
-            if (product.highlighted) {
-                article.classList.add('featured');
+
+            const tierName = TIER_NAMES[tier.tier] || tier.tier;
+            const trialDays = isHolding ? 60 : 14;
+
+            // Generate plan keys
+            const planKeyPrefix = isHolding ? `holding_${tier.tier.replace('holding_', '')}` : tier.tier;
+            const hrOnlyKey = `${planKeyPrefix}_hr`;
+            const hrPayrollKey = `${planKeyPrefix}_combo`;
+
+            // Build employee/entity range display
+            let rangeText = tier.employeeRange;
+            if (isHolding && tier.entityRange) {
+                rangeText = `${tier.entityRange} entities<br>${tier.employeeRange} employees`;
             }
 
-            // Get monthly and annual prices
-            const monthlyPrice = product.prices.monthly?.amount || 0;
-            const annualPrice = product.prices.annual?.amount || 0;
-            const monthlyPriceId = product.prices.monthly?.id || '';
-            const annualPriceId = product.prices.annual?.id || '';
-            const currency = product.prices.monthly?.currency || 'gbp';
-            const currencySymbol = currency === 'gbp' ? '£' : '$';
-
-            // Build features list
-            const featuresHtml = product.features.map(feature =>
-                `<li><span class="check-icon" aria-hidden="true"></span>${feature}</li>`
-            ).join('');
-
-            // Build card HTML
             article.innerHTML = `
-                <h3 class="pricing-tier">${product.name}</h3>
-                <div class="pricing-amount">
-                    <span class="price" data-monthly="${monthlyPrice}" data-annual="${annualPrice}">${currencySymbol}${monthlyPrice}</span>
-                    <span class="pricing-period">/month</span>
-                </div>
-                <p class="pricing-annual-note" style="display: none;">Billed annually (${currencySymbol}${annualPrice}/year)</p>
-                ${product.description ? `<p class="pricing-description">${product.description}</p>` : ''}
-                <ul class="pricing-features">
-                    ${featuresHtml}
-                </ul>
-                <div class="pricing-buttons">
-                    <button onclick="startSubscription('${monthlyPriceId}', '${product.name}')"
-                            class="pricing-cta-primary"
-                            data-monthly-price-id="${monthlyPriceId}"
-                            data-annual-price-id="${annualPriceId}">
-                        Subscribe Now
+                <h3 class="pricing-tier">${tierName}</h3>
+                <p class="pricing-range">${rangeText}</p>
+
+                <div class="pricing-option">
+                    <div class="option-header">
+                        <span class="option-label">HR Platform Only</span>
+                        <div class="pricing-amount">
+                            <span class="price">£${tier.hrOnly?.amount || 0}</span>
+                            <span class="pricing-period">/month</span>
+                        </div>
+                    </div>
+                    <button onclick="startSubscription('${tier.hrOnly?.priceId}', '${tierName}', '${hrOnlyKey}', ${isHolding})"
+                            class="pricing-cta-secondary">
+                        Start ${trialDays}-Day Free Trial
                     </button>
-                    <button onclick="startSubscription('${monthlyPriceId}', '${product.name}')"
-                            class="pricing-cta-secondary"
-                            data-monthly-price-id="${monthlyPriceId}"
-                            data-annual-price-id="${annualPriceId}">
-                        Start 14-Day Trial
+                </div>
+
+                <div class="pricing-divider">OR</div>
+
+                <div class="pricing-option">
+                    <div class="option-header">
+                        <span class="option-label">HR + Payroll Bundle</span>
+                        <div class="pricing-amount">
+                            <span class="price">£${tier.hrPayroll?.amount || 0}</span>
+                            <span class="pricing-period">/month</span>
+                        </div>
+                    </div>
+                    <button onclick="startSubscription('${tier.hrPayroll?.priceId}', '${tierName}', '${hrPayrollKey}', ${isHolding})"
+                            class="pricing-cta-primary">
+                        Start ${trialDays}-Day Free Trial
                     </button>
                 </div>
             `;
 
             return article;
+        }
+
+        // Initialize customer type toggle
+        function initializeCustomerTypeToggle() {
+            const singleBtn = document.getElementById('single-company-btn');
+            const holdingBtn = document.getElementById('holding-company-btn');
+            const singleSection = document.getElementById('single-companies-section');
+            const holdingSection = document.getElementById('holding-companies-section');
+
+            if (!singleBtn || !holdingBtn) return;
+
+            singleBtn.addEventListener('click', () => {
+                singleBtn.classList.add('active');
+                holdingBtn.classList.remove('active');
+                singleSection.classList.add('active');
+                holdingSection.classList.remove('active');
+            });
+
+            holdingBtn.addEventListener('click', () => {
+                holdingBtn.classList.add('active');
+                singleBtn.classList.remove('active');
+                holdingSection.classList.add('active');
+                singleSection.classList.remove('active');
+            });
         }
 
         // Fallback pricing (in case API fails)
@@ -3371,25 +3512,31 @@
         }
 
         // Real Stripe integration function
-        async function startSubscription(priceId, planName) {
+        async function startSubscription(priceId, planName, planKey, isHoldingCompany) {
             try {
+                // Determine trial days based on company type
+                const trialDays = isHoldingCompany ? 60 : 14;
+
                 const response = await fetch(CONFIG.backendUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
+                    body: JSON.stringify({
                         priceId: priceId,
+                        planKey: planKey,
+                        planName: planName,
+                        isHoldingCompany: isHoldingCompany,
                         successUrl: window.location.origin + '/success.html',
                         cancelUrl: window.location.origin + '/#pricing',
-                        trialDays: 14
+                        trialDays: trialDays
                     })
                 });
-                
+
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                
+
                 const data = await response.json();
-                
+
                 if (data.success && data.url) {
                     window.location.href = data.url;
                 } else {
@@ -3540,67 +3687,7 @@
             }
         });
 
-        // Pricing Toggle (Annual/Monthly)
-        let isAnnual = false;
-        let pricingToggleInitialized = false;
-
-        function initializePricingToggle() {
-            const pricingToggle = document.getElementById('pricing-toggle');
-            const monthlyLabel = document.getElementById('monthly-label');
-            const annualLabel = document.getElementById('annual-label');
-
-            if (!pricingToggle || pricingToggleInitialized) return;
-
-            function updatePricing() {
-                const priceElements = document.querySelectorAll('.price');
-                const annualNotes = document.querySelectorAll('.pricing-annual-note');
-                const pricingButtons = document.querySelectorAll('.pricing-cta-primary, .pricing-cta-secondary');
-
-                pricingToggle.classList.toggle('active', isAnnual);
-                pricingToggle.setAttribute('aria-pressed', isAnnual.toString());
-
-                monthlyLabel.classList.toggle('active', !isAnnual);
-                annualLabel.classList.toggle('active', isAnnual);
-
-                // Update displayed prices
-                priceElements.forEach(price => {
-                    const monthly = price.dataset.monthly;
-                    const annual = price.dataset.annual;
-                    const currencySymbol = price.textContent.charAt(0);
-                    price.textContent = isAnnual ? `${currencySymbol}${annual}` : `${currencySymbol}${monthly}`;
-                });
-
-                // Update annual notes
-                annualNotes.forEach(note => {
-                    note.style.display = isAnnual ? 'block' : 'none';
-                });
-
-                // Update period labels
-                document.querySelectorAll('.pricing-period').forEach(period => {
-                    period.textContent = isAnnual ? '/year' : '/month';
-                });
-
-                // Update button price IDs based on billing period
-                pricingButtons.forEach(button => {
-                    const monthlyPriceId = button.dataset.monthlyPriceId;
-                    const annualPriceId = button.dataset.annualPriceId;
-                    const planName = button.getAttribute('onclick')?.match(/'([^']+)'\s*\)$/)?.[1] || '';
-
-                    if (monthlyPriceId && annualPriceId) {
-                        const priceId = isAnnual ? annualPriceId : monthlyPriceId;
-                        button.setAttribute('onclick', `startSubscription('${priceId}', '${planName}')`);
-                    }
-                });
-            }
-
-            pricingToggle.addEventListener('click', () => {
-                isAnnual = !isAnnual;
-                updatePricing();
-            });
-
-            pricingToggleInitialized = true;
-            updatePricing();
-        }
+        // Note: Monthly billing only - no annual toggle needed in new pricing model
 
         // Smooth Scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

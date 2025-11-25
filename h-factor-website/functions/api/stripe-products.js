@@ -1,5 +1,5 @@
 // functions/api/stripe-products.js
-// Cloudflare Pages Function to fetch Stripe products and prices
+// Cloudflare Pages Function to fetch Stripe products and prices for H Factor pricing model
 
 export async function onRequestGet(context) {
   const { env } = context;
@@ -20,7 +20,7 @@ export async function onRequestGet(context) {
     }
 
     // Fetch products from Stripe API
-    const productsResponse = await fetch('https://api.stripe.com/v1/products?active=true&expand[]=data.default_price', {
+    const productsResponse = await fetch('https://api.stripe.com/v1/products?active=true&limit=100', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${env.STRIPE_SECRET_KEY}`,
@@ -37,7 +37,7 @@ export async function onRequestGet(context) {
     // Fetch all prices for each product
     const productsWithPrices = await Promise.all(
       productsData.data.map(async (product) => {
-        // Fetch all prices for this product
+        // Fetch price for this product
         const pricesResponse = await fetch(`https://api.stripe.com/v1/prices?product=${product.id}&active=true`, {
           method: 'GET',
           headers: {
@@ -47,49 +47,75 @@ export async function onRequestGet(context) {
         });
 
         const pricesData = await pricesResponse.json();
-
-        // Organize prices by billing period
-        const prices = {
-          monthly: null,
-          annual: null
-        };
-
-        pricesData.data.forEach(price => {
-          if (price.recurring) {
-            if (price.recurring.interval === 'month') {
-              prices.monthly = {
-                id: price.id,
-                amount: price.unit_amount / 100, // Convert from cents
-                currency: price.currency
-              };
-            } else if (price.recurring.interval === 'year') {
-              prices.annual = {
-                id: price.id,
-                amount: price.unit_amount / 100, // Convert from cents
-                currency: price.currency
-              };
-            }
-          }
-        });
+        const price = pricesData.data[0]; // Get first active price
 
         return {
           id: product.id,
           name: product.name,
-          description: product.description,
-          features: product.metadata.features ? JSON.parse(product.metadata.features) : [],
-          highlighted: product.metadata.highlighted === 'true',
-          order: parseInt(product.metadata.order || '999'),
-          prices: prices
+          priceId: price?.id || null,
+          amount: price ? price.unit_amount / 100 : 0,
+          currency: price?.currency || 'gbp',
+          planTier: product.metadata.plan_tier || '',
+          includesPayroll: product.metadata.includes_payroll === 'true',
+          employeeRange: product.metadata.employee_range || '',
+          entityRange: product.metadata.entity_range || '',
+          isHoldingCompany: product.metadata.is_holding_company === 'true',
+          order: parseInt(product.metadata.order || '999')
         };
       })
     );
 
-    // Sort products by order metadata
-    const sortedProducts = productsWithPrices.sort((a, b) => a.order - b.order);
+    // Organize products by customer type and tier
+    const singleCompanies = [];
+    const holdingCompanies = [];
+
+    productsWithPrices.forEach(product => {
+      if (product.isHoldingCompany) {
+        holdingCompanies.push(product);
+      } else {
+        singleCompanies.push(product);
+      }
+    });
+
+    // Sort by order
+    singleCompanies.sort((a, b) => a.order - b.order);
+    holdingCompanies.sort((a, b) => a.order - b.order);
+
+    // Group products by tier (HR-only and HR+Payroll pairs)
+    const groupByTier = (products) => {
+      const tiers = {};
+      products.forEach(product => {
+        if (!tiers[product.planTier]) {
+          tiers[product.planTier] = {
+            tier: product.planTier,
+            employeeRange: product.employeeRange,
+            entityRange: product.entityRange,
+            hrOnly: null,
+            hrPayroll: null,
+            order: product.order
+          };
+        }
+        if (product.includesPayroll) {
+          tiers[product.planTier].hrPayroll = {
+            priceId: product.priceId,
+            amount: product.amount
+          };
+        } else {
+          tiers[product.planTier].hrOnly = {
+            priceId: product.priceId,
+            amount: product.amount
+          };
+        }
+      });
+      return Object.values(tiers).sort((a, b) => a.order - b.order);
+    };
 
     return new Response(JSON.stringify({
       success: true,
-      products: sortedProducts
+      pricing: {
+        singleCompanies: groupByTier(singleCompanies),
+        holdingCompanies: groupByTier(holdingCompanies)
+      }
     }), {
       status: 200,
       headers: {
