@@ -3346,7 +3346,7 @@
         // Create tier card with HR-only and HR+Payroll options
         function createTierCard(tier, isHolding) {
             const article = document.createElement('article');
-            article.className = 'pricing-card animate-on-scroll';
+            article.className = 'pricing-card'; // Removed animate-on-scroll to fix visibility
 
             const tierName = TIER_NAMES[tier.tier] || tier.tier;
             const trialDays = isHolding ? 60 : 14;
