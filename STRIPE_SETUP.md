@@ -1,92 +1,175 @@
-# Stripe Products Integration Setup Guide
+# H Factor Stripe Products Setup Guide
 
-This guide explains how to configure your Stripe products to display correctly on your website.
+This guide explains how to configure your Stripe products for the H Factor pricing model with Single Companies and Holding Companies tiers.
 
 ## Overview
 
-Your website now dynamically fetches pricing information from Stripe using the Products API. When you update products in your Stripe dashboard, the changes will automatically appear on your website.
+H Factor has two customer types:
+- **Single Companies**: Individual businesses (7 pricing tiers)
+- **Holding Companies**: Multi-entity groups (5 pricing tiers)
 
-## Required Configuration
+Each tier offers two options:
+- **HR Platform Only** (core product)
+- **HR + Payroll Bundle** (includes payroll processing)
 
-### 1. Environment Variables
+**Total products to create**: 24 (14 for single companies + 10 for holding companies)
 
-You need to set the following environment variable in your Cloudflare Pages settings:
+## Trial Periods
 
-- **`STRIPE_SECRET_KEY`**: Your Stripe secret API key (starts with `sk_`)
+- **Single Companies**: 14-day free trial
+- **Holding Companies**: 60-day free trial
 
-#### How to set environment variables in Cloudflare Pages:
+## Environment Configuration
+
+### Step 1: Set Environment Variable in Cloudflare Pages
 
 1. Go to your Cloudflare Pages dashboard
 2. Select your project (`h-factor-website`)
 3. Go to **Settings** > **Environment variables**
-4. Add a new variable:
+4. Add:
    - **Variable name**: `STRIPE_SECRET_KEY`
-   - **Value**: Your Stripe secret key (found in Stripe Dashboard > Developers > API keys)
-   - **Environment**: Production (and Preview if you want)
-5. Click **Save**
-6. Redeploy your site for changes to take effect
+   - **Value**: Your Stripe secret key (starts with `sk_`)
+   - **Environment**: Production (and Preview if desired)
+5. Click **Save** and redeploy
 
-### 2. Stripe Product Configuration
+## Creating Stripe Products
 
-For each product in your Stripe dashboard, you need to configure:
+### Product Naming Convention
 
-#### Product Information:
-- **Name**: The plan name (e.g., "Essential", "Professional", "Enterprise")
-- **Description** (optional): A brief description of the plan
+**Single Companies:**
+```
+H Factor - [Tier Name] Plan ([Type])
+```
+Examples:
+- `H Factor - Micro Plan (HR Only)`
+- `H Factor - Growth Plan (HR + Payroll)`
 
-#### Product Metadata:
+**Holding Companies:**
+```
+H Factor - [Tier Name] ([Type])
+```
+Examples:
+- `H Factor - Starter Group (HR Only)`
+- `H Factor - Enterprise Group (HR + Payroll)`
 
-Add the following metadata fields to each product:
+### Single Company Tiers
 
-| Metadata Key | Value | Description |
-|--------------|-------|-------------|
-| `features` | JSON array | List of features as a JSON array |
-| `highlighted` | `true` or `false` | Whether to highlight this plan (only one should be `true`) |
-| `order` | Number (1, 2, 3, etc.) | Display order on the website |
+Create these 14 products in Stripe:
 
-#### Example Metadata Configuration:
+| Plan | Employee Range | HR Only Price | HR + Payroll Price |
+|------|----------------|---------------|-------------------|
+| Micro | 1-5 | £49/month | £114/month |
+| Starter | 6-15 | £150/month | £245/month |
+| Growth | 16-30 | £200/month | £350/month |
+| Standard | 31-60 | £280/month | £500/month |
+| Plus | 61-100 | £350/month | £630/month |
+| Scale | 101-150 | £450/month | £750/month |
+| Scale+ | 151-200 | £550/month | £950/month |
 
-**Essential Plan:**
-- `features`: `["Up to 10 employees","HMRC RTI submissions","Payroll processing","Employee self-service","Basic reporting","Email support"]`
-- `highlighted`: `false`
-- `order`: `1`
+### Holding Company Tiers
 
-**Professional Plan:**
-- `features`: `["Up to 50 employees","Everything in Essential","Advanced reporting","Holiday management","Performance tracking","Priority support","API access"]`
-- `highlighted`: `true`
-- `order`: `2`
+Create these 10 products in Stripe:
 
-**Enterprise Plan:**
-- `features`: `["Unlimited employees","Everything in Professional","Custom integrations","Dedicated account manager","Custom reporting","Phone support","SLA guarantee"]`
-- `highlighted`: `false`
-- `order`: `3`
+| Plan | Entities | Employees | HR Only Price | HR + Payroll Price |
+|------|----------|-----------|---------------|-------------------|
+| Starter Group | 2-4 | Up to 80 | £300/month | £450/month |
+| Regional Group | 5-8 | 80-120 | £550/month | £800/month |
+| Regional Group+ | 5-8 | 120-150 | £700/month | £1,000/month |
+| Enterprise Group | 9-15 | 150-300 | £1,050/month | £1,500/month |
+| National Group | 16-25 | 300-500 | £1,500/month | £2,100/month |
 
-#### How to add metadata in Stripe:
+## Product Metadata
 
-1. Go to **Products** in your Stripe dashboard
-2. Click on a product to edit it
-3. Scroll down to **Metadata**
-4. Click **Add metadata**
-5. Add each key-value pair listed above
-6. Click **Save product**
+Each Stripe product MUST include these metadata fields:
 
-### 3. Price Configuration
+### Single Company Metadata Example:
 
-For each product, you should create **two prices**:
+For "H Factor - Micro Plan (HR Only)":
+```
+plan_tier: micro
+includes_payroll: false
+employee_range: 1-5 employees
+is_holding_company: false
+order: 1
+```
 
-1. **Monthly Price**:
-   - Billing period: Monthly
-   - Set as recurring
-   - Active: Yes
+For "H Factor - Micro Plan (HR + Payroll)":
+```
+plan_tier: micro
+includes_payroll: true
+employee_range: 1-5 employees
+is_holding_company: false
+order: 2
+```
 
-2. **Annual Price**:
-   - Billing period: Yearly
-   - Set as recurring
-   - Active: Yes
+### Holding Company Metadata Example:
 
-The website will automatically detect and display both pricing options with a toggle switch.
+For "H Factor - Starter Group (HR Only)":
+```
+plan_tier: holding_starter
+includes_payroll: false
+employee_range: Up to 80 employees
+entity_range: 2-4 entities
+is_holding_company: true
+order: 1
+```
 
-## API Endpoint
+For "H Factor - Starter Group (HR + Payroll)":
+```
+plan_tier: holding_starter
+includes_payroll: true
+employee_range: Up to 80 employees
+entity_range: 2-4 entities
+is_holding_company: true
+order: 2
+```
+
+### Metadata Field Reference
+
+| Field | Type | Description | Example Values |
+|-------|------|-------------|----------------|
+| `plan_tier` | string | Unique tier identifier | `micro`, `starter`, `growth`, `holding_starter`, `holding_regional` |
+| `includes_payroll` | boolean | Whether product includes payroll | `true` or `false` |
+| `employee_range` | string | Employee count range | `1-5 employees`, `Up to 80 employees` |
+| `entity_range` | string | Entity count (holding only) | `2-4 entities`, `5-8 entities` |
+| `is_holding_company` | boolean | Whether this is for holding companies | `true` or `false` |
+| `order` | integer | Display order on website | `1`, `2`, `3`, etc. |
+
+## Plan Tier Values Reference
+
+### Single Companies:
+- `micro` (1-5 employees)
+- `starter` (6-15 employees)
+- `growth` (16-30 employees)
+- `standard` (31-60 employees)
+- `plus` (61-100 employees)
+- `scale` (101-150 employees)
+- `scaleplus` (151-200 employees)
+
+### Holding Companies:
+- `holding_starter` (2-4 entities, up to 80 employees)
+- `holding_regional` (5-8 entities, 80-120 employees)
+- `holding_regional_plus` (5-8 entities, 120-150 employees)
+- `holding_enterprise` (9-15 entities, 150-300 employees)
+- `holding_national` (16-25 entities, 300-500 employees)
+
+## Price Configuration
+
+For each product:
+1. Create ONE recurring monthly price
+2. Set currency to **GBP (£)**
+3. Mark price as **Active**
+4. Set billing period to **Monthly**
+
+**Example:**
+- Product: "H Factor - Micro Plan (HR Only)"
+- Price: £49.00
+- Recurring: Monthly
+- Currency: GBP
+
+## How It Works
+
+### API Endpoint
 
 The pricing data is fetched from:
 ```
@@ -95,63 +178,162 @@ The pricing data is fetched from:
 
 This endpoint:
 - Fetches all active products from Stripe
-- Retrieves associated prices (monthly and annual)
-- Returns formatted data for the website
-- Caches results for 5 minutes to improve performance
+- Organizes them by customer type (single/holding)
+- Groups products by tier (HR-only + HR+Payroll pairs)
+- Returns structured data for display
 
-## Fallback Behavior
+### Response Format
 
-If the Stripe API is unavailable or returns an error, the website will display your current hardcoded pricing as a fallback. This ensures your pricing page always works, even if there are API issues.
+```json
+{
+  "success": true,
+  "pricing": {
+    "singleCompanies": [
+      {
+        "tier": "micro",
+        "employeeRange": "1-5 employees",
+        "hrOnly": {
+          "priceId": "price_xxxxx",
+          "amount": 49
+        },
+        "hrPayroll": {
+          "priceId": "price_yyyyy",
+          "amount": 114
+        }
+      }
+      // ... more tiers
+    ],
+    "holdingCompanies": [
+      {
+        "tier": "holding_starter",
+        "employeeRange": "Up to 80 employees",
+        "entityRange": "2-4 entities",
+        "hrOnly": {
+          "priceId": "price_xxxxx",
+          "amount": 300
+        },
+        "hrPayroll": {
+          "priceId": "price_yyyyy",
+          "amount": 450
+        }
+      }
+      // ... more tiers
+    ]
+  }
+}
+```
+
+### Plan Keys
+
+When a user clicks a subscription button, a **planKey** is generated:
+
+**Format:**
+- Single Company HR-only: `[tier]_hr` (e.g., `growth_hr`)
+- Single Company HR+Payroll: `[tier]_combo` (e.g., `growth_combo`)
+- Holding Company HR-only: `holding_[tier]_hr` (e.g., `holding_enterprise_hr`)
+- Holding Company HR+Payroll: `holding_[tier]_combo` (e.g., `holding_enterprise_combo`)
+
+This planKey is sent to your backend for checkout session creation.
 
 ## Testing Your Setup
 
-1. **Set the environment variable** in Cloudflare Pages
-2. **Configure your products** in Stripe with the required metadata
-3. **Create monthly and annual prices** for each product
-4. **Deploy your site** (or trigger a new deployment if already deployed)
-5. **Visit your website** and check the pricing section
+### 1. Create Products in Stripe
+
+Start with one tier to test:
+- Create "H Factor - Micro Plan (HR Only)"
+- Create "H Factor - Micro Plan (HR + Payroll)"
+- Add all required metadata
+- Create monthly prices for each
+
+### 2. Verify Metadata
+
+Double-check each product has:
+- ✅ Correct `plan_tier` value
+- ✅ Correct `includes_payroll` (true/false)
+- ✅ Employee range text
+- ✅ `is_holding_company` set correctly
+- ✅ Unique `order` number
+
+### 3. Test API Endpoint
+
+Once deployed, visit:
+```
+https://your-site.com/api/stripe-products
+```
+
+You should see JSON with your products organized by type.
+
+### 4. Check Website Display
+
+Visit your pricing section:
+- Toggle between "Single Companies" and "Holding Companies"
+- Verify prices display correctly
+- Click a trial button to test checkout flow
 
 ## Troubleshooting
 
 ### Pricing doesn't load:
-- Check that `STRIPE_SECRET_KEY` is set correctly in Cloudflare Pages
-- Verify the secret key has the correct permissions in Stripe
-- Check browser console for error messages
-- Verify products are marked as "Active" in Stripe
+- ✅ Check `STRIPE_SECRET_KEY` is set in Cloudflare
+- ✅ Verify products are marked "Active" in Stripe
+- ✅ Check browser console for errors
+- ✅ Verify API endpoint returns 200 status
 
 ### Products display in wrong order:
-- Check the `order` metadata value for each product
-- Lower numbers appear first (1, 2, 3, etc.)
+- ✅ Check `order` metadata values
+- ✅ Lower numbers appear first (1, 2, 3...)
 
-### Features don't show correctly:
-- Verify the `features` metadata is valid JSON
-- Ensure it's an array of strings: `["Feature 1", "Feature 2"]`
-- Check for proper quote escaping
+### Tier doesn't show HR+Payroll option:
+- ✅ Verify both products exist (HR-only and HR+Payroll)
+- ✅ Check both have same `plan_tier` value
+- ✅ Verify `includes_payroll` is `true` for bundle product
 
-### Wrong plan is highlighted:
-- Only one product should have `highlighted: true`
-- Others should have `highlighted: false`
+### Employee/entity ranges don't display:
+- ✅ Check `employee_range` metadata is set
+- ✅ For holding companies, check `entity_range` is set
+- ✅ Verify text format matches examples
 
-## Security Notes
+### Wrong trial period:
+- ✅ Check `is_holding_company` metadata
+- ✅ `false` = 14-day trial (single companies)
+- ✅ `true` = 60-day trial (holding companies)
 
-- **Never expose your Stripe secret key** in frontend code or public repositories
-- The secret key should only be set as an environment variable in Cloudflare Pages
-- The API endpoint only fetches public product information (not customer data)
-- The checkout process still uses your existing backend at `https://h-factor.base44.app`
+## Complete Product Checklist
 
-## Making Changes
+Use this to track your Stripe product setup:
 
-Whenever you update pricing in Stripe:
-1. Edit the product in your Stripe dashboard
-2. Update prices, features, or metadata as needed
-3. Save the changes
-4. Your website will reflect the changes within 5 minutes (due to caching)
-5. To see changes immediately, you can clear the cache by redeploying
+### Single Companies (14 products)
+- [ ] Micro Plan (HR Only) - £49
+- [ ] Micro Plan (HR + Payroll) - £114
+- [ ] Starter Plan (HR Only) - £150
+- [ ] Starter Plan (HR + Payroll) - £245
+- [ ] Growth Plan (HR Only) - £200
+- [ ] Growth Plan (HR + Payroll) - £350
+- [ ] Standard Plan (HR Only) - £280
+- [ ] Standard Plan (HR + Payroll) - £500
+- [ ] Plus Plan (HR Only) - £350
+- [ ] Plus Plan (HR + Payroll) - £630
+- [ ] Scale Plan (HR Only) - £450
+- [ ] Scale Plan (HR + Payroll) - £750
+- [ ] Scale+ Plan (HR Only) - £550
+- [ ] Scale+ Plan (HR + Payroll) - £950
+
+### Holding Companies (10 products)
+- [ ] Starter Group (HR Only) - £300
+- [ ] Starter Group (HR + Payroll) - £450
+- [ ] Regional Group (HR Only) - £550
+- [ ] Regional Group (HR + Payroll) - £800
+- [ ] Regional Group+ (HR Only) - £700
+- [ ] Regional Group+ (HR + Payroll) - £1,000
+- [ ] Enterprise Group (HR Only) - £1,050
+- [ ] Enterprise Group (HR + Payroll) - £1,500
+- [ ] National Group (HR Only) - £1,500
+- [ ] National Group (HR + Payroll) - £2,100
 
 ## Support
 
-If you encounter issues, check:
-1. Cloudflare Pages deployment logs
-2. Browser console for JavaScript errors
-3. Stripe Dashboard > Logs for API errors
-4. Verify all metadata is properly formatted
+If you encounter issues:
+1. Check Cloudflare Pages deployment logs
+2. Review browser console for JavaScript errors
+3. Verify Stripe Dashboard > Logs for API errors
+4. Confirm all metadata fields are set correctly
+5. Test with Stripe test mode first before going live
