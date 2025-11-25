@@ -3042,86 +3042,11 @@
 
                     <!-- Right Column: Pricing Cards -->
                     <div class="pricing-right">
-                        <div class="pricing-grid">
-                    <!-- Essential Plan -->
-                    <article class="pricing-card animate-on-scroll">
-                        <h3 class="pricing-tier">Essential</h3>
-                        <div class="pricing-amount">
-                            <span class="price" data-monthly="49" data-annual="490">£49</span>
-                            <span class="pricing-period">/month</span>
-                        </div>
-                        <p class="pricing-annual-note" style="display: none;">Billed annually (£490/year)</p>
-                        <ul class="pricing-features">
-                            <li><span class="check-icon" aria-hidden="true"></span>Up to 10 employees</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>HMRC RTI submissions</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Payroll processing</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Employee self-service</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Basic reporting</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Email support</li>
-                        </ul>
-                        <div class="pricing-buttons">
-                            <button onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="pricing-cta-primary">
-                                Subscribe Now
-                            </button>
-                            <button onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="pricing-cta-secondary">
-                                Start 14-Day Trial
-                            </button>
-                        </div>
-                    </article>
-                    
-                    <!-- Professional Plan -->
-                    <article class="pricing-card featured animate-on-scroll">
-                        <h3 class="pricing-tier">Professional</h3>
-                        <div class="pricing-amount">
-                            <span class="price" data-monthly="99" data-annual="990">£99</span>
-                            <span class="pricing-period">/month</span>
-                        </div>
-                        <p class="pricing-annual-note" style="display: none;">Billed annually (£990/year)</p>
-                        <ul class="pricing-features">
-                            <li><span class="check-icon" aria-hidden="true"></span>Up to 50 employees</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Everything in Essential</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Advanced reporting</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Holiday management</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Performance tracking</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Priority support</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>API access</li>
-                        </ul>
-                        <div class="pricing-buttons">
-                            <button onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="pricing-cta-primary">
-                                Subscribe Now
-                            </button>
-                            <button onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="pricing-cta-secondary">
-                                Start 14-Day Trial
-                            </button>
-                        </div>
-                    </article>
-                    
-                    <!-- Enterprise Plan -->
-                    <article class="pricing-card animate-on-scroll">
-                        <h3 class="pricing-tier">Enterprise</h3>
-                        <div class="pricing-amount">
-                            <span class="price" data-monthly="199" data-annual="1990">£199</span>
-                            <span class="pricing-period">/month</span>
-                        </div>
-                        <p class="pricing-annual-note" style="display: none;">Billed annually (£1,990/year)</p>
-                        <ul class="pricing-features">
-                            <li><span class="check-icon" aria-hidden="true"></span>Unlimited employees</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Everything in Professional</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Custom integrations</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Dedicated account manager</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Custom reporting</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>Phone support</li>
-                            <li><span class="check-icon" aria-hidden="true"></span>SLA guarantee</li>
-                        </ul>
-                        <div class="pricing-buttons">
-                            <button onclick="startSubscription('price_1S7jiK1MYGRkQqmRAgmQ76gx', 'Enterprise')" class="pricing-cta-primary">
-                                Subscribe Now
-                            </button>
-                            <button onclick="startSubscription('price_1S7jiK1MYGRkQqmRAgmQ76gx', 'Enterprise')" class="pricing-cta-secondary">
-                                Start 14-Day Trial
-                            </button>
-                        </div>
-                    </article>
+                        <div class="pricing-grid" id="pricing-grid">
+                            <!-- Pricing cards will be dynamically loaded from Stripe -->
+                            <div class="pricing-loading">
+                                <p>Loading pricing...</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3261,8 +3186,189 @@
         // Configuration
         const CONFIG = {
             emailEndpoint: 'mailto:sales@h-factor.co.uk',
-            backendUrl: 'https://h-factor.base44.app/api/functions/createStripeCheckout'
+            backendUrl: 'https://h-factor.base44.app/api/functions/createStripeCheckout',
+            stripeProductsUrl: window.location.origin + '/api/stripe-products'
         };
+
+        // Fetch and render Stripe products
+        async function loadStripePricing() {
+            try {
+                const response = await fetch(CONFIG.stripeProductsUrl);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch pricing');
+                }
+
+                const data = await response.json();
+
+                if (!data.success || !data.products) {
+                    throw new Error('Invalid pricing data');
+                }
+
+                renderPricingCards(data.products);
+            } catch (error) {
+                console.error('Error loading pricing:', error);
+                renderFallbackPricing();
+            }
+        }
+
+        // Render pricing cards from Stripe products
+        function renderPricingCards(products) {
+            const pricingGrid = document.getElementById('pricing-grid');
+
+            if (!pricingGrid) return;
+
+            // Clear loading message
+            pricingGrid.innerHTML = '';
+
+            // Render each product
+            products.forEach(product => {
+                const card = createPricingCard(product);
+                pricingGrid.appendChild(card);
+            });
+
+            // Reinitialize pricing toggle after rendering
+            initializePricingToggle();
+        }
+
+        // Create individual pricing card
+        function createPricingCard(product) {
+            const article = document.createElement('article');
+            article.className = 'pricing-card animate-on-scroll';
+            if (product.highlighted) {
+                article.classList.add('featured');
+            }
+
+            // Get monthly and annual prices
+            const monthlyPrice = product.prices.monthly?.amount || 0;
+            const annualPrice = product.prices.annual?.amount || 0;
+            const monthlyPriceId = product.prices.monthly?.id || '';
+            const annualPriceId = product.prices.annual?.id || '';
+            const currency = product.prices.monthly?.currency || 'gbp';
+            const currencySymbol = currency === 'gbp' ? '£' : '$';
+
+            // Build features list
+            const featuresHtml = product.features.map(feature =>
+                `<li><span class="check-icon" aria-hidden="true"></span>${feature}</li>`
+            ).join('');
+
+            // Build card HTML
+            article.innerHTML = `
+                <h3 class="pricing-tier">${product.name}</h3>
+                <div class="pricing-amount">
+                    <span class="price" data-monthly="${monthlyPrice}" data-annual="${annualPrice}">${currencySymbol}${monthlyPrice}</span>
+                    <span class="pricing-period">/month</span>
+                </div>
+                <p class="pricing-annual-note" style="display: none;">Billed annually (${currencySymbol}${annualPrice}/year)</p>
+                ${product.description ? `<p class="pricing-description">${product.description}</p>` : ''}
+                <ul class="pricing-features">
+                    ${featuresHtml}
+                </ul>
+                <div class="pricing-buttons">
+                    <button onclick="startSubscription('${monthlyPriceId}', '${product.name}')"
+                            class="pricing-cta-primary"
+                            data-monthly-price-id="${monthlyPriceId}"
+                            data-annual-price-id="${annualPriceId}">
+                        Subscribe Now
+                    </button>
+                    <button onclick="startSubscription('${monthlyPriceId}', '${product.name}')"
+                            class="pricing-cta-secondary"
+                            data-monthly-price-id="${monthlyPriceId}"
+                            data-annual-price-id="${annualPriceId}">
+                        Start 14-Day Trial
+                    </button>
+                </div>
+            `;
+
+            return article;
+        }
+
+        // Fallback pricing (in case API fails)
+        function renderFallbackPricing() {
+            const pricingGrid = document.getElementById('pricing-grid');
+            if (!pricingGrid) return;
+
+            pricingGrid.innerHTML = `
+                <article class="pricing-card animate-on-scroll">
+                    <h3 class="pricing-tier">Essential</h3>
+                    <div class="pricing-amount">
+                        <span class="price" data-monthly="49" data-annual="490">£49</span>
+                        <span class="pricing-period">/month</span>
+                    </div>
+                    <p class="pricing-annual-note" style="display: none;">Billed annually (£490/year)</p>
+                    <ul class="pricing-features">
+                        <li><span class="check-icon" aria-hidden="true"></span>Up to 10 employees</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>HMRC RTI submissions</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Payroll processing</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Employee self-service</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Basic reporting</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Email support</li>
+                    </ul>
+                    <div class="pricing-buttons">
+                        <button onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="pricing-cta-primary">
+                            Subscribe Now
+                        </button>
+                        <button onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="pricing-cta-secondary">
+                            Start 14-Day Trial
+                        </button>
+                    </div>
+                </article>
+
+                <article class="pricing-card featured animate-on-scroll">
+                    <h3 class="pricing-tier">Professional</h3>
+                    <div class="pricing-amount">
+                        <span class="price" data-monthly="99" data-annual="990">£99</span>
+                        <span class="pricing-period">/month</span>
+                    </div>
+                    <p class="pricing-annual-note" style="display: none;">Billed annually (£990/year)</p>
+                    <ul class="pricing-features">
+                        <li><span class="check-icon" aria-hidden="true"></span>Up to 50 employees</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Everything in Essential</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Advanced reporting</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Holiday management</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Performance tracking</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Priority support</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>API access</li>
+                    </ul>
+                    <div class="pricing-buttons">
+                        <button onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="pricing-cta-primary">
+                            Subscribe Now
+                        </button>
+                        <button onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="pricing-cta-secondary">
+                            Start 14-Day Trial
+                        </button>
+                    </div>
+                </article>
+
+                <article class="pricing-card animate-on-scroll">
+                    <h3 class="pricing-tier">Enterprise</h3>
+                    <div class="pricing-amount">
+                        <span class="price" data-monthly="199" data-annual="1990">£199</span>
+                        <span class="pricing-period">/month</span>
+                    </div>
+                    <p class="pricing-annual-note" style="display: none;">Billed annually (£1,990/year)</p>
+                    <ul class="pricing-features">
+                        <li><span class="check-icon" aria-hidden="true"></span>Unlimited employees</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Everything in Professional</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Custom integrations</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Dedicated account manager</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Custom reporting</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>Phone support</li>
+                        <li><span class="check-icon" aria-hidden="true"></span>SLA guarantee</li>
+                    </ul>
+                    <div class="pricing-buttons">
+                        <button onclick="startSubscription('price_1S7jiK1MYGRkQqmRAgmQ76gx', 'Enterprise')" class="pricing-cta-primary">
+                            Subscribe Now
+                        </button>
+                        <button onclick="startSubscription('price_1S7jiK1MYGRkQqmRAgmQ76gx', 'Enterprise')" class="pricing-cta-secondary">
+                            Start 14-Day Trial
+                        </button>
+                    </div>
+                </article>
+            `;
+
+            initializePricingToggle();
+        }
 
         // Real Stripe integration function
         async function startSubscription(priceId, planName) {
@@ -3435,41 +3541,64 @@
         });
 
         // Pricing Toggle (Annual/Monthly)
-        const pricingToggle = document.getElementById('pricing-toggle');
-        const monthlyLabel = document.getElementById('monthly-label');
-        const annualLabel = document.getElementById('annual-label');
-        const priceElements = document.querySelectorAll('.price');
-        const annualNotes = document.querySelectorAll('.pricing-annual-note');
-
         let isAnnual = false;
+        let pricingToggleInitialized = false;
 
-        function updatePricing() {
-            pricingToggle.classList.toggle('active', isAnnual);
-            pricingToggle.setAttribute('aria-pressed', isAnnual.toString());
-            
-            monthlyLabel.classList.toggle('active', !isAnnual);
-            annualLabel.classList.toggle('active', isAnnual);
+        function initializePricingToggle() {
+            const pricingToggle = document.getElementById('pricing-toggle');
+            const monthlyLabel = document.getElementById('monthly-label');
+            const annualLabel = document.getElementById('annual-label');
 
-            priceElements.forEach(price => {
-                const monthly = price.dataset.monthly;
-                const annual = price.dataset.annual;
-                price.textContent = isAnnual ? `£${annual}` : `£${monthly}`;
-            });
+            if (!pricingToggle || pricingToggleInitialized) return;
 
-            annualNotes.forEach(note => {
-                note.style.display = isAnnual ? 'block' : 'none';
-            });
+            function updatePricing() {
+                const priceElements = document.querySelectorAll('.price');
+                const annualNotes = document.querySelectorAll('.pricing-annual-note');
+                const pricingButtons = document.querySelectorAll('.pricing-cta-primary, .pricing-cta-secondary');
 
-            document.querySelectorAll('.pricing-period').forEach(period => {
-                period.textContent = isAnnual ? '/year' : '/month';
-            });
-        }
+                pricingToggle.classList.toggle('active', isAnnual);
+                pricingToggle.setAttribute('aria-pressed', isAnnual.toString());
 
-        if (pricingToggle) {
+                monthlyLabel.classList.toggle('active', !isAnnual);
+                annualLabel.classList.toggle('active', isAnnual);
+
+                // Update displayed prices
+                priceElements.forEach(price => {
+                    const monthly = price.dataset.monthly;
+                    const annual = price.dataset.annual;
+                    const currencySymbol = price.textContent.charAt(0);
+                    price.textContent = isAnnual ? `${currencySymbol}${annual}` : `${currencySymbol}${monthly}`;
+                });
+
+                // Update annual notes
+                annualNotes.forEach(note => {
+                    note.style.display = isAnnual ? 'block' : 'none';
+                });
+
+                // Update period labels
+                document.querySelectorAll('.pricing-period').forEach(period => {
+                    period.textContent = isAnnual ? '/year' : '/month';
+                });
+
+                // Update button price IDs based on billing period
+                pricingButtons.forEach(button => {
+                    const monthlyPriceId = button.dataset.monthlyPriceId;
+                    const annualPriceId = button.dataset.annualPriceId;
+                    const planName = button.getAttribute('onclick')?.match(/'([^']+)'\s*\)$/)?.[1] || '';
+
+                    if (monthlyPriceId && annualPriceId) {
+                        const priceId = isAnnual ? annualPriceId : monthlyPriceId;
+                        button.setAttribute('onclick', `startSubscription('${priceId}', '${planName}')`);
+                    }
+                });
+            }
+
             pricingToggle.addEventListener('click', () => {
                 isAnnual = !isAnnual;
                 updatePricing();
             });
+
+            pricingToggleInitialized = true;
             updatePricing();
         }
 
@@ -3692,6 +3821,9 @@ Sent from H Factor contact form
             hoursSlider.addEventListener('input', calculateROI);
             calculateROI(); // Initial calculation
         }
+
+        // Load Stripe pricing on page load
+        loadStripePricing();
 
         console.log('H Factor website loaded successfully!');
     </script>
