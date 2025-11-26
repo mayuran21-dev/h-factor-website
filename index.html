@@ -3332,6 +3332,13 @@
                 <h2 id="pricing-title" class="pricing-title animate-on-scroll">Simple pricing that scales</h2>
                 <p class="pricing-subtitle animate-on-scroll">Calculate your plan based on your business size</p>
 
+                <!-- Error/Cancel Message -->
+                <div id="checkout-message" style="display: none; max-width: 800px; margin: 24px auto; padding: 16px 24px; background: #fee2e2; border: 2px solid #ef4444; border-radius: 8px; text-align: center;">
+                    <p style="color: #991b1b; font-size: 16px; font-weight: 600; margin: 0;">
+                        <span id="message-text">Payment was cancelled. Please try again or contact support if you need help.</span>
+                    </p>
+                </div>
+
                 <!-- Two Card Layout -->
                 <div class="pricing-calculator-wrapper">
                     <!-- Left Card: Input Form -->
@@ -3811,9 +3818,30 @@
             `;
         }
 
+        // Check if user returned from cancelled/failed checkout
+        function checkCheckoutStatus() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hash = window.location.hash;
+
+            // Check if user came back to #pricing (cancelled checkout)
+            if (hash === '#pricing' && document.referrer.includes('checkout.stripe.com')) {
+                const messageEl = document.getElementById('checkout-message');
+                if (messageEl) {
+                    messageEl.style.display = 'block';
+                    // Scroll to pricing section
+                    document.getElementById('pricing').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Auto-hide after 10 seconds
+                    setTimeout(() => {
+                        messageEl.style.display = 'none';
+                    }, 10000);
+                }
+            }
+        }
+
         // Initialize pricing calculator when page loads
         loadPricingData();
         initializePricingCalculator();
+        checkCheckoutStatus();
 
         // Real Stripe integration function
         async function startSubscription(priceId, planName, planKey, isHoldingCompany) {
