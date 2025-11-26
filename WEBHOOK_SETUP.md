@@ -1,43 +1,44 @@
 # H Factor Stripe Webhook Setup Guide
 
-This guide explains how to configure Stripe webhooks to automatically process new subscriptions and trigger customer onboarding.
+This guide explains how to configure Stripe webhooks for automated customer onboarding.
 
 ## Overview
 
 The webhook system handles:
-- ✅ New subscription notifications
+- ✅ Automated user account creation
+- ✅ Company profile creation
+- ✅ Welcome emails with login credentials
 - ✅ Subscription status changes (trial ending, cancellation, etc.)
 - ✅ Payment events (successful payments, failed payments)
-- ✅ Automated team notifications
-- ✅ Integration with backend API for automated onboarding
 
 ## Architecture
 
 ```
-Customer Completes Checkout
+Customer Completes Checkout on Marketing Website
          ↓
-Stripe sends webhook event
+Stripe sends webhook event to Backend API
          ↓
-Cloudflare Function receives & verifies
+Backend API (api.h-factor.co.uk)
          ↓
-Three parallel actions:
-1. Forward to backend API (base44.app) for automated onboarding
-2. Send notification email to team
-3. Store in KV storage for tracking
+Automated onboarding:
+1. Create user account with temporary password
+2. Create company profile and holding company structure
+3. Send welcome email with login credentials to customer
+4. Update Stripe subscription metadata
 ```
 
-## Step 1: Configure Stripe Webhook
+## Webhook Configuration
 
-### 1.1 Create Webhook Endpoint in Stripe
+### Step 1: Configure Stripe Webhook Endpoint
 
 1. Go to [Stripe Dashboard → Developers → Webhooks](https://dashboard.stripe.com/webhooks)
 2. Click **Add endpoint**
 3. Enter endpoint URL:
    ```
-   https://h-factor.co.uk/api/stripe-webhook
+   https://api.h-factor.co.uk/api/stripe/webhook
    ```
 4. Select events to listen for:
-   - ✅ `checkout.session.completed`
+   - ✅ `checkout.session.completed` ← **CRITICAL for automated onboarding**
    - ✅ `customer.subscription.created`
    - ✅ `customer.subscription.updated`
    - ✅ `customer.subscription.deleted`
@@ -46,317 +47,219 @@ Three parallel actions:
 
 5. Click **Add endpoint**
 
-### 1.2 Get Webhook Signing Secret
+### Step 2: Configure Backend Environment Variables
 
-After creating the endpoint:
-1. Click on the webhook endpoint you just created
-2. Under **Signing secret**, click **Reveal**
-3. Copy the secret (starts with `whsec_`)
-4. Save this - you'll need it for environment variables
+The backend API requires these environment variables (configured in your backend repository):
 
-## Step 2: Configure Environment Variables
-
-Add these variables in **Cloudflare Pages → Settings → Environment variables**:
-
-### Required:
 ```
+# Stripe
+STRIPE_SECRET_KEY=sk_live_xxxxx
 STRIPE_WEBHOOK_SECRET=whsec_xxxxx
-```
-*The signing secret from Step 1.2*
 
-### Optional (for enhanced functionality):
+# Email Service
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=noreply@h-factor.co.uk
+SMTP_PASSWORD=<app-password>
+EMAIL_FROM=H Factor <noreply@h-factor.co.uk>
 
-**Backend API Integration:**
-```
-BACKEND_API_URL=https://h-factor.base44.app
-BACKEND_API_KEY=your_backend_api_key
-```
-*For automated forwarding of subscription data to your backend*
-
-**Email Notifications:**
-```
-EMAIL_SERVICE_URL=https://api.your-email-service.com/send
-EMAIL_API_KEY=your_email_api_key
-ADMIN_EMAIL=support@h-factor.co.uk
-```
-*For sending team notifications about new subscriptions*
-
-**KV Storage (optional):**
-```
-SUBSCRIPTIONS=your_kv_namespace_id
-```
-*For storing subscription data for manual processing*
-
-## Step 3: Update Backend API
-
-Your backend at `https://h-factor.base44.app` needs to be updated to include metadata when creating Stripe checkout sessions.
-
-### 3.1 Update createStripeCheckout Function
-
-In your backend's `createStripeCheckout` function, ensure you pass metadata to Stripe:
-
-```javascript
-// Example backend code (base44.app/api/functions/createStripeCheckout)
-const session = await stripe.checkout.sessions.create({
-  mode: 'subscription',
-  line_items: [{
-    price: priceId,
-    quantity: 1,
-  }],
-  subscription_data: {
-    trial_period_days: trialDays
-  },
-  success_url: successUrl,
-  cancel_url: cancelUrl,
-
-  // IMPORTANT: Add this metadata
-  metadata: {
-    planName: planName,
-    planKey: planKey,
-    isHoldingCompany: isHoldingCompany.toString(),
-    source: 'website'
-  }
-});
+# Application
+APP_URL=https://app.h-factor.co.uk
 ```
 
-### 3.2 Create Subscription Processing Endpoint (Optional but Recommended)
+## How It Works
 
-Create a new endpoint to receive subscription data from the webhook:
+### Customer Journey:
 
-```javascript
-// base44.app/api/functions/processSubscription
-export async function processSubscription(req, res) {
-  // Verify API key
-  const apiKey = req.headers.authorization?.replace('Bearer ', '');
-  if (apiKey !== process.env.BACKEND_API_KEY) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
+1. **Customer visits marketing website** (https://h-factor.co.uk)
+2. **Uses pricing calculator** to find their plan
+3. **Clicks "Start Free Trial"**
+4. **Marketing website calls backend API**:
+   ```
+   POST https://api.h-factor.co.uk/api/stripe/create-checkout
 
-  const {
-    sessionId,
-    customerId,
-    subscriptionId,
-    customerEmail,
-    planName,
-    planKey,
-    isHoldingCompany
-  } = req.body;
+   Body:
+   {
+     priceId: "price_xxxxx",
+     planName: "Starter Plan",
+     planKey: "starter_hr",
+     isHoldingCompany: false,
+     numEmployees: 25,
+     numEntities: 0,
+     industryPack: "General",
+     successUrl: "https://h-factor.co.uk/success.html",
+     cancelUrl: "https://h-factor.co.uk/#pricing",
+     trialDays: 14
+   }
+   ```
 
-  // 1. Create user account in your system
-  const user = await createUserAccount({
-    email: customerEmail,
-    stripeCustomerId: customerId,
-    stripeSubscriptionId: subscriptionId,
-    plan: planKey
-  });
+5. **Backend creates Stripe checkout session** with metadata
+6. **Customer completes payment on Stripe**
+7. **Stripe sends webhook to backend**: `checkout.session.completed`
+8. **Backend automatically**:
+   - Creates user account with secure temporary password
+   - Creates holding company and company profile
+   - Links user to company
+   - Sends welcome email with login credentials
+   - Updates subscription metadata
 
-  // 2. Send welcome email with login credentials
-  await sendWelcomeEmail({
-    to: customerEmail,
-    loginUrl: 'https://h-factor.base44.app',
-    username: user.username,
-    temporaryPassword: user.tempPassword,
-    planName: planName,
-    trialDays: isHoldingCompany ? 60 : 14
-  });
+9. **Customer receives email** within seconds with:
+   - Login URL: https://app.h-factor.co.uk
+   - Email address (their email)
+   - Temporary password
+   - Instructions to change password on first login
 
-  // 3. Log subscription for reporting
-  await logSubscription({
-    userId: user.id,
-    subscriptionId: subscriptionId,
-    plan: planKey,
-    startDate: new Date()
-  });
+10. **Customer logs in immediately** - Zero manual intervention!
 
-  return res.json({ success: true, userId: user.id });
-}
-```
+## Testing
 
-## Step 4: Test the Webhook
+### Test with Stripe Test Cards
 
-### 4.1 Test in Stripe Dashboard
+**Success:**
+- Card: `4242 4242 4242 4242`
+- Any future expiry date
+- Any 3-digit CVC
+- Any ZIP code
 
-1. Go to **Stripe Dashboard → Developers → Webhooks**
-2. Click on your webhook endpoint
-3. Click **Send test webhook**
-4. Select `checkout.session.completed`
-5. Click **Send test webhook**
+**Expected Flow:**
+1. Complete checkout
+2. Redirected to success page
+3. Receive welcome email within 30 seconds
+4. Email contains temporary password
+5. Can log in at https://app.h-factor.co.uk
+6. Company profile exists in database
 
-### 4.2 Check Webhook Logs
+**Decline:**
+- Card: `4000 0000 0000 0002`
 
-In Cloudflare Pages:
-1. Go to **Functions** tab
-2. Check **Real-time logs**
-3. You should see: `Received Stripe webhook event: checkout.session.completed`
+**Expected:** Payment fails, customer returned to pricing page
 
-### 4.3 Test with Real Checkout
+### Verify Webhook is Working
 
-Use Stripe test cards:
-- **Success**: `4242 4242 4242 4242`
-- **Failure**: `4000 0000 0000 0002`
+1. **Check Stripe Dashboard**:
+   - Go to Developers → Webhooks
+   - Click on your webhook endpoint
+   - View "Events" tab
+   - Should see recent events with 200 status codes
 
-Complete a test checkout and verify:
-1. Webhook receives the event
-2. Notification email is sent (if configured)
-3. Backend API is called (if configured)
-4. Customer receives welcome email (if backend configured)
+2. **Check Backend Logs**:
+   - Look for: `🎉 New customer checkout completed`
+   - Verify user creation logs
+   - Check email sending logs
 
-## Step 5: Monitor Webhook Events
-
-### In Stripe Dashboard:
-- **Webhooks → [Your endpoint] → Events tab**: See all webhook deliveries
-- Look for successful deliveries (200 response) or failures
-
-### In Cloudflare:
-- **Pages → Functions → Logs**: See real-time webhook processing
-- Check for errors or warnings
-
-### In Your Backend:
-- Monitor your backend API logs for subscription processing
-- Check database for new user accounts created
-- Verify welcome emails are being sent
-
-## Webhook Event Handling
-
-### checkout.session.completed
-**When**: Customer completes checkout successfully
-**Actions**:
-1. Extract customer email and subscription details
-2. Forward to backend API for account creation
-3. Send notification email to team
-4. Store in KV storage
-
-### customer.subscription.created
-**When**: Subscription is created (usually same time as checkout.session.completed)
-**Actions**: Log subscription creation with trial end date
-
-### customer.subscription.updated
-**When**: Subscription changes (status, plan, etc.)
-**Actions**:
-- Check if trial is ending soon (3 days)
-- Send reminder emails if needed
-- Update backend system
-
-### customer.subscription.deleted
-**When**: Customer cancels subscription
-**Actions**:
-1. Send cancellation notification to team
-2. Trigger follow-up workflow
-3. Update user account status in backend
-
-### invoice.paid
-**When**: Customer pays an invoice (including first payment after trial)
-**Actions**: Log successful payment
-
-### invoice.payment_failed
-**When**: Payment fails (card declined, expired, etc.)
-**Actions**:
-1. Send urgent notification to team
-2. Trigger dunning workflow
-3. Send payment reminder to customer
-
-## Security Best Practices
-
-### 1. Webhook Signature Verification
-The webhook function automatically verifies Stripe signatures to ensure requests are genuine. Never disable this check.
-
-### 2. Timestamp Validation
-Webhooks older than 5 minutes are rejected to prevent replay attacks.
-
-### 3. HTTPS Only
-Webhooks must use HTTPS URLs. Cloudflare Pages provides this automatically.
-
-### 4. Secure Environment Variables
-Store all API keys and secrets as Cloudflare environment variables, never in code.
-
-### 5. Backend API Authentication
-If forwarding to backend API, use API key authentication to verify requests.
+3. **Check Database**:
+   - Query users table for new customer email
+   - Verify company_profile_id is set
+   - Check company_profiles table
 
 ## Troubleshooting
 
-### Webhook showing failures in Stripe Dashboard
+### Webhook showing failures in Stripe
 
-**Check 1: Signature Verification**
-- Verify `STRIPE_WEBHOOK_SECRET` is set correctly in Cloudflare
-- Make sure you're using the correct secret (test mode vs live mode)
+**Check:**
+- Verify webhook URL is correct: `https://api.h-factor.co.uk/api/stripe/webhook`
+- Check backend is running and accessible
+- Verify `STRIPE_WEBHOOK_SECRET` matches in backend environment
+- Check backend logs for errors
 
-**Check 2: Function Deployment**
-- Verify webhook function is deployed: `ls functions/api/stripe-webhook.js`
-- Check Cloudflare Pages deployment succeeded
+### Customer not receiving welcome email
 
-**Check 3: Response Status**
-- Webhook should return 200 status for success
-- Check Cloudflare Functions logs for errors
+**Check:**
+1. **Email service configured**:
+   - Verify SMTP credentials in backend
+   - Test email service separately
 
-### Not receiving notification emails
+2. **Check spam folder**:
+   - Welcome emails might be filtered
 
-**Check 1: Email Service Configured**
-- Verify `EMAIL_SERVICE_URL` and `EMAIL_API_KEY` are set
-- Test email service separately
+3. **Backend logs**:
+   - Look for email sending errors
+   - Verify `sendEmail()` function executed
 
-**Check 2: Admin Email Set**
-- Verify `ADMIN_EMAIL` is configured
+4. **SMTP credentials**:
+   - Gmail App Password (not regular password)
+   - 2FA must be enabled for App Passwords
 
-**Check 3: Check Logs**
-- Look for email sending errors in Cloudflare logs
+### Customer account not created
 
-### Backend not receiving subscription data
+**Check:**
+1. **Webhook received**:
+   - Check Stripe Dashboard webhook events
+   - Should show 200 response
 
-**Check 1: Backend API URL**
-- Verify `BACKEND_API_URL` is set correctly
-- Test endpoint manually with curl or Postman
+2. **Backend errors**:
+   - Check application logs
+   - Look for database connection errors
+   - Verify migration 023 was run
 
-**Check 2: API Key Authentication**
-- Verify `BACKEND_API_KEY` matches on both sides
+3. **Database schema**:
+   - Ensure `company_profile_id` column exists in users table
+   - Run migration: `023_add_company_profile_to_users.sql`
 
-**Check 3: Backend Endpoint Exists**
-- Create `/api/functions/processSubscription` if it doesn't exist
+### Metadata not being passed
 
-### Customers not receiving welcome emails
+**Check:**
+1. **Marketing website updated**:
+   - Verify `CONFIG.backendUrl` points to `https://api.h-factor.co.uk/api/stripe/create-checkout`
+   - Check browser console for API errors
 
-**This requires backend implementation**:
-1. Verify backend is receiving webhook data
-2. Check backend is creating user accounts
-3. Verify backend email service is working
-4. Check spam folders
+2. **Backend receiving metadata**:
+   - Check backend logs for received payload
+   - Verify metadata extraction in `handleCheckoutSessionCompleted`
 
-## Testing Checklist
+## Security
 
-- [ ] Webhook endpoint created in Stripe
-- [ ] `STRIPE_WEBHOOK_SECRET` configured in Cloudflare
-- [ ] Test webhook sent from Stripe Dashboard (received 200 response)
-- [ ] Test checkout completed with test card
-- [ ] Webhook event logged in Cloudflare Functions
-- [ ] Notification email received (if configured)
-- [ ] Backend API received subscription data (if configured)
-- [ ] Customer received welcome email (if backend configured)
-- [ ] Test subscription cancellation (receives webhook)
-- [ ] Test payment failure (receives webhook and notification)
+### Best Practices Implemented:
 
-## Next Steps After Setup
+- ✅ **Webhook signature verification**: Prevents spoofing
+- ✅ **Timestamp validation**: Prevents replay attacks
+- ✅ **Secure password generation**: 12 chars, bcrypt hashed
+- ✅ **HTTPS only**: All endpoints secured
+- ✅ **Environment variables**: No secrets in code
+- ✅ **Email security**: App passwords, not plain text
 
-1. **Test in Test Mode**: Complete full checkout flow with test cards
-2. **Verify Automation**: Check all emails and account creation work
-3. **Switch to Live Mode**:
-   - Create new webhook endpoint with live mode secret
-   - Update `STRIPE_WEBHOOK_SECRET` to live mode secret
-   - Update backend to use live Stripe keys
-4. **Monitor**: Watch webhook events and logs for first few real customers
+### Password Security:
+
+- **Generation**: 12 characters, uppercase, lowercase, numbers, symbols
+- **Hashing**: bcrypt with 10 rounds
+- **Temporary**: User must change on first login
+- **Example**: `Kp8#mN2$vL9@`
+
+## Monitoring
+
+### What to Monitor:
+
+1. **Stripe Webhook Events**:
+   - Check for failed deliveries
+   - Monitor response times
+
+2. **Backend Application Logs**:
+   - User creation success/failures
+   - Email sending status
+   - Database errors
+
+3. **Email Deliverability**:
+   - Monitor spam folder placement
+   - Check email service quotas
+
+4. **Customer Feedback**:
+   - Watch for customers not receiving emails
+   - Monitor support tickets
 
 ## Support
 
 If you encounter issues:
-- Check Cloudflare Pages Functions logs
-- Check Stripe Dashboard webhook events for delivery status
-- Verify all environment variables are set correctly
-- Review backend API logs for processing errors
-- Check email service logs if emails not sending
 
-## Files in This Implementation
+1. Check Stripe Dashboard webhook event logs
+2. Review backend application logs
+3. Verify environment variables are set correctly
+4. Check email service status
+5. Verify database migrations are current
 
-- `/functions/api/stripe-webhook.js` - Webhook handler function
-- `/functions/api/stripe-products.js` - Products API endpoint
-- `/index.html` - Frontend with pricing calculator
-- `/success.html` - Checkout success page
-- `STRIPE_SETUP.md` - Stripe products configuration guide
-- `WEBHOOK_SETUP.md` - This file
+For backend implementation details, see `AUTOMATED_ONBOARDING.md` in the backend repository.
+
+## Related Documentation
+
+- **Backend Implementation**: See backend repo `/AUTOMATED_ONBOARDING.md`
+- **Stripe Products Setup**: See `STRIPE_SETUP.md` in this repo
+- **Marketing Website**: See `README.md` in this repo

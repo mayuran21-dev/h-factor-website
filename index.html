@@ -2764,7 +2764,7 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="nav-cta-container">
-                <a href="https://h-factor.base44.app" class="nav-login">Log in</a>
+                <a href="https://app.h-factor.co.uk" class="nav-login">Log in</a>
                 <a href="#" onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="nav-cta">Get started</a>
             </div>
             <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -3496,7 +3496,7 @@
                         <li><a href="#features">Features</a></li>
                         <li><a href="#pricing">Pricing</a></li>
                         <li><a href="#roi-calculator">ROI Calculator</a></li>
-                        <li><a href="https://h-factor.base44.app">Log in</a></li>
+                        <li><a href="https://app.h-factor.co.uk">Log in</a></li>
                     </ul>
                 </div>
 
@@ -3567,7 +3567,7 @@
         // Configuration
         const CONFIG = {
             emailEndpoint: 'mailto:sales@h-factor.co.uk',
-            backendUrl: 'https://h-factor.base44.app/api/functions/createStripeCheckout',
+            backendUrl: 'https://api.h-factor.co.uk/api/stripe/create-checkout',
             stripeProductsUrl: window.location.origin + '/api/stripe-products'
         };
 
@@ -3575,6 +3575,8 @@
         let pricingData = null;
         let currentTier = null;
         let showingPayroll = false;
+        let customerNumEmployees = 0;
+        let customerNumEntities = 0;
 
         // Tier name mapping for display
         const TIER_NAMES = {
@@ -3689,6 +3691,10 @@
                 showContactUs(numEmployees, numEntities);
                 return;
             }
+
+            // Store customer data for checkout
+            customerNumEmployees = numEmployees;
+            customerNumEntities = numEntities;
 
             currentTier = matchedTier;
             showPricingResult();
@@ -3859,7 +3865,10 @@
                         isHoldingCompany: isHoldingCompany,
                         successUrl: window.location.origin + '/success.html',
                         cancelUrl: window.location.origin + '/#pricing',
-                        trialDays: trialDays
+                        trialDays: trialDays,
+                        numEmployees: customerNumEmployees,
+                        numEntities: customerNumEntities,
+                        industryPack: 'General'
                     })
                 });
 

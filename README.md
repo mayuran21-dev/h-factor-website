@@ -15,27 +15,32 @@ This website integrates with Stripe to offer tiered subscription plans with:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    H Factor Website (Cloudflare Pages)          │
-│                        https://h-factor.co.uk                   │
+│              Marketing Website (Cloudflare Pages)               │
+│                     https://h-factor.co.uk                      │
 └─────────────────────────────────────────────────────────────────┘
                                 │
-                    ┌───────────┼───────────┐
-                    │           │           │
-                    ▼           ▼           ▼
-            ┌───────────┐ ┌──────────┐ ┌────────────┐
-            │  Stripe   │ │ Backend  │ │ Cloudflare │
-            │  Products │ │   API    │ │ Functions  │
-            │    API    │ │(base44)  │ │            │
-            └───────────┘ └──────────┘ └────────────┘
-                    │           │           │
-                    │           │           │
-                    └───────────┼───────────┘
-                                │
-                                ▼
-                        ┌───────────────┐
-                        │ Stripe Webhook│
-                        │   Processing  │
-                        └───────────────┘
+                    ┌───────────┴───────────┐
+                    ▼                       ▼
+            ┌───────────────┐      ┌────────────────┐
+            │   Cloudflare  │      │   Backend API  │
+            │   Functions   │      │(Azure Static   │
+            │ stripe-products│      │  Web Apps)    │
+            └───────────────┘      └────────────────┘
+                    │               api.h-factor.co.uk
+                    │                       │
+                    ▼                       ▼
+            ┌───────────────┐      ┌────────────────┐
+            │ Stripe Products│      │ Stripe Checkout│
+            │      API       │      │   & Webhooks   │
+            └───────────────┘      └────────────────┘
+                                            │
+                                            ▼
+                                    ┌────────────────┐
+                                    │   Automated    │
+                                    │   Onboarding   │
+                                    │ (User Creation,│
+                                    │ Welcome Email) │
+                                    └────────────────┘
 ```
 
 ### Components:
@@ -48,19 +53,18 @@ This website integrates with Stripe to offer tiered subscription plans with:
 
 2. **Cloudflare Functions**:
    - `/api/stripe-products` - Fetches products and prices from Stripe
-   - `/api/stripe-webhook` - Processes Stripe webhook events
-   - `/api/contact` - Handles contact form submissions (to be deployed)
 
-3. **Backend API** (`https://h-factor.base44.app`):
+3. **Backend API** (`https://api.h-factor.co.uk`):
    - Creates Stripe checkout sessions
-   - Manages customer portal and login
-   - Processes subscriptions (via webhook forwarding)
-   - Sends automated welcome emails
+   - Processes Stripe webhooks for automated onboarding
+   - Creates user accounts and company profiles
+   - Sends automated welcome emails with login credentials
+   - Manages customer portal at `https://app.h-factor.co.uk`
 
 4. **Stripe**:
    - 24 products (14 single company + 10 holding company)
    - Monthly recurring subscriptions
-   - Webhook events for automation
+   - Webhook events trigger automated customer onboarding
 
 ## Key Features
 
@@ -83,12 +87,14 @@ Handles complex range formats:
 - Trial periods: 14 days (single) or 60 days (holding)
 - Test mode support with proper error handling
 
-### 📧 Webhook Automation
-- Captures successful checkouts
-- Forwards subscription data to backend
-- Sends team notifications
+### 📧 Automated Customer Onboarding
+- Webhook captures successful checkouts in real-time
+- Automatically creates user accounts with secure temporary passwords
+- Creates company profiles and holding company structures
+- Sends welcome emails with login credentials immediately
 - Tracks subscription lifecycle events
 - Handles payment failures and cancellations
+- Zero manual intervention required
 
 ## Files Structure
 
@@ -99,8 +105,7 @@ h-factor-website/
 ├── learn.html                          # Learning resources page
 ├── functions/
 │   └── api/
-│       ├── stripe-products.js         # Fetch Stripe products endpoint
-│       └── stripe-webhook.js          # Webhook event processor
+│       └── stripe-products.js         # Fetch Stripe products endpoint
 ├── STRIPE_SETUP.md                     # Guide for configuring Stripe products
 ├── WEBHOOK_SETUP.md                    # Guide for webhook configuration
 └── README.md                           # This file
@@ -116,55 +121,40 @@ Create 24 products in Stripe with proper metadata. See **STRIPE_SETUP.md** for:
 - Naming conventions
 - Testing checklist
 
-### 2. Environment Variables
+### 2. Environment Variables (Cloudflare Pages)
 
 Configure in **Cloudflare Pages → Settings → Environment variables**:
 
 **Required:**
 ```
-STRIPE_SECRET_KEY=sk_xxxxx          # Your Stripe secret key
-STRIPE_WEBHOOK_SECRET=whsec_xxxxx   # Webhook signing secret
+STRIPE_SECRET_KEY=sk_xxxxx          # Your Stripe secret key (for stripe-products function)
 ```
 
-**Optional (recommended):**
-```
-BACKEND_API_URL=https://h-factor.base44.app
-BACKEND_API_KEY=your_api_key
-EMAIL_SERVICE_URL=https://api.your-email-service.com/send
-EMAIL_API_KEY=your_email_key
-ADMIN_EMAIL=support@h-factor.co.uk
-```
+**Note**: Webhook secrets and other backend configuration is managed in your backend repository.
 
-### 3. Webhook Configuration
+### 3. Backend API Configuration
 
-Configure Stripe webhook to enable automated onboarding. See **WEBHOOK_SETUP.md** for:
-- Step-by-step webhook setup in Stripe Dashboard
-- Backend API integration requirements
-- Email notification configuration
-- Testing procedures
-- Troubleshooting guide
+Your backend at `https://api.h-factor.co.uk` is already configured with:
+- Stripe webhook handler at `/api/stripe/webhook`
+- Checkout session creation at `/api/stripe/create-checkout`
+- Automated onboarding on `checkout.session.completed` events
+- Email service for welcome messages
+- User and company creation
 
-### 4. Backend API Updates
+See **backend repository → AUTOMATED_ONBOARDING.md** for backend setup details.
 
-Your backend at `https://h-factor.base44.app` needs:
+### 4. Webhook Configuration
 
-1. **Include metadata in checkout sessions**:
-```javascript
-metadata: {
-  planName: planName,
-  planKey: planKey,
-  isHoldingCompany: isHoldingCompany.toString()
-}
-```
+Configure Stripe webhook to point to your backend. See **WEBHOOK_SETUP.md** for:
+- Step-by-step webhook setup in Stripe Dashboard (endpoint: `https://api.h-factor.co.uk/api/stripe/webhook`)
+- Testing procedures with Stripe test cards
+- Troubleshooting common issues
+- Customer journey flow diagram
 
-2. **Create subscription processing endpoint**:
-```
-POST /api/functions/processSubscription
-```
-
-3. **Send automated welcome emails** with login credentials
-
-See **WEBHOOK_SETUP.md** section 3 for detailed backend requirements.
+**Note**: The marketing website already sends all required metadata to the backend, including:
+- `planName`, `planKey`, `isHoldingCompany`
+- `numEmployees`, `numEntities`, `industryPack`
+- `trialDays`, `successUrl`, `cancelUrl`
 
 ## Testing
 
