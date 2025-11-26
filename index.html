@@ -2376,96 +2376,312 @@
             }
         }
 
-        /* Customer Type Toggle Styles */
-        .customer-type-toggle {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            margin: 40px 0;
+        /* Pricing Calculator Styles */
+        .pricing-calculator-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            max-width: 1200px;
+            margin: 60px auto 0;
         }
 
-        .type-btn {
-            padding: 12px 32px;
+        .pricing-calculator-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .calculator-card-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 32px;
+        }
+
+        /* Form Styles */
+        .calculator-form-group {
+            margin-bottom: 28px;
+        }
+
+        .calculator-label {
+            display: block;
             font-size: 16px;
             font-weight: 600;
-            border: 2px solid #C8A972;
-            background: transparent;
-            color: #C8A972;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 16px;
+        }
+
+        .radio-option {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border: 2px solid #e5e7eb;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .type-btn:hover {
+        .radio-option:hover {
+            border-color: #C8A972;
+            background: rgba(200, 169, 114, 0.05);
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            accent-color: #C8A972;
+        }
+
+        .radio-option input[type="radio"]:checked + .radio-label {
+            font-weight: 600;
+        }
+
+        .radio-option:has(input:checked) {
+            border-color: #C8A972;
             background: rgba(200, 169, 114, 0.1);
         }
 
-        .type-btn.active {
-            background: #C8A972;
-            color: white;
+        .radio-label {
+            font-size: 16px;
+            color: #1a1a1a;
         }
 
-        /* Pricing Type Sections */
-        .pricing-type-section {
-            display: none !important;
+        .calculator-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
         }
 
-        .pricing-type-section.active {
-            display: block !important;
+        .calculator-input:focus {
+            outline: none;
+            border-color: #C8A972;
         }
 
-        /* Pricing Card Updates for New Model */
-        .pricing-range {
-            text-align: center;
+        .input-hint {
+            display: block;
             font-size: 14px;
             color: #666;
-            margin: 8px 0 24px;
-            line-height: 1.6;
+            margin-top: 8px;
         }
 
-        .pricing-option {
-            margin: 20px 0;
-            padding: 20px;
-            border: 1px solid #e5e7eb;
+        .calculator-btn-primary {
+            width: 100%;
+            padding: 16px 24px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            background: #C8A972;
+            border: none;
             border-radius: 8px;
-            background: #fafafa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 16px;
         }
 
-        .option-header {
+        .calculator-btn-primary:hover {
+            background: #b89862;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(200, 169, 114, 0.3);
+        }
+
+        /* Result Card Styles */
+        .pricing-result-empty {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            justify-content: center;
+            min-height: 500px;
         }
 
-        .option-label {
+        .result-empty-state {
+            text-align: center;
+            color: #666;
+        }
+
+        .result-empty-state svg {
+            color: #C8A972;
+            margin-bottom: 24px;
+        }
+
+        .result-empty-state h3 {
+            font-size: 20px;
             font-weight: 600;
             color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .result-empty-state p {
             font-size: 16px;
+            color: #666;
+            max-width: 300px;
+            margin: 0 auto;
         }
 
-        .pricing-divider {
+        /* Result Display */
+        #pricing-result-display {
             text-align: center;
-            margin: 16px 0;
-            color: #999;
-            font-size: 14px;
-            font-weight: 600;
         }
 
-        @media (max-width: 768px) {
-            .customer-type-toggle {
-                flex-direction: column;
-                gap: 12px;
+        .result-toggle-wrapper {
+            margin-bottom: 32px;
+        }
+
+        .result-toggle {
+            display: inline-flex;
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .toggle-option {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: #666;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-option.active {
+            background: white;
+            color: #C8A972;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-plan-info {
+            margin-bottom: 32px;
+        }
+
+        .result-plan-name {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .result-plan-range {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .result-pricing {
+            margin-bottom: 32px;
+        }
+
+        .result-price-amount {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+
+        .result-currency {
+            font-size: 36px;
+            font-weight: 700;
+            color: #C8A972;
+        }
+
+        .result-price {
+            font-size: 64px;
+            font-weight: 700;
+            color: #C8A972;
+            line-height: 1;
+        }
+
+        .result-period {
+            font-size: 20px;
+            color: #666;
+        }
+
+        .result-trial {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .calculator-btn-cta {
+            width: 100%;
+            padding: 18px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            background: #274969;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 24px;
+        }
+
+        .calculator-btn-cta:hover {
+            background: #1e3a52;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(39, 73, 105, 0.3);
+        }
+
+        .result-description {
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .result-description p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .pricing-calculator-wrapper {
+                grid-template-columns: 1fr;
+                gap: 24px;
             }
 
-            .type-btn {
-                width: 100%;
+            .pricing-calculator-card {
+                padding: 32px 24px;
             }
 
-            .option-header {
+            .result-plan-name {
+                font-size: 28px;
+            }
+
+            .result-price {
+                font-size: 48px;
+            }
+
+            .result-currency {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .radio-group {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
+            }
+
+            .pricing-calculator-card {
+                padding: 24px 20px;
+            }
+
+            .calculator-card-title {
+                font-size: 20px;
+            }
+
+            .result-price {
+                font-size: 40px;
             }
         }
     </style>
@@ -3114,34 +3330,97 @@
         <section id="pricing" class="pricing-section" aria-labelledby="pricing-title">
             <div class="pricing-container">
                 <h2 id="pricing-title" class="pricing-title animate-on-scroll">Simple pricing that scales</h2>
-                <p class="pricing-subtitle animate-on-scroll">Choose the plan that fits your business needs</p>
+                <p class="pricing-subtitle animate-on-scroll">Calculate your plan based on your business size</p>
 
-                <!-- Customer Type Toggle -->
-                <div class="customer-type-toggle animate-on-scroll">
-                    <button class="type-btn active" id="single-company-btn" data-type="single">
-                        Single Companies
-                    </button>
-                    <button class="type-btn" id="holding-company-btn" data-type="holding">
-                        Holding Companies
-                    </button>
-                </div>
+                <!-- Two Card Layout -->
+                <div class="pricing-calculator-wrapper">
+                    <!-- Left Card: Input Form -->
+                    <div class="pricing-calculator-card pricing-input-card">
+                        <h3 class="calculator-card-title">Tell us about your business</h3>
 
-                <!-- Single Companies Pricing -->
-                <div id="single-companies-section" class="pricing-type-section active">
-                    <div class="pricing-grid" id="single-companies-grid">
-                        <!-- Pricing cards will be dynamically loaded from Stripe -->
-                        <div class="pricing-loading">
-                            <p>Loading pricing...</p>
+                        <!-- Step 1: Company Type -->
+                        <div class="calculator-form-group">
+                            <label class="calculator-label">Company Type</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="companyType" value="single" checked>
+                                    <span class="radio-label">Single Company</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="companyType" value="holding">
+                                    <span class="radio-label">Holding Company</span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Holding Companies Pricing -->
-                <div id="holding-companies-section" class="pricing-type-section">
-                    <div class="pricing-grid" id="holding-companies-grid">
-                        <!-- Pricing cards will be dynamically loaded from Stripe -->
-                        <div class="pricing-loading">
-                            <p>Loading pricing...</p>
+                        <!-- Step 2: Number of Entities (only for holding) -->
+                        <div class="calculator-form-group" id="entities-group" style="display: none;">
+                            <label class="calculator-label" for="num-entities">Number of Entities</label>
+                            <input type="number" id="num-entities" class="calculator-input" min="2" placeholder="e.g., 5">
+                            <span class="input-hint">How many separate entities/companies?</span>
+                        </div>
+
+                        <!-- Step 3: Number of Employees -->
+                        <div class="calculator-form-group">
+                            <label class="calculator-label" for="num-employees">Number of Employees</label>
+                            <input type="number" id="num-employees" class="calculator-input" min="1" placeholder="e.g., 25" required>
+                            <span class="input-hint">Total employees across all locations</span>
+                        </div>
+
+                        <!-- Step 4: Calculate Button -->
+                        <button type="button" id="calculate-pricing-btn" class="calculator-btn-primary">
+                            Calculate My Pricing
+                        </button>
+                    </div>
+
+                    <!-- Right Card: Results Display -->
+                    <div class="pricing-calculator-card pricing-result-card">
+                        <div id="pricing-result-content" class="pricing-result-empty">
+                            <div class="result-empty-state">
+                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                <h3>Calculate your pricing</h3>
+                                <p>Enter your business details to see your recommended plan and pricing</p>
+                            </div>
+                        </div>
+
+                        <!-- Result will be populated here -->
+                        <div id="pricing-result-display" style="display: none;">
+                            <!-- HR/Payroll Toggle -->
+                            <div class="result-toggle-wrapper">
+                                <div class="result-toggle">
+                                    <button class="toggle-option active" data-option="hr">HR Only</button>
+                                    <button class="toggle-option" data-option="payroll">HR + Payroll</button>
+                                </div>
+                            </div>
+
+                            <!-- Plan Details -->
+                            <div class="result-plan-info">
+                                <h3 class="result-plan-name" id="result-plan-name">Growth Plan</h3>
+                                <p class="result-plan-range" id="result-plan-range">16-30 employees</p>
+                            </div>
+
+                            <!-- Pricing Display -->
+                            <div class="result-pricing">
+                                <div class="result-price-amount">
+                                    <span class="result-currency">£</span>
+                                    <span class="result-price" id="result-price">200</span>
+                                    <span class="result-period">/month</span>
+                                </div>
+                                <p class="result-trial" id="result-trial">14-day free trial included</p>
+                            </div>
+
+                            <!-- CTA Button -->
+                            <button type="button" id="start-trial-btn" class="calculator-btn-cta">
+                                Start Free Trial
+                            </button>
+
+                            <!-- Plan Description -->
+                            <div class="result-description">
+                                <p id="result-description">Perfect for growing teams</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3285,6 +3564,11 @@
             stripeProductsUrl: window.location.origin + '/api/stripe-products'
         };
 
+        // Pricing Calculator Logic
+        let pricingData = null;
+        let currentTier = null;
+        let showingPayroll = false;
+
         // Tier name mapping for display
         const TIER_NAMES = {
             'micro': 'Micro Plan',
@@ -3301,215 +3585,235 @@
             'holding_national': 'National Group'
         };
 
-        // Fetch and render Stripe products
-        async function loadStripePricing() {
+        // Fetch and load pricing data from Stripe
+        async function loadPricingData() {
             try {
                 const response = await fetch(CONFIG.stripeProductsUrl);
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch pricing');
-                }
+                if (!response.ok) throw new Error('Failed to fetch pricing');
 
                 const data = await response.json();
+                if (!data.success || !data.pricing) throw new Error('Invalid pricing data');
 
-                if (!data.success || !data.pricing) {
-                    throw new Error('Invalid pricing data');
-                }
-
-                renderPricingSections(data.pricing);
-                initializeCustomerTypeToggle();
+                pricingData = data.pricing;
+                console.log('Pricing data loaded successfully');
             } catch (error) {
                 console.error('Error loading pricing:', error);
-                renderFallbackPricing();
             }
         }
 
-        // Render both pricing sections
-        function renderPricingSections(pricing) {
-            renderTierCards(pricing.singleCompanies, 'single-companies-grid', false);
-            renderTierCards(pricing.holdingCompanies, 'holding-companies-grid', true);
-        }
+        // Initialize pricing calculator
+        function initializePricingCalculator() {
+            const companyTypeRadios = document.querySelectorAll('input[name="companyType"]');
+            const entitiesGroup = document.getElementById('entities-group');
+            const calculateBtn = document.getElementById('calculate-pricing-btn');
+            const toggleOptions = document.querySelectorAll('.toggle-option');
+            const startTrialBtn = document.getElementById('start-trial-btn');
 
-        // Render tier cards
-        function renderTierCards(tiers, gridId, isHolding) {
-            const grid = document.getElementById(gridId);
-            if (!grid) return;
-
-            grid.innerHTML = '';
-
-            tiers.forEach(tier => {
-                const card = createTierCard(tier, isHolding);
-                grid.appendChild(card);
+            // Handle company type change
+            companyTypeRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    if (e.target.value === 'holding') {
+                        entitiesGroup.style.display = 'block';
+                    } else {
+                        entitiesGroup.style.display = 'none';
+                    }
+                });
             });
+
+            // Handle calculate button click
+            if (calculateBtn) {
+                calculateBtn.addEventListener('click', calculatePricing);
+            }
+
+            // Handle HR/Payroll toggle
+            toggleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    toggleOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    showingPayroll = this.dataset.option === 'payroll';
+                    updatePricingDisplay();
+                });
+            });
+
+            // Handle start trial button
+            if (startTrialBtn) {
+                startTrialBtn.addEventListener('click', function() {
+                    if (!currentTier) return;
+
+                    const isHolding = document.querySelector('input[name="companyType"]:checked').value === 'holding';
+                    const tierKey = currentTier.tier;
+                    const priceId = showingPayroll ? currentTier.hrPayroll?.priceId : currentTier.hrOnly?.priceId;
+                    const planName = TIER_NAMES[tierKey] || tierKey;
+                    const planKey = isHolding ?
+                        `holding_${tierKey.replace('holding_', '')}_${showingPayroll ? 'combo' : 'hr'}` :
+                        `${tierKey}_${showingPayroll ? 'combo' : 'hr'}`;
+
+                    startSubscription(priceId, planName, planKey, isHolding);
+                });
+            }
         }
 
-        // Create tier card with HR-only and HR+Payroll options
-        function createTierCard(tier, isHolding) {
-            const article = document.createElement('article');
-            article.className = 'pricing-card'; // Removed animate-on-scroll to fix visibility
+        // Calculate pricing based on inputs
+        function calculatePricing() {
+            const companyType = document.querySelector('input[name="companyType"]:checked').value;
+            const numEmployees = parseInt(document.getElementById('num-employees').value);
+            const numEntities = parseInt(document.getElementById('num-entities').value) || 0;
 
-            const tierName = TIER_NAMES[tier.tier] || tier.tier;
+            if (!numEmployees || numEmployees < 1) {
+                alert('Please enter a valid number of employees');
+                return;
+            }
+
+            if (companyType === 'holding' && (!numEntities || numEntities < 2)) {
+                alert('Please enter a valid number of entities (minimum 2)');
+                return;
+            }
+
+            if (!pricingData) {
+                alert('Pricing data not loaded. Please refresh the page.');
+                return;
+            }
+
+            // Find matching tier
+            const tiers = companyType === 'single' ? pricingData.singleCompanies : pricingData.holdingCompanies;
+            const matchedTier = findMatchingTier(tiers, numEmployees, numEntities, companyType === 'holding');
+
+            if (!matchedTier) {
+                showContactUs(numEmployees, numEntities);
+                return;
+            }
+
+            currentTier = matchedTier;
+            showPricingResult();
+            updatePricingDisplay();
+        }
+
+        // Find matching tier based on employee/entity count
+        function findMatchingTier(tiers, employees, entities, isHolding) {
+            for (const tier of tiers) {
+                if (isHolding) {
+                    // For holding companies, check both entity and employee ranges
+                    if (checkEntityRange(tier.entityRange, entities) && checkEmployeeRange(tier.employeeRange, employees)) {
+                        return tier;
+                    }
+                } else {
+                    // For single companies, just check employee range
+                    if (checkEmployeeRange(tier.employeeRange, employees)) {
+                        return tier;
+                    }
+                }
+            }
+            return null;
+        }
+
+        // Check if employee count is within range
+        function checkEmployeeRange(rangeStr, count) {
+            // Handle "up to X" format
+            if (rangeStr.includes('up to')) {
+                const max = parseInt(rangeStr.match(/\d+/)[0]);
+                return count <= max;
+            }
+
+            // Handle "X-Y" format
+            const match = rangeStr.match(/(\d+)-(\d+)/);
+            if (match) {
+                const min = parseInt(match[1]);
+                const max = parseInt(match[2]);
+                return count >= min && count <= max;
+            }
+
+            // Handle "X+" format
+            if (rangeStr.includes('+')) {
+                const min = parseInt(rangeStr.match(/\d+/)[0]);
+                return count >= min;
+            }
+
+            return false;
+        }
+
+        // Check if entity count is within range
+        function checkEntityRange(rangeStr, count) {
+            const match = rangeStr.match(/(\d+)-(\d+)/);
+            if (match) {
+                const min = parseInt(match[1]);
+                const max = parseInt(match[2]);
+                return count >= min && count <= max;
+            }
+
+            // Handle "X+" format
+            if (rangeStr.includes('+')) {
+                const min = parseInt(rangeStr.match(/\d+/)[0]);
+                return count >= min;
+            }
+
+            return false;
+        }
+
+        // Show pricing result
+        function showPricingResult() {
+            document.getElementById('pricing-result-content').style.display = 'none';
+            document.getElementById('pricing-result-display').style.display = 'block';
+        }
+
+        // Update pricing display
+        function updatePricingDisplay() {
+            if (!currentTier) return;
+
+            const isHolding = document.querySelector('input[name="companyType"]:checked').value === 'holding';
+            const tierName = TIER_NAMES[currentTier.tier] || currentTier.tier;
+            const price = showingPayroll ? currentTier.hrPayroll?.amount : currentTier.hrOnly?.amount;
             const trialDays = isHolding ? 60 : 14;
 
-            // Generate plan keys
-            const planKeyPrefix = isHolding ? `holding_${tier.tier.replace('holding_', '')}` : tier.tier;
-            const hrOnlyKey = `${planKeyPrefix}_hr`;
-            const hrPayrollKey = `${planKeyPrefix}_combo`;
+            // Update plan name
+            document.getElementById('result-plan-name').textContent = tierName;
 
-            // Build employee/entity range display
-            let rangeText = tier.employeeRange;
-            if (isHolding && tier.entityRange) {
-                rangeText = `${tier.entityRange} entities<br>${tier.employeeRange} employees`;
+            // Update plan range
+            let rangeText = currentTier.employeeRange;
+            if (isHolding && currentTier.entityRange) {
+                rangeText = `${currentTier.entityRange} entities, ${currentTier.employeeRange}`;
             }
+            document.getElementById('result-plan-range').textContent = rangeText;
 
-            article.innerHTML = `
-                <h3 class="pricing-tier">${tierName}</h3>
-                <p class="pricing-range">${rangeText}</p>
+            // Update price
+            document.getElementById('result-price').textContent = price || '0';
 
-                <div class="pricing-option">
-                    <div class="option-header">
-                        <span class="option-label">HR Platform Only</span>
-                        <div class="pricing-amount">
-                            <span class="price">£${tier.hrOnly?.amount || 0}</span>
-                            <span class="pricing-period">/month</span>
-                        </div>
-                    </div>
-                    <button onclick="startSubscription('${tier.hrOnly?.priceId}', '${tierName}', '${hrOnlyKey}', ${isHolding})"
-                            class="pricing-cta-secondary">
-                        Start ${trialDays}-Day Free Trial
-                    </button>
-                </div>
+            // Update trial period
+            document.getElementById('result-trial').textContent = `${trialDays}-day free trial included`;
 
-                <div class="pricing-divider">OR</div>
+            // Update description
+            const planType = showingPayroll ? 'HR + Payroll Bundle' : 'HR Platform Only';
+            document.getElementById('result-description').textContent = planType;
+        }
 
-                <div class="pricing-option">
-                    <div class="option-header">
-                        <span class="option-label">HR + Payroll Bundle</span>
-                        <div class="pricing-amount">
-                            <span class="price">£${tier.hrPayroll?.amount || 0}</span>
-                            <span class="pricing-period">/month</span>
-                        </div>
-                    </div>
-                    <button onclick="startSubscription('${tier.hrPayroll?.priceId}', '${tierName}', '${hrPayrollKey}', ${isHolding})"
-                            class="pricing-cta-primary">
-                        Start ${trialDays}-Day Free Trial
-                    </button>
+        // Show contact us message for Enterprise/Mega plans
+        function showContactUs(employees, entities) {
+            const resultContent = document.getElementById('pricing-result-content');
+            const resultDisplay = document.getElementById('pricing-result-display');
+
+            resultContent.style.display = 'none';
+            resultDisplay.style.display = 'block';
+            resultDisplay.innerHTML = `
+                <div style="text-align: center; padding: 40px 20px;">
+                    <h3 style="font-size: 28px; margin-bottom: 16px; color: #1a1a1a;">Enterprise Plan</h3>
+                    <p style="font-size: 18px; color: #666; margin-bottom: 32px;">
+                        Your business size requires a custom solution
+                    </p>
+                    <p style="font-size: 16px; color: #666; margin-bottom: 32px;">
+                        ${employees} employees${entities > 0 ? ` across ${entities} entities` : ''}
+                    </p>
+                    <a href="#contact" class="calculator-btn-cta" style="display: inline-block; text-decoration: none;">
+                        Contact Sales
+                    </a>
+                    <p style="font-size: 14px; color: #999; margin-top: 24px;">
+                        We'll create a custom plan tailored to your needs
+                    </p>
                 </div>
             `;
-
-            return article;
         }
 
-        // Initialize customer type toggle
-        function initializeCustomerTypeToggle() {
-            const singleBtn = document.getElementById('single-company-btn');
-            const holdingBtn = document.getElementById('holding-company-btn');
-            const singleSection = document.getElementById('single-companies-section');
-            const holdingSection = document.getElementById('holding-companies-section');
-
-            if (!singleBtn || !holdingBtn) return;
-
-            singleBtn.addEventListener('click', () => {
-                singleBtn.classList.add('active');
-                holdingBtn.classList.remove('active');
-                singleSection.classList.add('active');
-                holdingSection.classList.remove('active');
-            });
-
-            holdingBtn.addEventListener('click', () => {
-                holdingBtn.classList.add('active');
-                singleBtn.classList.remove('active');
-                holdingSection.classList.add('active');
-                singleSection.classList.remove('active');
-            });
-        }
-
-        // Fallback pricing (in case API fails)
-        function renderFallbackPricing() {
-            const pricingGrid = document.getElementById('pricing-grid');
-            if (!pricingGrid) return;
-
-            pricingGrid.innerHTML = `
-                <article class="pricing-card animate-on-scroll">
-                    <h3 class="pricing-tier">Essential</h3>
-                    <div class="pricing-amount">
-                        <span class="price" data-monthly="49" data-annual="490">£49</span>
-                        <span class="pricing-period">/month</span>
-                    </div>
-                    <p class="pricing-annual-note" style="display: none;">Billed annually (£490/year)</p>
-                    <ul class="pricing-features">
-                        <li><span class="check-icon" aria-hidden="true"></span>Up to 10 employees</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>HMRC RTI submissions</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Payroll processing</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Employee self-service</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Basic reporting</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Email support</li>
-                    </ul>
-                    <div class="pricing-buttons">
-                        <button onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="pricing-cta-primary">
-                            Subscribe Now
-                        </button>
-                        <button onclick="startSubscription('price_1S7jep1MYGRkQqmRFHcJn0VC', 'Essential')" class="pricing-cta-secondary">
-                            Start 14-Day Trial
-                        </button>
-                    </div>
-                </article>
-
-                <article class="pricing-card featured animate-on-scroll">
-                    <h3 class="pricing-tier">Professional</h3>
-                    <div class="pricing-amount">
-                        <span class="price" data-monthly="99" data-annual="990">£99</span>
-                        <span class="pricing-period">/month</span>
-                    </div>
-                    <p class="pricing-annual-note" style="display: none;">Billed annually (£990/year)</p>
-                    <ul class="pricing-features">
-                        <li><span class="check-icon" aria-hidden="true"></span>Up to 50 employees</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Everything in Essential</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Advanced reporting</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Holiday management</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Performance tracking</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Priority support</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>API access</li>
-                    </ul>
-                    <div class="pricing-buttons">
-                        <button onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="pricing-cta-primary">
-                            Subscribe Now
-                        </button>
-                        <button onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="pricing-cta-secondary">
-                            Start 14-Day Trial
-                        </button>
-                    </div>
-                </article>
-
-                <article class="pricing-card animate-on-scroll">
-                    <h3 class="pricing-tier">Enterprise</h3>
-                    <div class="pricing-amount">
-                        <span class="price" data-monthly="199" data-annual="1990">£199</span>
-                        <span class="pricing-period">/month</span>
-                    </div>
-                    <p class="pricing-annual-note" style="display: none;">Billed annually (£1,990/year)</p>
-                    <ul class="pricing-features">
-                        <li><span class="check-icon" aria-hidden="true"></span>Unlimited employees</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Everything in Professional</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Custom integrations</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Dedicated account manager</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Custom reporting</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>Phone support</li>
-                        <li><span class="check-icon" aria-hidden="true"></span>SLA guarantee</li>
-                    </ul>
-                    <div class="pricing-buttons">
-                        <button onclick="startSubscription('price_1S7jiK1MYGRkQqmRAgmQ76gx', 'Enterprise')" class="pricing-cta-primary">
-                            Subscribe Now
-                        </button>
-                        <button onclick="startSubscription('price_1S7jiK1MYGRkQqmRAgmQ76gx', 'Enterprise')" class="pricing-cta-secondary">
-                            Start 14-Day Trial
-                        </button>
-                    </div>
-                </article>
-            `;
-
-            initializePricingToggle();
-        }
+        // Initialize pricing calculator when page loads
+        loadPricingData();
+        initializePricingCalculator();
 
         // Real Stripe integration function
         async function startSubscription(priceId, planName, planKey, isHoldingCompany) {
