@@ -329,6 +329,33 @@ Use this to track your Stripe product setup:
 - [ ] National Group (HR Only) - £1,500
 - [ ] National Group (HR + Payroll) - £2,100
 
+## Automated Customer Onboarding
+
+After customers complete checkout, you need to:
+1. Create their account in your system
+2. Send them login credentials
+3. Grant access to the H Factor platform
+
+**IMPORTANT**: See `WEBHOOK_SETUP.md` for complete instructions on configuring Stripe webhooks to automate this process.
+
+### Quick Webhook Setup:
+
+1. **Create webhook in Stripe**:
+   - URL: `https://h-factor.co.uk/api/stripe-webhook`
+   - Events: `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`
+
+2. **Configure environment variable**:
+   - Add `STRIPE_WEBHOOK_SECRET` to Cloudflare Pages settings
+   - Get the secret from Stripe Dashboard after creating webhook
+
+3. **Update backend API**:
+   - Your backend at `https://h-factor.base44.app` needs to:
+     - Include metadata when creating checkout sessions
+     - Create endpoint to receive subscription data from webhook
+     - Send automated welcome emails with login credentials
+
+For detailed setup instructions, see **WEBHOOK_SETUP.md**.
+
 ## Support
 
 If you encounter issues:
