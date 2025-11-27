@@ -3374,7 +3374,14 @@
                             <span class="input-hint">Total employees across all locations</span>
                         </div>
 
-                        <!-- Step 4: Calculate Button -->
+                        <!-- Step 4: Email Address (REQUIRED for account creation) -->
+                        <div class="calculator-form-group">
+                            <label class="calculator-label" for="customer-email">Email Address *</label>
+                            <input type="email" id="customer-email" class="calculator-input" placeholder="your@email.com" required>
+                            <span class="input-hint">We'll send your login credentials here</span>
+                        </div>
+
+                        <!-- Step 5: Calculate Button -->
                         <button type="button" id="calculate-pricing-btn" class="calculator-btn-primary">
                             Calculate My Pricing
                         </button>
@@ -3577,6 +3584,7 @@
         let showingPayroll = false;
         let customerNumEmployees = 0;
         let customerNumEntities = 0;
+        let customerEmail = '';
 
         // Tier name mapping for display
         const TIER_NAMES = {
@@ -3667,6 +3675,14 @@
             const companyType = document.querySelector('input[name="companyType"]:checked').value;
             const numEmployees = parseInt(document.getElementById('num-employees').value);
             const numEntities = parseInt(document.getElementById('num-entities').value) || 0;
+            const email = document.getElementById('customer-email').value.trim();
+
+            // Validate email
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address');
+                document.getElementById('customer-email').focus();
+                return;
+            }
 
             if (!numEmployees || numEmployees < 1) {
                 alert('Please enter a valid number of employees');
@@ -3693,6 +3709,7 @@
             }
 
             // Store customer data for checkout
+            customerEmail = email;
             customerNumEmployees = numEmployees;
             customerNumEntities = numEntities;
 
@@ -3852,8 +3869,23 @@
         // Real Stripe integration function
         async function startSubscription(priceId, planName, planKey, isHoldingCompany) {
             try {
+                // Validate customer email is set
+                if (!customerEmail || !customerEmail.includes('@')) {
+                    alert('Please enter your email address first by clicking "Calculate My Pricing"');
+                    return;
+                }
+
                 // Determine trial days based on company type
                 const trialDays = isHoldingCompany ? 60 : 14;
+
+                console.log('Creating checkout session with:', {
+                    priceId,
+                    planName,
+                    planKey,
+                    customerEmail,
+                    numEmployees: customerNumEmployees,
+                    numEntities: customerNumEntities
+                });
 
                 const response = await fetch(CONFIG.backendUrl, {
                     method: 'POST',
@@ -3863,6 +3895,7 @@
                         planKey: planKey,
                         planName: planName,
                         isHoldingCompany: isHoldingCompany,
+                        customerEmail: customerEmail,
                         successUrl: window.location.origin + '/success.html',
                         cancelUrl: window.location.origin + '/#pricing',
                         trialDays: trialDays,
@@ -3873,19 +3906,22 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
                 }
 
                 const data = await response.json();
+                console.log('Checkout session created:', data);
 
-                if (data.success && data.url) {
-                    window.location.href = data.url;
+                if (data.success && data.sessionUrl) {
+                    // Redirect to Stripe checkout
+                    window.location.href = data.sessionUrl;
                 } else {
-                    throw new Error(data.error || 'Failed to create checkout session');
+                    throw new Error(data.message || 'Failed to create checkout session');
                 }
             } catch (error) {
                 console.error('Stripe Checkout Error:', error);
-                alert('Something went wrong. Please try again or contact support.');
+                alert('Failed to start checkout: ' + error.message + '\n\nPlease try again or contact support@h-factor.co.uk');
             }
         }
 
