@@ -3913,9 +3913,9 @@
                 const data = await response.json();
                 console.log('Checkout session created:', data);
 
-                if (data.success && data.sessionUrl) {
-                    // Redirect to Stripe checkout
-                    window.location.href = data.sessionUrl;
+                if (data.success && (data.sessionUrl || data.url)) {
+                    // Redirect to Stripe checkout (backend returns "url", not "sessionUrl")
+                    window.location.href = data.sessionUrl || data.url;
                 } else {
                     throw new Error(data.message || 'Failed to create checkout session');
                 }
