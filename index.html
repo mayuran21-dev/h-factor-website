@@ -542,26 +542,33 @@
 
         /* Features Section */
         .features-section {
-            padding: 60px 20px;
+            padding: 20px;
             background: var(--white);
             position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
+            justify-content: center;
         }
 
         /* USP Mosaic Layout */
         .usp-mosaic-container {
-            max-width: 1240px;
-            margin: 0 auto 80px;
-            padding: 0 20px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
         }
 
         .usp-mosaic-title {
-            font-size: clamp(32px, 4vw, 48px);
+            font-size: clamp(28px, 3.5vw, 42px);
             font-weight: 900;
             color: var(--text-primary);
-            margin-bottom: 48px;
+            margin-bottom: 32px;
             text-align: center;
             letter-spacing: -0.02em;
         }
@@ -569,8 +576,9 @@
         .usp-mosaic-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            grid-auto-rows: 180px;
-            gap: 16px;
+            grid-auto-rows: min(100px, calc((100vh - 200px) / 6));
+            gap: 12px;
+            width: 100%;
         }
 
         .usp-mosaic-item {
@@ -676,12 +684,12 @@
         }
 
         .usp-mosaic-item:nth-child(2) {
-            grid-column: span 5;
+            grid-column: span 4;
             grid-row: span 2;
         }
 
         .usp-mosaic-item:nth-child(3) {
-            grid-column: span 3;
+            grid-column: span 4;
             grid-row: span 2;
         }
 
@@ -720,17 +728,16 @@
             grid-row: span 2;
         }
 
-        .usp-mosaic-item:nth-child(11) {
-            grid-column: span 4;
-            grid-row: span 1;
-        }
-
         /* Responsive mosaic for tablets */
         @media (max-width: 960px) {
+            .usp-mosaic-container {
+                padding: 30px 20px;
+            }
+
             .usp-mosaic-grid {
                 grid-template-columns: repeat(6, 1fr);
-                grid-auto-rows: 160px;
-                gap: 12px;
+                grid-auto-rows: min(90px, calc((100vh - 160px) / 6));
+                gap: 10px;
             }
 
             .usp-mosaic-item:nth-child(1),
@@ -754,19 +761,20 @@
                 grid-column: span 2;
                 grid-row: span 2;
             }
-
-            .usp-mosaic-item:nth-child(11) {
-                grid-column: span 3;
-                grid-row: span 1;
-            }
         }
 
         /* Responsive mosaic for mobile */
         @media (max-width: 480px) {
+            .usp-mosaic-container {
+                padding: 20px 16px;
+                min-height: auto;
+            }
+
             .usp-mosaic-grid {
                 grid-template-columns: repeat(2, 1fr);
-                grid-auto-rows: 140px;
-                gap: 10px;
+                grid-auto-rows: 100px;
+                gap: 8px;
+                max-height: none;
             }
 
             .usp-mosaic-item {
@@ -775,12 +783,13 @@
             }
 
             .usp-mosaic-overlay {
-                font-size: 13px;
-                padding: 16px 12px 12px;
+                font-size: 12px;
+                padding: 12px 10px 10px;
             }
 
             .usp-mosaic-title {
-                margin-bottom: 32px;
+                margin-bottom: 20px;
+                font-size: 24px;
             }
         }
 
@@ -2784,7 +2793,7 @@
                     <div class="hero-text-container">
                         <h1 id="hero-title" class="hero-title fade-in">Workforce Hub<br>Built in the UK</h1>
                         <p class="hero-subtitle fade-in">Complete HR and Payroll Management Solution<br>For Small and Growing UK Businesses</p>
-                        <p class="hero-tagline fade-in">0% AI, 100% People</p>
+                        <p class="hero-tagline fade-in">100% People. 0% Operational Noise.</p>
                         <div class="hero-buttons fade-in">
                             <a href="#" onclick="startSubscription('price_1S7jhg1MYGRkQqmR8YkXuKR3', 'Professional')" class="hero-cta-primary" aria-describedby="subscribe-description">
                                 Subscribe Now
@@ -2830,15 +2839,16 @@
             <div class="usp-mosaic-container animate-on-scroll">
                 <h2 class="usp-mosaic-title">Built for Your Industry</h2>
                 <div class="usp-mosaic-grid">
+                    <!-- Row 1: UK Compliant, Multiple Companies, Learning & Development -->
                     <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
                         <div class="usp-card-inner">
                             <div class="usp-card-front">
-                                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&h=600&fit=crop&q=90"
-                                     alt="Dental practice with modern equipment"
+                                <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop&q=90"
+                                     alt="United Kingdom business compliance"
                                      loading="lazy">
-                                <div class="usp-mosaic-overlay">Dental Practices</div>
+                                <div class="usp-mosaic-overlay">UK Compliant</div>
                             </div>
-                            <div class="usp-card-back dental-gradient">
+                            <div class="usp-card-back">
                                 <div class="usp-card-back-text">H-Factor</div>
                             </div>
                         </div>
@@ -2861,10 +2871,10 @@
                     <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
                         <div class="usp-card-inner">
                             <div class="usp-card-front">
-                                <img src="https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?w=800&h=600&fit=crop&q=90"
-                                     alt="Rota scheduling with labour cost tracking"
+                                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=800&h=600&fit=crop&q=90"
+                                     alt="Library with hanging bulbs for learning and development"
                                      loading="lazy">
-                                <div class="usp-mosaic-overlay">Rota & Labour Cost</div>
+                                <div class="usp-mosaic-overlay">Learning & Development</div>
                             </div>
                             <div class="usp-card-back">
                                 <div class="usp-card-back-text">H-Factor</div>
@@ -2872,15 +2882,16 @@
                         </div>
                     </div>
 
+                    <!-- Row 2: Dental Practices, Retail, Construction, Courier Services -->
                     <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
                         <div class="usp-card-inner">
                             <div class="usp-card-front">
-                                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=600&fit=crop&q=90"
-                                     alt="Trainee dental nurse learning and training"
+                                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&h=600&fit=crop&q=90"
+                                     alt="Dental practice with modern equipment"
                                      loading="lazy">
-                                <div class="usp-mosaic-overlay">Trainee Nurses</div>
+                                <div class="usp-mosaic-overlay">Dental Practices</div>
                             </div>
-                            <div class="usp-card-back">
+                            <div class="usp-card-back dental-gradient">
                                 <div class="usp-card-back-text">H-Factor</div>
                             </div>
                         </div>
@@ -2917,10 +2928,10 @@
                     <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
                         <div class="usp-card-inner">
                             <div class="usp-card-front">
-                                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop&q=90"
-                                     alt="Payroll processing and calculations"
+                                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop&q=90"
+                                     alt="Courier delivery and logistics services"
                                      loading="lazy">
-                                <div class="usp-mosaic-overlay">Payroll</div>
+                                <div class="usp-mosaic-overlay">Courier Services</div>
                             </div>
                             <div class="usp-card-back">
                                 <div class="usp-card-back-text">H-Factor</div>
@@ -2928,13 +2939,14 @@
                         </div>
                     </div>
 
+                    <!-- Row 3: Rota & Labour Cost, HR Management, Payroll -->
                     <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
                         <div class="usp-card-inner">
                             <div class="usp-card-front">
-                                <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop&q=90"
-                                     alt="United Kingdom business compliance"
+                                <img src="https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?w=800&h=600&fit=crop&q=90"
+                                     alt="Rota scheduling with labour cost tracking"
                                      loading="lazy">
-                                <div class="usp-mosaic-overlay">UK Compliant</div>
+                                <div class="usp-mosaic-overlay">Rota & Labour Cost</div>
                             </div>
                             <div class="usp-card-back">
                                 <div class="usp-card-back-text">H-Factor</div>
@@ -2959,71 +2971,15 @@
                     <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
                         <div class="usp-card-inner">
                             <div class="usp-card-front">
-                                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=800&h=600&fit=crop&q=90"
-                                     alt="Library with hanging bulbs for learning and development"
+                                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop&q=90"
+                                     alt="Payroll processing and calculations"
                                      loading="lazy">
-                                <div class="usp-mosaic-overlay">Learning & Development</div>
+                                <div class="usp-mosaic-overlay">Payroll</div>
                             </div>
                             <div class="usp-card-back">
                                 <div class="usp-card-back-text">H-Factor</div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="usp-mosaic-item" onclick="this.classList.toggle('flipped')">
-                        <div class="usp-card-inner">
-                            <div class="usp-card-front">
-                                <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&h=600&fit=crop&q=90"
-                                     alt="Dentist and dental healthcare professionals"
-                                     loading="lazy">
-                                <div class="usp-mosaic-overlay">Dental Nurses</div>
-                            </div>
-                            <div class="usp-card-back">
-                                <div class="usp-card-back-text">H-Factor</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Features Split Layout -->
-            <div class="features-container" style="padding-top: 40px;">
-                <div class="features-split">
-                    <div class="features-content">
-                        <h2 id="features-title" class="sr-only">Key Features</h2>
-                        <div class="features-grid">
-                            <article class="feature-card animate-on-scroll">
-                                <div class="feature-icon" aria-hidden="true">🏛️</div>
-                                <h3 class="feature-title">HMRC Compliant</h3>
-                                <p class="feature-description">Automated RTI submissions and tax calculations ensure full compliance with UK regulations.</p>
-                            </article>
-
-                            <article class="feature-card animate-on-scroll">
-                                <div class="feature-icon" aria-hidden="true">🔒</div>
-                                <h3 class="feature-title">GDPR Certified</h3>
-                                <p class="feature-description">Your employee data is protected with bank-level security and GDPR compliance.</p>
-                            </article>
-
-                            <article class="feature-card animate-on-scroll">
-                                <div class="feature-icon" aria-hidden="true">💰</div>
-                                <h3 class="feature-title">Payroll Processing</h3>
-                                <p class="feature-description">Process payroll in minutes with automatic calculations for PAYE, NI, and pensions.</p>
-                            </article>
-
-                            <article class="feature-card animate-on-scroll">
-                                <div class="feature-icon" aria-hidden="true">📊</div>
-                                <h3 class="feature-title">HMRC Reporting</h3>
-                                <p class="feature-description">Automatic submission of RTI reports, P45s, P60s, and pension auto-enrollment.</p>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="features-image-container animate-on-scroll">
-                        <img
-                            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=1200&fit=crop&q=90"
-                            alt="HR system dashboard and analytics"
-                            class="features-image"
-                            loading="lazy"
-                        />
                     </div>
                 </div>
             </div>
@@ -3042,55 +2998,8 @@
                         />
                     </div>
                     <div class="holiday-cover-content">
-                        <h2 class="holiday-cover-heading fade-in">Your employees book holidays, H-Factor finds your cover!</h2>
+                        <h2 class="holiday-cover-heading fade-in">Say yes to holidays, not overtime.</h2>
                         <p class="holiday-cover-subheader fade-in">Smart cover with the right skills finder</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ROI Calculator Section -->
-        <section id="roi-calculator" class="roi-calculator-section animate-on-scroll" aria-labelledby="roi-title">
-            <div class="roi-calculator-container">
-                <h2 id="roi-title" class="roi-calculator-title">Calculate Your Savings</h2>
-                <p class="roi-calculator-subtitle">See how much time and money H Factor can save your business</p>
-
-                <div class="calculator-box">
-                    <div class="slider-group">
-                        <div class="slider-label">
-                            <span class="slider-label-text">Number of Employees</span>
-                            <span class="slider-value" id="employee-value">25</span>
-                        </div>
-                        <input type="range" min="1" max="200" value="25" class="slider-input" id="employee-slider" aria-label="Number of employees">
-                    </div>
-
-                    <div class="slider-group">
-                        <div class="slider-label">
-                            <span class="slider-label-text">Hours Spent on HR/Payroll per Week</span>
-                            <span class="slider-value" id="hours-value">10</span>
-                        </div>
-                        <input type="range" min="1" max="40" value="10" class="slider-input" id="hours-slider" aria-label="Hours spent on HR and payroll per week">
-                    </div>
-
-                    <div class="roi-results">
-                        <div class="roi-result-item">
-                            <div class="roi-result-label">Time Saved</div>
-                            <div class="roi-result-value">
-                                <span id="time-saved">7</span><span class="roi-result-suffix">h/week</span>
-                            </div>
-                        </div>
-                        <div class="roi-result-item">
-                            <div class="roi-result-label">Cost Savings</div>
-                            <div class="roi-result-value">
-                                £<span id="cost-saved">1,456</span><span class="roi-result-suffix">/month</span>
-                            </div>
-                        </div>
-                        <div class="roi-result-item">
-                            <div class="roi-result-label">Annual ROI</div>
-                            <div class="roi-result-value">
-                                <span id="roi-percentage">1,200</span><span class="roi-result-suffix">%</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -3321,6 +3230,53 @@
                         <p class="feature-detail-subtext">Plan rotas with cost visibility before you publish. Let staff request shift swaps with approval controls. Track trainee nurse pathways online instead of in filing cabinets. Run payroll with RTI submissions built in. Manage multiple limited companies from one login, each tailored to its own workflows.</p>
                         <p class="feature-detail-subtext">No more exporting data between systems. No more duplicate entries. No more wondering if your training records will be ready when CQE asks.</p>
                         <p class="feature-detail-tagline">Built for UK dental groups that grew beyond spreadsheets but don't want enterprise software complexity.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROI Calculator Section -->
+        <section id="roi-calculator" class="roi-calculator-section animate-on-scroll" aria-labelledby="roi-title">
+            <div class="roi-calculator-container">
+                <h2 id="roi-title" class="roi-calculator-title">Calculate Your Savings</h2>
+                <p class="roi-calculator-subtitle">See how much time and money H Factor can save your business</p>
+
+                <div class="calculator-box">
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-text">Number of Employees</span>
+                            <span class="slider-value" id="employee-value">25</span>
+                        </div>
+                        <input type="range" min="1" max="200" value="25" class="slider-input" id="employee-slider" aria-label="Number of employees">
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-text">Hours Spent on HR/Payroll per Week</span>
+                            <span class="slider-value" id="hours-value">10</span>
+                        </div>
+                        <input type="range" min="1" max="40" value="10" class="slider-input" id="hours-slider" aria-label="Hours spent on HR and payroll per week">
+                    </div>
+
+                    <div class="roi-results">
+                        <div class="roi-result-item">
+                            <div class="roi-result-label">Time Saved</div>
+                            <div class="roi-result-value">
+                                <span id="time-saved">7</span><span class="roi-result-suffix">h/week</span>
+                            </div>
+                        </div>
+                        <div class="roi-result-item">
+                            <div class="roi-result-label">Cost Savings</div>
+                            <div class="roi-result-value">
+                                £<span id="cost-saved">1,456</span><span class="roi-result-suffix">/month</span>
+                            </div>
+                        </div>
+                        <div class="roi-result-item">
+                            <div class="roi-result-label">Annual ROI</div>
+                            <div class="roi-result-value">
+                                <span id="roi-percentage">1,200</span><span class="roi-result-suffix">%</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
